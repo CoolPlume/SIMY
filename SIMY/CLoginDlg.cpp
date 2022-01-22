@@ -86,5 +86,7 @@ void CLoginDlg::OnBnClickedButton1()
 	username = CW2A(login_username.GetString());
 	password = CW2A(login_password.GetString());
 
+	int nCheckId = GetCheckedRadioButton(IDC_RADIO1, IDC_RADIO3);
+
 	bool login_flag = app->SIM->login_decision(username, password);
 }
