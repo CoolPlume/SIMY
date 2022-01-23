@@ -43,6 +43,8 @@ CSIMYApp theApp;
 BOOL CSIMYApp::InitInstance()
 {
 	SIM = new student_information_management;
+	AIM = new administrator_information_management;
+	TIM = new teacher_information_management;
 
 	CLoginDlg login_dlg;
 	login_dlg.DoModal();
@@ -115,3 +117,14 @@ BOOL CSIMYApp::InitInstance()
 	return FALSE;
 }
 
+
+
+BOOL CSIMYApp::SaveAllModified()
+{
+	// TODO: 在此添加专用代码和/或调用基类
+
+	delete AIM;
+	delete SIM;
+
+	return CWinApp::SaveAllModified();
+}

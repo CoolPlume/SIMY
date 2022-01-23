@@ -34,4 +34,6 @@ public:
 	afx_msg void OnEnSetfocusEdit1();
 private:
 	CEdit IDC_login_password;
+	virtual void OnOK();
+	virtual void OnCancel();
 };

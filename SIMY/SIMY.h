@@ -11,6 +11,8 @@
 #include "resource.h"		// 主符号
 
 #include "student_information_management.h"
+#include "administrator_information_management.h"
+#include "teacher_information_management.h"
 
 // CSIMYApp:
 // 有关此类的实现，请参阅 SIMY.cpp
@@ -31,7 +33,12 @@ public:
 
 public:
 	student_information_management* SIM;
+	administrator_information_management* AIM;
+	teacher_information_management* TIM;
 	int nCheckId = 0;
+	virtual BOOL SaveAllModified();
+
+
 };
 
 extern CSIMYApp theApp;

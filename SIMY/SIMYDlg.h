@@ -31,4 +31,12 @@ protected:
 	afx_msg void OnPaint();
 	afx_msg HCURSOR OnQueryDragIcon();
 	DECLARE_MESSAGE_MAP()
+public:
+	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
+
+private:
+	CFrameWnd* m_pMyFrame;   // 分隔窗口  
+	CSplitterWnd m_cSplitter;     // 左右分隔  
+public:
+	afx_msg void OnSize(UINT nType, int cx, int cy);
 };

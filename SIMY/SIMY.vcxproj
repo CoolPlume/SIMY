@@ -191,7 +191,12 @@
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="administrator.h" />
+    <ClInclude Include="administrator_information_management.h" />
+    <ClInclude Include="CDispalyView.h" />
     <ClInclude Include="CLoginDlg.h" />
+    <ClInclude Include="CSelectView.h" />
+    <ClInclude Include="DISPLAYVIEW_LEFT.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="person.h" />
@@ -201,11 +206,18 @@
     <ClInclude Include="student.h" />
     <ClInclude Include="student_information_management.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="teacher.h" />
+    <ClInclude Include="teacher_information_management.h" />
     <ClInclude Include="user.h" />
     <ClInclude Include="user_information_management.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="administrator.cpp" />
+    <ClCompile Include="administrator_information_management.cpp" />
+    <ClCompile Include="CDispalyView.cpp" />
     <ClCompile Include="CLoginDlg.cpp" />
+    <ClCompile Include="CSelectView.cpp" />
+    <ClCompile Include="DISPLAYVIEW_LEFT.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -217,6 +229,8 @@
     <ClCompile Include="SIMYDlg.cpp" />
     <ClCompile Include="student.cpp" />
     <ClCompile Include="student_information_management.cpp" />
+    <ClCompile Include="teacher.cpp" />
+    <ClCompile Include="teacher_information_management.cpp" />
     <ClCompile Include="user.cpp" />
     <ClCompile Include="user_information_management.cpp" />
   </ItemGroup>

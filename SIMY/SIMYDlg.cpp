@@ -7,6 +7,9 @@
 #include "SIMY.h"
 #include "SIMYDlg.h"
 #include "afxdialogex.h"
+#include "CSelectView.h"
+#include "CDispalyView.h"
+#include "DISPLAYVIEW_LEFT.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -31,6 +34,7 @@ public:
 // 实现
 protected:
 	DECLARE_MESSAGE_MAP()
+	virtual void OnOK();
 };
 
 CAboutDlg::CAboutDlg() : CDialogEx(IDD_ABOUTBOX)
@@ -65,6 +69,8 @@ BEGIN_MESSAGE_MAP(CSIMYDlg, CDialogEx)
 	ON_WM_SYSCOMMAND()
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
+	ON_WM_CREATE()
+	ON_WM_SIZE()
 END_MESSAGE_MAP()
 
 
@@ -105,6 +111,12 @@ BOOL CSIMYDlg::OnInitDialog()
 
 	// TODO: 在此添加额外的初始化代码
 
+	CRect cRect;
+	GetWindowRect(&cRect);
+	ScreenToClient(&cRect);
+	m_pMyFrame->MoveWindow(&cRect);
+	m_pMyFrame->ShowWindow(SW_SHOW);
+
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
 
@@ -134,12 +146,12 @@ void CSIMYDlg::OnPaint()
 		SendMessage(WM_ICONERASEBKGND, reinterpret_cast<WPARAM>(dc.GetSafeHdc()), 0);
 
 		// 使图标在工作区矩形中居中
-		int cxIcon = GetSystemMetrics(SM_CXICON);
-		int cyIcon = GetSystemMetrics(SM_CYICON);
+		const int cxIcon = GetSystemMetrics(SM_CXICON);
+		const int cyIcon = GetSystemMetrics(SM_CYICON);
 		CRect rect;
 		GetClientRect(&rect);
-		int x = (rect.Width() - cxIcon + 1) / 2;
-		int y = (rect.Height() - cyIcon + 1) / 2;
+		const int x = (rect.Width() - cxIcon + 1) / 2;
+		const int y = (rect.Height() - cyIcon + 1) / 2;
 
 		// 绘制图标
 		dc.DrawIcon(x, y, m_hIcon);
@@ -157,3 +169,54 @@ HCURSOR CSIMYDlg::OnQueryDragIcon()
 	return static_cast<HCURSOR>(m_hIcon);
 }
 
+
+
+void CAboutDlg::OnOK()
+{
+	// TODO: 在此添加专用代码和/或调用基类
+
+	CDialogEx::OnOK();
+}
+
+
+int CSIMYDlg::OnCreate(LPCREATESTRUCT lpCreateStruct)
+{
+	if (CDialogEx::OnCreate(lpCreateStruct) == -1)
+		return -1;
+
+	// TODO:  在此添加您专用的创建代码
+
+	//静态拆分窗口
+	CRect rc;
+	GetClientRect(&rc);
+
+	const CString strMyClass = AfxRegisterWndClass(CS_VREDRAW | CS_HREDRAW,
+	                                               ::LoadCursor(nullptr, IDC_ARROW), static_cast<HBRUSH>(::GetStockObject(WHITE_BRUSH)),
+	                                               ::LoadIcon(nullptr, IDI_APPLICATION));
+
+	m_pMyFrame = new CFrameWnd;
+	m_pMyFrame->Create(strMyClass, _T(""), WS_CHILD, rc, this);
+	m_pMyFrame->ShowWindow(SW_SHOW);
+
+	m_cSplitter.CreateStatic(m_pMyFrame, 1, 2);//将窗口分割为1行2列
+	//m_cSplitter.CreateView(0, 1, RUNTIME_CLASS(DISPLAYVIEW_LEFT), CSize(rc.Width() * 3 / 4, rc.Height()), nullptr);//指定（0,1）区域显示内容及大小
+	//m_cSplitter.SetColumnInfo(0, rc.Width() / 4, 20);//设置第一列的宽度
+	//m_cSplitter.SetColumnInfo(1, rc.Width() * 3 / 4, 20);
+	//m_cSplitter.SetRowInfo(0, rc.Height(), 20);
+
+	return 0;
+}
+
+
+void CSIMYDlg::OnSize(UINT nType, int cx, int cy)
+{
+	CDialogEx::OnSize(nType, cx, cy);
+
+	// TODO: 在此处添加消息处理程序代码
+
+	CRect cRect;
+	GetWindowRect(&cRect);
+	ScreenToClient(&cRect);
+	m_pMyFrame->MoveWindow(&cRect);
+	m_pMyFrame->ShowWindow(SW_SHOW);
+}
