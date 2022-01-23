@@ -245,7 +245,8 @@ int CSIMYDlg::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	// Initialize a context for the view. CMyTreeView is my view and
 	// is defined as :  class CMyListView : public CListView.
-	CCreateContext ctx_left_view, ctx_right_view;
+	CCreateContext ctx_left_view;
+	CCreateContext ctx_right_view;
 	ctx_left_view.m_pNewViewClass = RUNTIME_CLASS(DISPLAYVIEW_LEFT);
 	ctx_left_view.m_pCurrentDoc = nullptr;
 	ctx_left_view.m_pNewDocTemplate = nullptr;
@@ -275,9 +276,11 @@ int CSIMYDlg::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	// and finally, create the splitter with the frame as
 	// the parent
 	m_cSplitter.CreateStatic(m_pMyFrame, 1, 2);
-	m_cSplitter.CreateView(0, 0, RUNTIME_CLASS(DISPLAYVIEW_LEFT), CSize(300, 300), &ctx_left_view);
-	m_cSplitter.CreateView(0, 1, RUNTIME_CLASS(DISPLAY_RIGHT), CSize(500, 100), &ctx_right_view);
+	m_cSplitter.CreateView(0, 0, RUNTIME_CLASS(DISPLAYVIEW_LEFT), CSize(300, 320), &ctx_left_view);
+	m_cSplitter.CreateView(0, 1, RUNTIME_CLASS(DISPLAY_RIGHT), CSize(1100, 320), &ctx_right_view);
 
+	DISPLAYVIEW_LEFT* pview1 = (DISPLAYVIEW_LEFT*)m_cSplitter.GetPane(0, 0);
+	pview1->OnInitialUpdate();
 	return 0;
 }
 

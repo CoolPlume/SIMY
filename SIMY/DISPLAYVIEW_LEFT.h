@@ -29,6 +29,12 @@ protected:
 	DECLARE_MESSAGE_MAP()
 private:
 	CStatic SHOW_IDENTITY;
+public:
+	virtual void OnInitialUpdate();
+private:
+	CString IDC_TEST;
+	CTreeCtrl navigation;
+	virtual void OnActivateView(BOOL bActivate, CView* pActivateView, CView* pDeactiveView);
 };
 
 
