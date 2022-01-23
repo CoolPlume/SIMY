@@ -31,6 +31,7 @@ public:
 
 public:
 	student_information_management* SIM;
+	int nCheckId = 0;
 };
 
 extern CSIMYApp theApp;

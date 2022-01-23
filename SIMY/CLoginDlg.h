@@ -30,4 +30,8 @@ private:
 	CString login_password;
 public:
 	afx_msg void OnBnClickedButton1();
+	afx_msg void OnEnSetfocusEdit2();
+	afx_msg void OnEnSetfocusEdit1();
+private:
+	CEdit IDC_login_password;
 };

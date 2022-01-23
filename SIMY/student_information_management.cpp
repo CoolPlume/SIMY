@@ -92,10 +92,8 @@ student_information_management::student_information_management()
 	{
 		while (read_local_date.peek() != EOF)
 		{
-			std::string* judge;
-			judge = new std::string;
-			student* stu;
-			stu = new student;
+			const auto judge = new std::string;
+			const auto stu = new student;
 			bool read_end = false;
 			do
 			{
@@ -169,7 +167,7 @@ student_information_management::~student_information_management()
 				<< student_storage_field_description[static_cast<int>(student_storage_field_Type::Gender)] << student_storage_field_description[static_cast<int>(student_storage_field_Type::Space)] << stu->return_gender() << student_storage_field_description[static_cast<int>(student_storage_field_Type::Space)]
 				<< student_storage_field_description[static_cast<int>(student_storage_field_Type::Actual_name)] << student_storage_field_description[static_cast<int>(student_storage_field_Type::Space)] << stu->return_actual_name() << student_storage_field_description[static_cast<int>(student_storage_field_Type::Space)]
 				<< student_storage_field_description[static_cast<int>(student_storage_field_Type::Nick_name)] << student_storage_field_description[static_cast<int>(student_storage_field_Type::Space)] << stu->return_nick_name() << student_storage_field_description[static_cast<int>(student_storage_field_Type::Space)]
-				//<< student_storage_field_description[static_cast<int>(student_storage_field_Type::Chinese)] << student_storage_field_description[static_cast<int>(student_storage_field_Type::Space)] << stu->return_course_information_management().return_the_selection_status(static_cast<int>(course_Type::chinese)) << student_storage_field_description[static_cast<int>(student_storage_field_Type::Space)] << stu->return_course_information_management().return_course_results(static_cast<int>(course_Type::chinese)) << student_storage_field_description[static_cast<int>(student_storage_field_Type::Space)]
+			//	<< student_storage_field_description[static_cast<int>(student_storage_field_Type::Chinese)] << student_storage_field_description[static_cast<int>(student_storage_field_Type::Space)] << stu->return_course_information_management().return_the_selection_status(static_cast<int>(course_Type::chinese)) << student_storage_field_description[static_cast<int>(student_storage_field_Type::Space)] << stu->return_course_information_management().return_course_results(static_cast<int>(course_Type::chinese)) << student_storage_field_description[static_cast<int>(student_storage_field_Type::Space)]
 				<< student_storage_field_description[static_cast<int>(student_storage_field_Type::END)] << std::endl;
 			delete stu;
 		}
