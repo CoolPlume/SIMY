@@ -72,6 +72,9 @@
     <ClInclude Include="DISPLAYVIEW_LEFT.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="DISPLAY_RIGHT.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SIMY.cpp">
@@ -120,6 +123,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="DISPLAYVIEW_LEFT.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="DISPLAY_RIGHT.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

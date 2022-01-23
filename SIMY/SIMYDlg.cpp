@@ -10,6 +10,7 @@
 #include "CSelectView.h"
 #include "CDispalyView.h"
 #include "DISPLAYVIEW_LEFT.h"
+#include "DISPLAY_RIGHT.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -71,6 +72,7 @@ BEGIN_MESSAGE_MAP(CSIMYDlg, CDialogEx)
 	ON_WM_QUERYDRAGICON()
 	ON_WM_CREATE()
 	ON_WM_SIZE()
+	ON_WM_DESTROY()
 END_MESSAGE_MAP()
 
 
@@ -111,11 +113,41 @@ BOOL CSIMYDlg::OnInitDialog()
 
 	// TODO: 在此添加额外的初始化代码
 
-	CRect cRect;
-	GetWindowRect(&cRect);
-	ScreenToClient(&cRect);
-	m_pMyFrame->MoveWindow(&cRect);
+	//CRect cRect;
+	//GetWindowRect(&cRect);
+	//ScreenToClient(&cRect);
+	//m_pMyFrame->MoveWindow(&cRect);
+	//m_pMyFrame->ShowWindow(SW_SHOW);
+
+
+
+	//// 设置窗口屏幕居中
+	//CRect recTemp;
+
+	//CClientDC dc(this);
+	//int width = dc.GetDeviceCaps(HORZRES);
+	//int height = dc.GetDeviceCaps(VERTRES);
+
+	//recTemp.left = (int)(width * 0.3);
+	//recTemp.right = (int)(width * 0.7);
+	//recTemp.top = (int)(height * 0.1);
+	//recTemp.bottom = (int)(height * 0.9);
+
+	//MoveWindow(recTemp);
+
+
+	CRect rect;
+	// Get the rectangle of the custom window. The custom window
+	// is just a a big button that is not visible and is disabled.
+	// It's a trick to not use coordinates directly.
+	GetDlgItem(IDC_CUTSOM_WINDOW)->GetWindowRect(&rect);
+
+	// Move the splitter
+	ScreenToClient(&rect);
+	m_pMyFrame->MoveWindow(&rect);
 	m_pMyFrame->ShowWindow(SW_SHOW);
+	m_cSplitter.MoveWindow(0, 0, rect.Width(), rect.Height());
+	m_cSplitter.ShowWindow(SW_SHOW);
 
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
@@ -186,23 +218,65 @@ int CSIMYDlg::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	// TODO:  在此添加您专用的创建代码
 
-	//静态拆分窗口
-	CRect rc;
-	GetClientRect(&rc);
+	////静态拆分窗口
+	//CRect rc;
+	//GetClientRect(&rc);
 
+	//// 注册主框架窗口类
+	//const CString strMyClass = AfxRegisterWndClass(CS_VREDRAW | CS_HREDRAW,
+	//                                               ::LoadCursor(nullptr, IDC_ARROW), static_cast<HBRUSH>(::GetStockObject(WHITE_BRUSH)),
+	//                                               ::LoadIcon(nullptr, IDI_APPLICATION));
+
+	//// 创建框架窗口
+	//m_pMyFrame = new CFrameWnd;
+	//m_pMyFrame->Create(strMyClass, _T(""), WS_CHILD, rc, this);
+	//	m_pMyFrame->ShowWindow(SW_SHOW);
+
+	//// 创建分割条作为框架窗口的子窗口
+	////m_cSplitter.CreateStatic(m_pMyFrame, 1, 2);//将窗口分割为1行2列
+	////m_cSplitter.CreateView(0, 0, RUNTIME_CLASS(DISPLAYVIEW_LEFT), CSize(rc.Width() * 3 / 4, rc.Height()), nullptr);//指定（0,1）区域显示内容及大小
+	////m_cSplitter.SetColumnInfo(0, rc.Width() / 4, 20);//设置第一列的宽度
+	////m_cSplitter.SetColumnInfo(1, rc.Width() * 3 / 4, 20);
+	////m_cSplitter.SetRowInfo(0, rc.Height(), 20);
+
+	//// 设置当前活动窗口
+	////m_cSplitter.SetActivePane(0, 0);
+
+
+	// Initialize a context for the view. CMyTreeView is my view and
+	// is defined as :  class CMyListView : public CListView.
+	CCreateContext ctx_left_view, ctx_right_view;
+	ctx_left_view.m_pNewViewClass = RUNTIME_CLASS(DISPLAYVIEW_LEFT);
+	ctx_left_view.m_pCurrentDoc = nullptr;
+	ctx_left_view.m_pNewDocTemplate = nullptr;
+	ctx_left_view.m_pLastView = nullptr;
+	ctx_left_view.m_pCurrentFrame = nullptr;
+
+	ctx_right_view.m_pNewViewClass = RUNTIME_CLASS(DISPLAY_RIGHT);
+	ctx_right_view.m_pCurrentDoc = nullptr;
+	ctx_right_view.m_pNewDocTemplate = nullptr;
+	ctx_right_view.m_pLastView = nullptr;
+	ctx_right_view.m_pCurrentFrame = nullptr;
+
+	// Because the CFrameWnd needs a window class, we will create
+	// a new one. I just copied the sample from MSDN Help.
+	// When using it in your project, you may keep CS_VREDRAW and
+	// CS_HREDRAW and then throw the other three parameters.
 	const CString strMyClass = AfxRegisterWndClass(CS_VREDRAW | CS_HREDRAW,
-	                                               ::LoadCursor(nullptr, IDC_ARROW), static_cast<HBRUSH>(::GetStockObject(WHITE_BRUSH)),
-	                                               ::LoadIcon(nullptr, IDI_APPLICATION));
+		::LoadCursor(nullptr, IDC_ARROW), static_cast<HBRUSH>(::GetStockObject(WHITE_BRUSH)),
+		::LoadIcon(nullptr, IDI_APPLICATION));
 
-	m_pMyFrame = new CFrameWnd;
-	m_pMyFrame->Create(strMyClass, _T(""), WS_CHILD, rc, this);
+	// Create the frame window with "this" as the parent
+	m_pMyFrame = new CFrameWnd();
+	m_pMyFrame->Create(strMyClass, _T(""), WS_CHILD, CRect(0, 0, 1, 1), this);
 	m_pMyFrame->ShowWindow(SW_SHOW);
+	m_pMyFrame->MoveWindow(0, 0, 500, 400);
 
-	m_cSplitter.CreateStatic(m_pMyFrame, 1, 2);//将窗口分割为1行2列
-	//m_cSplitter.CreateView(0, 1, RUNTIME_CLASS(DISPLAYVIEW_LEFT), CSize(rc.Width() * 3 / 4, rc.Height()), nullptr);//指定（0,1）区域显示内容及大小
-	//m_cSplitter.SetColumnInfo(0, rc.Width() / 4, 20);//设置第一列的宽度
-	//m_cSplitter.SetColumnInfo(1, rc.Width() * 3 / 4, 20);
-	//m_cSplitter.SetRowInfo(0, rc.Height(), 20);
+	// and finally, create the splitter with the frame as
+	// the parent
+	m_cSplitter.CreateStatic(m_pMyFrame, 1, 2);
+	m_cSplitter.CreateView(0, 0, RUNTIME_CLASS(DISPLAYVIEW_LEFT), CSize(300, 300), &ctx_left_view);
+	m_cSplitter.CreateView(0, 1, RUNTIME_CLASS(DISPLAY_RIGHT), CSize(500, 100), &ctx_right_view);
 
 	return 0;
 }
@@ -214,9 +288,20 @@ void CSIMYDlg::OnSize(UINT nType, int cx, int cy)
 
 	// TODO: 在此处添加消息处理程序代码
 
-	CRect cRect;
-	GetWindowRect(&cRect);
-	ScreenToClient(&cRect);
-	m_pMyFrame->MoveWindow(&cRect);
-	m_pMyFrame->ShowWindow(SW_SHOW);
+	//CRect cRect;
+	//GetWindowRect(&cRect);
+	//ScreenToClient(&cRect);
+	//m_pMyFrame->MoveWindow(&cRect);
+
+	//m_pMyFrame->ShowWindow(SW_SHOW);
+}
+
+
+void CSIMYDlg::OnDestroy()
+{
+	CDialogEx::OnDestroy();
+
+	// TODO: 在此处添加消息处理程序代码
+
+
 }

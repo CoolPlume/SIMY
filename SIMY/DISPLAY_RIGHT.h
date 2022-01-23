@@ -2,19 +2,19 @@
 
 
 
-// DISPLAYVIEW_LEFT 窗体视图
+// DISPLAY_RIGHT 窗体视图
 
-class DISPLAYVIEW_LEFT : public CFormView
+class DISPLAY_RIGHT : public CFormView
 {
-	DECLARE_DYNCREATE(DISPLAYVIEW_LEFT)
+	DECLARE_DYNCREATE(DISPLAY_RIGHT)
 
 protected:
-	DISPLAYVIEW_LEFT();           // 动态创建所使用的受保护的构造函数
-	virtual ~DISPLAYVIEW_LEFT();
+	DISPLAY_RIGHT();           // 动态创建所使用的受保护的构造函数
+	virtual ~DISPLAY_RIGHT();
 
 public:
 #ifdef AFX_DESIGN_TIME
-	enum { IDD = IDD_DISPLAYVIEW_LEFT };
+	enum { IDD = IDD_DISPLAY_RIGHT };
 #endif
 #ifdef _DEBUG
 	virtual void AssertValid() const;
@@ -27,8 +27,6 @@ protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 支持
 
 	DECLARE_MESSAGE_MAP()
-private:
-	CStatic SHOW_IDENTITY;
 };
 
 

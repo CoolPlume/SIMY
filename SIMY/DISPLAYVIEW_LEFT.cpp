@@ -23,6 +23,7 @@ DISPLAYVIEW_LEFT::~DISPLAYVIEW_LEFT()
 void DISPLAYVIEW_LEFT::DoDataExchange(CDataExchange* pDX)
 {
 	CFormView::DoDataExchange(pDX);
+	DDX_Control(pDX, IDC_show_identity, SHOW_IDENTITY);
 }
 
 BEGIN_MESSAGE_MAP(DISPLAYVIEW_LEFT, CFormView)
