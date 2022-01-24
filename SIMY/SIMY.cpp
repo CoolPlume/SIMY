@@ -46,6 +46,27 @@ BOOL CSIMYApp::InitInstance()
 	AIM = new administrator_information_management;
 	TIM = new teacher_information_management;
 
+	//设置config路径
+	// 得到exe执行路径.  
+	TCHAR tcExePath[MAX_PATH] = { 0 };
+	::GetModuleFileName(nullptr, tcExePath, MAX_PATH);
+	// 设置ini路径到exe同一目录下  
+	#ifndef CONFIG_FILE  
+	#define CONFIG_FILE     (TEXT("Config.ini"))  
+	#endif  
+	//_tcsrchr() 反向搜索获得最后一个'\\'的位置，并返回该位置的指针  
+	TCHAR* pFind = _tcsrchr(tcExePath, '\\');
+	if (pFind == nullptr)
+	{
+		//return;
+	}
+	*pFind = '\0';
+
+	szIniPath = tcExePath;
+	szIniPath += "\\";
+	szIniPath += CONFIG_FILE;
+
+	//登录窗口
 	CLoginDlg login_dlg;
 	login_dlg.DoModal();
 
@@ -125,6 +146,7 @@ BOOL CSIMYApp::SaveAllModified()
 
 	delete AIM;
 	delete SIM;
+	delete TIM;
 
 	return CWinApp::SaveAllModified();
 }

@@ -36,4 +36,6 @@ private:
 	CEdit IDC_login_password;
 	virtual void OnOK();
 	virtual void OnCancel();
+public:
+	CButton IDC_REMEMBER;
 };

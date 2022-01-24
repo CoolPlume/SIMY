@@ -37,7 +37,7 @@ public:
 	teacher_information_management* TIM;
 	int nCheckId = 0;
 	virtual BOOL SaveAllModified();
-
+	CString szIniPath;
 
 };
 
