@@ -39,3 +39,6 @@
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif
+
+
+constexpr UINT WM_MyMessage_A = WM_USER + 1001;

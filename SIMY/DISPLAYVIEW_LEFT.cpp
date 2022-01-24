@@ -6,7 +6,6 @@
 #include "DISPLAYVIEW_LEFT.h"
 #include "SIMYDlg.h"
 
-
 // DISPLAYVIEW_LEFT
 
 IMPLEMENT_DYNCREATE(DISPLAYVIEW_LEFT, CFormView)
@@ -154,7 +153,7 @@ void DISPLAYVIEW_LEFT::OnTvnSelchangedTree1(NMHDR* pNMHDR, LRESULT* pResult)
 
 	//获取选中项的文本内容 CTreeCtrl::GetItemText
 	CString str = navigation.GetItemText(item);
-	MessageBox(str);
+	//MessageBox(str);
 
 	if (str == TEXT("个人信息"))
 	{
@@ -166,7 +165,7 @@ void DISPLAYVIEW_LEFT::OnTvnSelchangedTree1(NMHDR* pNMHDR, LRESULT* pResult)
 	}
 	else if (str == TEXT("关于"))
 	{
-		
+		::PostMessage(AfxGetMainWnd()->GetSafeHwnd(), WM_MyMessage_A, 0, 0);
 	}
 	else if (str == TEXT("待定"))
 	{

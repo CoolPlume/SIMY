@@ -73,6 +73,9 @@ BEGIN_MESSAGE_MAP(CSIMYDlg, CDialogEx)
 	ON_WM_CREATE()
 	ON_WM_SIZE()
 	ON_WM_DESTROY()
+	//{{AFX_MSG_MAP(CChildView)
+	ON_MESSAGE(WM_MyMessage_A, &CSIMYDlg::OnMyMessage_A)
+	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 
@@ -198,6 +201,15 @@ void CSIMYDlg::OnPaint()
 HCURSOR CSIMYDlg::OnQueryDragIcon()
 {
 	return static_cast<HCURSOR>(m_hIcon);
+}
+
+LRESULT CSIMYDlg::OnMyMessage_A(WPARAM wParam, LPARAM lParam)
+{
+	//MessageBox(TEXT("123"));
+	CAboutDlg dlg;
+	dlg.DoModal();
+	//return LRESULT();
+	return 0;
 }
 
 

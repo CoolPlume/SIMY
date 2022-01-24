@@ -5,6 +5,9 @@
 #pragma once
 
 
+
+
+
 // CSIMYDlg 对话框
 class CSIMYDlg : public CDialogEx
 {
@@ -30,6 +33,11 @@ protected:
 	afx_msg void OnSysCommand(UINT nID, LPARAM lParam);
 	afx_msg void OnPaint();
 	afx_msg HCURSOR OnQueryDragIcon();
+	//{{AFX_MSG(CChildView)
+
+	afx_msg LRESULT OnMyMessage_A(WPARAM wParam, LPARAM lParam);
+
+	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 public:
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
