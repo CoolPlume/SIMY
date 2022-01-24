@@ -34,7 +34,12 @@ public:
 private:
 	CString IDC_TEST;
 	CTreeCtrl navigation;
+	CImageList m_imageList;
 	virtual void OnActivateView(BOOL bActivate, CView* pActivateView, CView* pDeactiveView);
+	CString m_time;
+public:
+	afx_msg void OnTimer(UINT_PTR nIDEvent);
+	afx_msg void OnTvnSelchangedTree1(NMHDR* pNMHDR, LRESULT* pResult);
 };
 
 

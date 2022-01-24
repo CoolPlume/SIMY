@@ -23,7 +23,7 @@
     <ProjectGuid>{C581C530-3749-42EB-87B6-467776D705D0}</ProjectGuid>
     <Keyword>MFCProj</Keyword>
     <RootNamespace>SIMY</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.22000.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -243,6 +243,9 @@
     <None Include="res\SIMY.rc2" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="res\icon1.ico" />
+    <Image Include="res\locate.ico" />
+    <Image Include="res\OIP-C.jfif" />
     <Image Include="res\SIMY.ico" />
     <Image Include="res\zknuico.ico" />
   </ItemGroup>

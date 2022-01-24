@@ -13,6 +13,7 @@
 #define IDD_DispalyView                 133
 #define IDD_SelectView                  134
 #define IDD_DISPLAY_RIGHT               135
+#define IDI_LOCATE                      141
 #define IDC_BUTTON1                     1000
 #define IDC_BUTTON2                     1001
 #define IDC_EDIT1                       1002
@@ -26,14 +27,15 @@
 #define IDC_show_identity               1011
 #define IDC_show_name                   1012
 #define IDC_TREE1                       1013
+#define IDC_TIME                        1014
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        139
+#define _APS_NEXT_RESOURCE_VALUE        142
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1014
+#define _APS_NEXT_CONTROL_VALUE         1015
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif
