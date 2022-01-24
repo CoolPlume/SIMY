@@ -18,12 +18,14 @@ administrator::~administrator()
 
 }
 
-[[noreturn]] void administrator::change_super_administrator(bool super_administrator)
+void administrator::change_super_administrator(bool super_administrator)
+	//改变管理员状态
 {
 	this->super_administrator = super_administrator;
 }
 
 [[nodiscard]] bool administrator::return_super_administrator()const
+	//返回管理员状态
 {
 	return super_administrator;
 }

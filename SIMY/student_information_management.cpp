@@ -75,6 +75,7 @@ enum class login_decision_return_code_Type
 
 student_information_management::student_information_management()
 {
+	//创建学生列表本地文件
 	std::ofstream create_local_file("student_list.txt", std::ios::app);
 	if (create_local_file.is_open())
 	{
@@ -87,6 +88,7 @@ student_information_management::student_information_management()
 	create_local_file.flush();
 	create_local_file.close();
 
+	//从本地文件中读取学生信息至内存
 	std::ifstream read_local_date("student_list.txt", std::ios::in | std::ios::_Nocreate);
 	if (read_local_date.is_open())
 	{
@@ -156,6 +158,7 @@ student_information_management::student_information_management()
 
 student_information_management::~student_information_management()
 {
+	//将学生信息从内存写入本地文件
 	std::ofstream write_local_data("student_list.txt", std::ios::out | std::ios::trunc | std::ios::_Nocreate);
 	if (write_local_data.is_open())
 	{
@@ -181,6 +184,7 @@ student_information_management::~student_information_management()
 }
 
 bool student_information_management::login_decision(const std::string& username, const std::string& password)
+	//学生登录判断
 {
 	bool return_code = 0;
 	auto i = student_list.begin();
@@ -198,30 +202,36 @@ bool student_information_management::login_decision(const std::string& username,
 	{
 		return_code = static_cast<int>(login_decision_return_code_Type::login_failed);
 	}
+
 	return return_code;
 }
 
 [[nodiscard]] student student_information_management::return_currently_logged_in_student() const
+	//返回当前登录的学生
 {
 	return *currently_logged_in_student;
 }
 
-[[noreturn]] void student_information_management::add_student(const student& stu)
+void student_information_management::add_student(const student& stu)
+	//添加学生
 {
 	student_list.push_back(stu);
 }
 
 [[nodiscard]] size_t student_information_management::return_student_list_size() const
+	//返回学生总数
 {
 	return student_list.size();
 }
 
 [[nodiscard]] student* student_information_management::revise_currently_logged_in_student() const
+	//改变当前登录学生的属性
 {
 	return currently_logged_in_student;
 }
 
 [[nodiscard]] student* student_information_management::find_student(const std::string& username) const
+	//根据用户名寻找学生，返回学生指针
 {
 	student* stu = nullptr;
 	for (const auto& i : student_list)

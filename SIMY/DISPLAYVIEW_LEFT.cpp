@@ -148,10 +148,10 @@ void DISPLAYVIEW_LEFT::OnTvnSelchangedTree1(NMHDR* pNMHDR, LRESULT* pResult)
 	// TODO: 在此添加控件通知处理程序代码
 	*pResult = 0;
 
-	//获取当前节点选中项目 CTreeCtrl::GetSelectedItem
+	//获取当前节点选中项目 
 	HTREEITEM item = navigation.GetSelectedItem();
 
-	//获取选中项的文本内容 CTreeCtrl::GetItemText
+	//获取选中项的文本内容 
 	CString str = navigation.GetItemText(item);
 	//MessageBox(str);
 

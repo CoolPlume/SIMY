@@ -16,7 +16,7 @@ public:
 	virtual ~student_information_management();
 	bool login_decision(const std::string&, const std::string&);
 	[[nodiscard]] student return_currently_logged_in_student()const;
-	[[noreturn]] void add_student(const student&);
+	void add_student(const student&);
 	[[nodiscard]] size_t return_student_list_size()const;
 	[[nodiscard]] student* revise_currently_logged_in_student()const;
 	[[nodiscard]] student* find_student(const std::string&)const;

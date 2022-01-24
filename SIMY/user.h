@@ -15,9 +15,9 @@ public:
 	user();
 	~user();
 	user(const user&);
-	[[noreturn]] void change_gender(int);
+	void change_gender(int);
 	[[nodiscard]] int return_gender()const;
-	[[noreturn]] void change_actual_name(const std::string&);
+	void change_actual_name(const std::string&);
 	[[nodiscard]] std::string return_actual_name()const;
 	//[[nodiscard]] course_information_management* revise_course_information_management()const;
 	//[[nodiscard]] course_information_management return_course_information_management()const;

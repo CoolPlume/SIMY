@@ -173,6 +173,8 @@ void CLoginDlg::OnOK()
 void CLoginDlg::OnCancel()
 {
 	// TODO: 在此添加专用代码和/或调用基类
+	//！！！！！！！！！！！！！！     IMPORTANT     ！！！！！！！！！！！！！！
+	//测试用后门 勿忘！！！！！！！！！！！
 	//exit(0);
 	CDialogEx::OnCancel();
 }

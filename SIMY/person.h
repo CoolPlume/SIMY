@@ -15,8 +15,8 @@ public:
 	[[nodiscard]] std::string return_username()const;
 	[[nodiscard]] std::string return_password()const;
 	[[nodiscard]] std::string return_nick_name()const;
-	[[noreturn]] void change_username(const std::string&);
-	[[noreturn]] void change_password(const std::string&);
-	[[noreturn]] void change_nick_name(const std::string&);
+	void change_username(const std::string&);
+	void change_password(const std::string&);
+	void change_nick_name(const std::string&);
 };
 

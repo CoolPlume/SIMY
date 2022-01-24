@@ -47,18 +47,19 @@ enum class login_decision_return_code_Type
 
 administrator_information_management::administrator_information_management()
 {
+	//创建管理员列表文件
 	std::ofstream create_local_file("administrator_list.txt", std::ios::app);
 	if (create_local_file.is_open())
 	{
 		std::ifstream whether_the_local_file_was_created_for_the_first_time("administrator_list.txt", std::ios::in);
 		if (whether_the_local_file_was_created_for_the_first_time.is_open())
 		{
-			std::string* judge;
-			judge = new std::string;
+			const auto judge = new std::string;
 			whether_the_local_file_was_created_for_the_first_time >> *judge >> *judge;
 			if (judge->empty())
 			{
-				administrator* super_administrator = new administrator("admin", "123456", true);
+				//如果为空，则添加默认管理员
+				auto super_administrator = new administrator("admin", "123456", true);
 				create_local_file << administrator_storage_field_description[static_cast<int>(administrator_storage_field_Type::Username)] << administrator_storage_field_description[static_cast<int>(administrator_storage_field_Type::Space)] << super_administrator->return_username() << administrator_storage_field_description[static_cast<int>(administrator_storage_field_Type::Space)]
 					<< administrator_storage_field_description[static_cast<int>(administrator_storage_field_Type::Password)] << administrator_storage_field_description[static_cast<int>(administrator_storage_field_Type::Space)] << super_administrator->return_password() << administrator_storage_field_description[static_cast<int>(administrator_storage_field_Type::Space)]
 					<< administrator_storage_field_description[static_cast<int>(administrator_storage_field_Type::Super_administrator)] << administrator_storage_field_description[static_cast<int>(administrator_storage_field_Type::Space)] << super_administrator->return_super_administrator() << administrator_storage_field_description[static_cast<int>(administrator_storage_field_Type::Space)]
@@ -87,15 +88,14 @@ administrator_information_management::administrator_information_management()
 	create_local_file.flush();
 	create_local_file.close();
 
+	//读取管理员列表内容至内存
 	std::ifstream read_local_date("administrator_list.txt", std::ios::in | std::ios::_Nocreate);
 	if (read_local_date.is_open())
 	{
 		while (read_local_date.peek() != EOF)
 		{
-			std::string* judge;
-			judge = new std::string;
-			administrator* admin;
-			admin = new administrator;
+			const auto judge = new std::string;
+			const auto admin = new administrator;
 			bool read_end = false;
 			do
 			{
@@ -146,6 +146,7 @@ administrator_information_management::administrator_information_management()
 
 administrator_information_management::~administrator_information_management()
 {
+	//将内存中的管理员列表全部写入文件
 	std::ofstream write_local_data("administrator_list.txt", std::ios::out | std::ios::trunc | std::ios::_Nocreate);
 	if (write_local_data.is_open())
 	{
@@ -168,9 +169,11 @@ administrator_information_management::~administrator_information_management()
 }
 
 bool administrator_information_management::add_manager(const administrator& admin)
+	//添加管理员
 {
 	bool return_code = false;
 	if ((*currently_logged_in_administrator).return_super_administrator() == true)
+		//判断发起对象是否为超级管理员
 	{
 		administrator_list.push_back(admin);
 		return_code = static_cast<int>(add_manager_return_code_Type::Added_successfully);
@@ -183,6 +186,7 @@ bool administrator_information_management::add_manager(const administrator& admi
 }
 
 bool administrator_information_management::login_decision(const std::string& username, const std::string& password)
+	//管理员的登录判断
 {
 	bool return_code = false;
 	auto i = administrator_list.begin();
@@ -205,11 +209,13 @@ bool administrator_information_management::login_decision(const std::string& use
 }
 
 [[nodiscard]] administrator administrator_information_management::return_currently_logged_in_administrator() const
+	//返回当前登录的管理员
 {
 	return administrator(*currently_logged_in_administrator);
 }
 
 [[nodiscard]] administrator* administrator_information_management::revise_currently_logged_in_administrator() const
+	//改变当前登录的管理员的属性
 {
 	return currently_logged_in_administrator;
 }

@@ -20,22 +20,26 @@ user::user(const user& user) :person(user)
 	this->actual_name = user.actual_name;
 }
 
-[[noreturn]] void user::change_gender(int gender)
+void user::change_gender(int gender)
+	//改变性别
 {
 	this->gender = gender;
 }
 
 [[nodiscard]] int user::return_gender() const
+	//返回性别
 {
 	return gender;
 }
 
-[[noreturn]] void user::change_actual_name(const std::string& actual_name)
+void user::change_actual_name(const std::string& actual_name)
+	//改变真名
 {
 	this->actual_name = actual_name;
 }
 
 [[nodiscard]] std::string user::return_actual_name() const
+	//返回真名
 {
 	return actual_name;
 }

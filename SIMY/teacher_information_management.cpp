@@ -42,6 +42,7 @@ enum class login_decision_return_code_Type
 
 teacher_information_management::teacher_information_management()
 {
+	//创建教师列表本地文件
 	std::ofstream create_local_file("teacher_list.txt", std::ios::app);
 	if (create_local_file.is_open())
 	{
@@ -54,6 +55,7 @@ teacher_information_management::teacher_information_management()
 	create_local_file.flush();
 	create_local_file.close();
 
+	//从本地文件中读取学生信息至内存
 	std::ifstream read_local_date("teacher_list.txt", std::ios::in | std::ios::_Nocreate);
 	if (read_local_date.is_open())
 	{
@@ -125,6 +127,7 @@ teacher_information_management::teacher_information_management()
 
 teacher_information_management::~teacher_information_management()
 {
+	//将教师信息从内存写入本地文件
 	std::ofstream write_local_data("teacher_list.txt", std::ios::out | std::ios::trunc | std::ios::_Nocreate);
 	if (write_local_data.is_open())
 	{
@@ -149,6 +152,7 @@ teacher_information_management::~teacher_information_management()
 }
 
 bool teacher_information_management::login_decision(const std::string& username, const std::string& password)
+	//教师登录判断
 {
 	bool return_code = false;
 	auto i = teacher_list.begin();
@@ -170,21 +174,25 @@ bool teacher_information_management::login_decision(const std::string& username,
 }
 
 [[nodiscard]] teacher teacher_information_management::return_currently_logged_in_teacher() const
+	//返回当前登录教师
 {
 	return *currently_logged_in_teacher;
 }
 
-[[noreturn]] void teacher_information_management::add_teacher(const teacher& tea)
+void teacher_information_management::add_teacher(const teacher& tea)
+	//添加教师
 {
 	teacher_list.push_back(tea);
 }
 
 [[nodiscard]] size_t teacher_information_management::return_teacher_list_size() const
+	//返回教师总数
 {
 	return teacher_list.size();
 }
 
 [[nodiscard]] teacher* teacher_information_management::revise_currently_logged_in_teacher() const
+	//改变当前登录教师的属性
 {
 	return currently_logged_in_teacher;
 }

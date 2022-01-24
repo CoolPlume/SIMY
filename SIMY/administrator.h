@@ -11,7 +11,7 @@ public:
 	administrator();
 	administrator(const std::string&, const std::string&, bool);
 	virtual ~administrator();
-	[[noreturn]] void change_super_administrator(bool);
+	void change_super_administrator(bool);
 	[[nodiscard]] bool return_super_administrator()const;
 	administrator(const administrator&);
 };
