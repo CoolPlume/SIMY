@@ -61,10 +61,8 @@ teacher_information_management::teacher_information_management()
 	{
 		while (read_local_date.peek() != EOF)
 		{
-			std::string* judge;
-			judge = new std::string;
-			teacher* tea;
-			tea = new teacher;
+			const auto judge = new std::string;
+			const auto tea = new teacher;
 			bool read_end = false;
 			do
 			{
@@ -158,7 +156,7 @@ bool teacher_information_management::login_decision(const std::string& username,
 	auto i = teacher_list.begin();
 	for (i; i != teacher_list.end(); ++i)
 	{
-		teacher* tea = new teacher(*i);
+		const auto tea = new teacher(*i);
 		if ((tea->return_username() == username) && (tea->return_password() == password))
 		{
 			return_code = static_cast<int>(login_decision_return_code_Type::login_successful);

@@ -87,8 +87,8 @@ BOOL CLoginDlg::OnInitDialog()
 		//nValue = ::GetPrivateProfileInt(TEXT("Service"), TEXT("Description"), 0, szIniPath);
 
 			//转换成string
-		const int iLen = WideCharToMultiByte(CP_ACP, 0, remember_password_flag, -1, nullptr, 0, nullptr, nullptr); 
-		char* chRtn = new char[iLen * sizeof(char)];
+		const int iLen = WideCharToMultiByte(CP_ACP, 0, remember_password_flag, -1, nullptr, 0, nullptr, nullptr);
+		const auto chRtn = new char[iLen * sizeof(char)];
 		WideCharToMultiByte(CP_ACP, 0, remember_password_flag, -1, chRtn, iLen, nullptr, nullptr);
 		const std::string str(chRtn);
 			//判断
@@ -107,7 +107,7 @@ BOOL CLoginDlg::OnInitDialog()
 			TCHAR identity[MAX_PATH] = { 0 };
 			::GetPrivateProfileStringW(TEXT("Login options"), TEXT("identity"), nullptr, identity, MAX_PATH, app->szIniPath);
 			const int iLen = WideCharToMultiByte(CP_ACP, 0, identity, -1, nullptr, 0, nullptr, nullptr);
-			char* chRtn = new char[iLen * sizeof(char)];
+			const auto chRtn = new char[iLen * sizeof(char)];
 			WideCharToMultiByte(CP_ACP, 0, identity, -1, chRtn, iLen, nullptr, nullptr);
 			const std::string str(chRtn);
 			const int identity_int = std::stoi(str);

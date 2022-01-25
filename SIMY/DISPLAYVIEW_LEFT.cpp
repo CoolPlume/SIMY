@@ -144,15 +144,15 @@ void DISPLAYVIEW_LEFT::OnTimer(UINT_PTR nIDEvent)
 
 void DISPLAYVIEW_LEFT::OnTvnSelchangedTree1(NMHDR* pNMHDR, LRESULT* pResult)
 {
-	LPNMTREEVIEW pNMTreeView = reinterpret_cast<LPNMTREEVIEW>(pNMHDR);
+	auto pNMTreeView = reinterpret_cast<LPNMTREEVIEW>(pNMHDR);
 	// TODO: 在此添加控件通知处理程序代码
 	*pResult = 0;
 
 	//获取当前节点选中项目 
-	HTREEITEM item = navigation.GetSelectedItem();
+	const HTREEITEM item = navigation.GetSelectedItem();
 
 	//获取选中项的文本内容 
-	CString str = navigation.GetItemText(item);
+	const CString str = navigation.GetItemText(item);
 	//MessageBox(str);
 
 	if (str == TEXT("个人信息"))

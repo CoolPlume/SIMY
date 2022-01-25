@@ -95,7 +95,7 @@ BOOL CSIMYDlg::OnInitDialog()
 	if (pSysMenu != nullptr)
 	{
 		CString strAboutMenu;
-		BOOL bNameValid = strAboutMenu.LoadString(IDS_ABOUTBOX);
+		const BOOL bNameValid = strAboutMenu.LoadString(IDS_ABOUTBOX);
 		ASSERT(bNameValid);
 		if (!strAboutMenu.IsEmpty())
 		{
@@ -115,29 +115,7 @@ BOOL CSIMYDlg::OnInitDialog()
 
 	// TODO: 在此添加额外的初始化代码
 
-	//CRect cRect;
-	//GetWindowRect(&cRect);
-	//ScreenToClient(&cRect);
-	//m_pMyFrame->MoveWindow(&cRect);
-	//m_pMyFrame->ShowWindow(SW_SHOW);
-
-
-
-	//// 设置窗口屏幕居中
-	//CRect recTemp;
-
-	//CClientDC dc(this);
-	//int width = dc.GetDeviceCaps(HORZRES);
-	//int height = dc.GetDeviceCaps(VERTRES);
-
-	//recTemp.left = (int)(width * 0.3);
-	//recTemp.right = (int)(width * 0.7);
-	//recTemp.top = (int)(height * 0.1);
-	//recTemp.bottom = (int)(height * 0.9);
-
-	//MoveWindow(recTemp);
-
-
+	
 	CRect rect;
 	// Get the rectangle of the custom window. The custom window
 	// is just a a big button that is not visible and is disabled.
@@ -229,31 +207,6 @@ int CSIMYDlg::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	// TODO:  在此添加您专用的创建代码
 
-	////静态拆分窗口
-	//CRect rc;
-	//GetClientRect(&rc);
-
-	//// 注册主框架窗口类
-	//const CString strMyClass = AfxRegisterWndClass(CS_VREDRAW | CS_HREDRAW,
-	//                                               ::LoadCursor(nullptr, IDC_ARROW), static_cast<HBRUSH>(::GetStockObject(WHITE_BRUSH)),
-	//                                               ::LoadIcon(nullptr, IDI_APPLICATION));
-
-	//// 创建框架窗口
-	//m_pMyFrame = new CFrameWnd;
-	//m_pMyFrame->Create(strMyClass, _T(""), WS_CHILD, rc, this);
-	//	m_pMyFrame->ShowWindow(SW_SHOW);
-
-	//// 创建分割条作为框架窗口的子窗口
-	////m_cSplitter.CreateStatic(m_pMyFrame, 1, 2);//将窗口分割为1行2列
-	////m_cSplitter.CreateView(0, 0, RUNTIME_CLASS(DISPLAYVIEW_LEFT), CSize(rc.Width() * 3 / 4, rc.Height()), nullptr);//指定（0,1）区域显示内容及大小
-	////m_cSplitter.SetColumnInfo(0, rc.Width() / 4, 20);//设置第一列的宽度
-	////m_cSplitter.SetColumnInfo(1, rc.Width() * 3 / 4, 20);
-	////m_cSplitter.SetRowInfo(0, rc.Height(), 20);
-
-	//// 设置当前活动窗口
-	////m_cSplitter.SetActivePane(0, 0);
-
-
 	// Initialize a context for the view. CMyTreeView is my view and
 	// is defined as :  class CMyListView : public CListView.
 	CCreateContext ctx_left_view;
@@ -290,7 +243,7 @@ int CSIMYDlg::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_cSplitter.CreateView(0, 0, RUNTIME_CLASS(DISPLAYVIEW_LEFT), CSize(300, 320), &ctx_left_view);
 	m_cSplitter.CreateView(0, 1, RUNTIME_CLASS(DISPLAY_RIGHT), CSize(1100, 320), &ctx_right_view);
 
-	DISPLAYVIEW_LEFT* pview1 = (DISPLAYVIEW_LEFT*)m_cSplitter.GetPane(0, 0);
+	auto* pview1 = dynamic_cast<DISPLAYVIEW_LEFT*>(m_cSplitter.GetPane(0, 0));
 	pview1->OnInitialUpdate();
 	return 0;
 }
@@ -302,12 +255,6 @@ void CSIMYDlg::OnSize(UINT nType, int cx, int cy)
 
 	// TODO: 在此处添加消息处理程序代码
 
-	//CRect cRect;
-	//GetWindowRect(&cRect);
-	//ScreenToClient(&cRect);
-	//m_pMyFrame->MoveWindow(&cRect);
-
-	//m_pMyFrame->ShowWindow(SW_SHOW);
 }
 
 
