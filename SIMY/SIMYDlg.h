@@ -36,6 +36,7 @@ protected:
 	//{{AFX_MSG(CChildView)
 
 	afx_msg LRESULT OnMyMessage_A(WPARAM wParam, LPARAM lParam);
+	afx_msg LRESULT OnMyMessage_INFORMATION(WPARAM wParam, LPARAM lParam);
 
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
@@ -43,9 +44,11 @@ public:
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 
 private:
-	CFrameWnd* m_pMyFrame;   // 分隔窗口  
+	CFrameWnd* m_pMyFrame;   // 分隔窗口
+public:
 	CSplitterWnd m_cSplitter;     // 左右分隔  
 public:
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	afx_msg void OnDestroy();
+	afx_msg void OnClose();
 };

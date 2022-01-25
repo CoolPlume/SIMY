@@ -144,9 +144,7 @@ BOOL CSIMYApp::SaveAllModified()
 {
 	// TODO: 在此添加专用代码和/或调用基类
 
-	delete AIM;
-	delete SIM;
-	delete TIM;
+
 
 	return CWinApp::SaveAllModified();
 }

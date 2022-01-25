@@ -73,7 +73,7 @@ void DISPLAYVIEW_LEFT::OnInitialUpdate()
 	case IDC_RADIO1:
 	{
 		identity = "管理员:";
-		name = app -> AIM -> return_currently_logged_in_administrator().return_nick_name().c_str();
+		name = app -> AIM -> return_currently_logged_in_administrator().return_username().c_str();
 		break;
 	}
 	case IDC_RADIO2:
@@ -157,7 +157,8 @@ void DISPLAYVIEW_LEFT::OnTvnSelchangedTree1(NMHDR* pNMHDR, LRESULT* pResult)
 
 	if (str == TEXT("个人信息"))
 	{
-
+		::PostMessage(AfxGetMainWnd()->GetSafeHwnd(), WM_MyMessage_INFORMATION, 0, 0);
+		
 	}
 	else if (str == TEXT("成绩查询"))
 	{

@@ -7,8 +7,6 @@
 #include "SIMY.h"
 #include "SIMYDlg.h"
 #include "afxdialogex.h"
-#include "CSelectView.h"
-#include "CDispalyView.h"
 #include "DISPLAYVIEW_LEFT.h"
 #include "DISPLAY_RIGHT.h"
 
@@ -75,7 +73,10 @@ BEGIN_MESSAGE_MAP(CSIMYDlg, CDialogEx)
 	ON_WM_DESTROY()
 	//{{AFX_MSG_MAP(CChildView)
 	ON_MESSAGE(WM_MyMessage_A, &CSIMYDlg::OnMyMessage_A)
+	ON_MESSAGE(WM_MyMessage_INFORMATION, &CSIMYDlg::OnMyMessage_INFORMATION)
+
 	//}}AFX_MSG_MAP
+	ON_WM_CLOSE()
 END_MESSAGE_MAP()
 
 
@@ -190,6 +191,44 @@ LRESULT CSIMYDlg::OnMyMessage_A(WPARAM wParam, LPARAM lParam)
 	return 0;
 }
 
+LRESULT CSIMYDlg::OnMyMessage_INFORMATION(WPARAM wParam, LPARAM lParam)
+{
+	//MessageBox(TEXT("123"));
+	const auto app = dynamic_cast<CSIMYApp*>(AfxGetApp());
+	const auto* pview_right = dynamic_cast<DISPLAY_RIGHT*>(app->child_window->GetPane(0, 1));
+	CString name, password;
+	switch (app->nCheckId)
+	{
+	case IDC_RADIO1:
+	{
+		name = app->AIM->return_currently_logged_in_administrator().return_username().c_str();
+		password = app->AIM->return_currently_logged_in_administrator().return_password().c_str();
+		break;
+	}
+	case IDC_RADIO2:
+	{
+		name = app->TIM->return_currently_logged_in_teacher().return_username().c_str();
+		password = app->TIM->return_currently_logged_in_teacher().return_password().c_str();
+
+		break;
+	}
+	case IDC_RADIO3:
+	{
+		name = app->SIM->return_currently_logged_in_student().return_username().c_str();
+		password = app->SIM->return_currently_logged_in_student().return_password().c_str();
+
+		break;
+	}
+	default:
+	{
+		break;
+	}
+	}
+	::SetWindowTextW(pview_right->information_name, name);
+	::SetWindowTextW(pview_right->information_password, password);
+	return LRESULT();
+}
+
 
 
 void CAboutDlg::OnOK()
@@ -235,16 +274,22 @@ int CSIMYDlg::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_pMyFrame = new CFrameWnd();
 	m_pMyFrame->Create(strMyClass, _T(""), WS_CHILD, CRect(0, 0, 1, 1), this);
 	m_pMyFrame->ShowWindow(SW_SHOW);
-	m_pMyFrame->MoveWindow(0, 0, 500, 400);
+	m_pMyFrame->MoveWindow(0, 0, 640, 320);
 
 	// and finally, create the splitter with the frame as
 	// the parent
 	m_cSplitter.CreateStatic(m_pMyFrame, 1, 2);
-	m_cSplitter.CreateView(0, 0, RUNTIME_CLASS(DISPLAYVIEW_LEFT), CSize(300, 320), &ctx_left_view);
-	m_cSplitter.CreateView(0, 1, RUNTIME_CLASS(DISPLAY_RIGHT), CSize(1100, 320), &ctx_right_view);
+	m_cSplitter.CreateView(0, 0, RUNTIME_CLASS(DISPLAYVIEW_LEFT), CSize(300, 640), &ctx_left_view);
+	m_cSplitter.CreateView(0, 1, RUNTIME_CLASS(DISPLAY_RIGHT), CSize(980, 640), &ctx_right_view);
+
+	const auto app = dynamic_cast<CSIMYApp*>(AfxGetApp());
+	app->child_window = &m_cSplitter;
 
 	auto* pview1 = dynamic_cast<DISPLAYVIEW_LEFT*>(m_cSplitter.GetPane(0, 0));
 	pview1->OnInitialUpdate();
+	auto* pview2 = dynamic_cast<DISPLAY_RIGHT*>(m_cSplitter.GetPane(0, 1));
+	pview2->OnInitialUpdate();
+
 	return 0;
 }
 
@@ -263,6 +308,21 @@ void CSIMYDlg::OnDestroy()
 	CDialogEx::OnDestroy();
 
 	// TODO: 在此处添加消息处理程序代码
+
+
+}
+
+
+void CSIMYDlg::OnClose()
+{
+	// TODO: 在此添加消息处理程序代码和/或调用默认值
+	const auto app = dynamic_cast<CSIMYApp*>(AfxGetApp());
+
+	delete app->AIM;
+	delete app->SIM;
+	delete app->TIM;
+
+	CDialogEx::OnClose();
 
 
 }

@@ -27,6 +27,18 @@ protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 支持
 
 	DECLARE_MESSAGE_MAP()
+public:
+	CButton logout;
+	CEdit information_name;
+	CEdit information_password;
+public:
+	CButton information_password_hidden;
+	CButton information_password_change;
+public:
+	CEdit information_password_change_content;
+	virtual void OnInitialUpdate();
+	afx_msg void OnBnClickedButton1();
+	afx_msg void OnBnClickedButton2();
 };
 
 

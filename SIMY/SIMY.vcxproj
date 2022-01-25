@@ -193,9 +193,7 @@
   <ItemGroup>
     <ClInclude Include="administrator.h" />
     <ClInclude Include="administrator_information_management.h" />
-    <ClInclude Include="CDispalyView.h" />
     <ClInclude Include="CLoginDlg.h" />
-    <ClInclude Include="CSelectView.h" />
     <ClInclude Include="DISPLAYVIEW_LEFT.h" />
     <ClInclude Include="DISPLAY_RIGHT.h" />
     <ClInclude Include="framework.h" />
@@ -215,9 +213,7 @@
   <ItemGroup>
     <ClCompile Include="administrator.cpp" />
     <ClCompile Include="administrator_information_management.cpp" />
-    <ClCompile Include="CDispalyView.cpp" />
     <ClCompile Include="CLoginDlg.cpp" />
-    <ClCompile Include="CSelectView.cpp" />
     <ClCompile Include="DISPLAYVIEW_LEFT.cpp" />
     <ClCompile Include="DISPLAY_RIGHT.cpp" />
     <ClCompile Include="pch.cpp">

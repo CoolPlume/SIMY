@@ -63,12 +63,6 @@
     <ClInclude Include="teacher_information_management.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="CDispalyView.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="CSelectView.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="DISPLAYVIEW_LEFT.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -114,12 +108,6 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="teacher_information_management.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="CDispalyView.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="CSelectView.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="DISPLAYVIEW_LEFT.cpp">

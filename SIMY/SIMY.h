@@ -38,7 +38,10 @@ public:
 	int nCheckId = 0;
 	virtual BOOL SaveAllModified();
 	CString szIniPath;
+	CSplitterWnd* child_window;
 
 };
 
 extern CSIMYApp theApp;
+constexpr UINT WM_MyMessage_A = WM_USER + 1001;
+constexpr UINT WM_MyMessage_INFORMATION = WM_USER + 1002;
