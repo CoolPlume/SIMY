@@ -318,9 +318,30 @@ void CSIMYDlg::OnClose()
 	// TODO: 在此添加消息处理程序代码和/或调用默认值
 	const auto app = dynamic_cast<CSIMYApp*>(AfxGetApp());
 
+	//重启
+	//MessageBox(TEXT("close"));
+	TCHAR szPath[MAX_PATH];  // 获取当前应用程序的全路径
+	GetModuleFileName(nullptr, szPath, MAX_PATH);
+	STARTUPINFO startupInfo;
+	PROCESS_INFORMATION procInfo;
+	memset(&startupInfo, 0x00, sizeof(STARTUPINFO));
+	startupInfo.cb = sizeof(STARTUPINFO);
+
 	delete app->AIM;
 	delete app->SIM;
 	delete app->TIM;
+
+	if (app->m_bRestart) // 新建进程
+	{
+		::WritePrivateProfileString(TEXT("system"), TEXT("restart"), TEXT("true"), app->szIniPath);
+		::CreateProcess(szPath, nullptr, nullptr, nullptr, FALSE, NORMAL_PRIORITY_CLASS, nullptr, nullptr, &startupInfo, &procInfo);
+	}
+	else
+	{
+		::WritePrivateProfileString(TEXT("system"), TEXT("restart"), TEXT("false"), app->szIniPath);
+	}
+
+
 
 	CDialogEx::OnClose();
 

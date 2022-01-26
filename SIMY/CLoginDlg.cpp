@@ -169,7 +169,7 @@ void CLoginDlg::OnBnClickedButton1()
 
 	if (login_flag == false)
 	{
-		::MessageBox(nullptr, TEXT("用户名或密码错误！"), TEXT("警告"), MB_ICONWARNING | MB_OK);
+		::MessageBox(nullptr, TEXT("用户名或密码错误！"), TEXT("警告"), MB_ICONWARNING | MB_OK);//|MB_SYSTEMMODAL);
 		return;
 	}
 	else

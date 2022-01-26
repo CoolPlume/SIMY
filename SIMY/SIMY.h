@@ -39,7 +39,7 @@ public:
 	virtual BOOL SaveAllModified();
 	CString szIniPath;
 	CSplitterWnd* child_window;
-
+	bool m_bRestart = false;
 };
 
 extern CSIMYApp theApp;

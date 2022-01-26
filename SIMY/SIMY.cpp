@@ -42,10 +42,6 @@ CSIMYApp theApp;
 
 BOOL CSIMYApp::InitInstance()
 {
-	SIM = new student_information_management;
-	AIM = new administrator_information_management;
-	TIM = new teacher_information_management;
-
 	//设置config路径
 	// 得到exe执行路径.  
 	TCHAR tcExePath[MAX_PATH] = { 0 };
@@ -65,6 +61,52 @@ BOOL CSIMYApp::InitInstance()
 	szIniPath = tcExePath;
 	szIniPath += "\\";
 	szIniPath += CONFIG_FILE;
+
+
+	//重启判断
+	TCHAR restart_flag[MAX_PATH] = { 0 };
+	::GetPrivateProfileStringW(TEXT("system"), TEXT("restart"), nullptr, restart_flag, MAX_PATH, szIniPath);
+
+	const int iLen = WideCharToMultiByte(CP_ACP, 0, restart_flag, -1, nullptr, 0, nullptr, nullptr);
+	const auto chRtn = new char[iLen * sizeof(char)];
+	WideCharToMultiByte(CP_ACP, 0, restart_flag, -1, chRtn, iLen, nullptr, nullptr);
+	const std::string str(chRtn);
+
+	if (str == "true")
+	{
+		
+	}
+	else 
+	{
+		//程序互斥判断
+		HANDLE m_hMutex = ::CreateMutex(nullptr, FALSE, _T("Program Mutual Exclusion"));
+		if (GetLastError() == ERROR_ALREADY_EXISTS)
+		{
+			::MessageBox(nullptr, TEXT("程序已经运行！"), TEXT("错误"), MB_ICONERROR | MB_OK);
+
+			HWND   oldHWnd = nullptr;
+			oldHWnd = ::FindWindow(nullptr, _T("用户登录")); //查找已经运行的程序
+			if (!oldHWnd)
+			{
+				oldHWnd = ::FindWindow(nullptr, _T("学生信息管理系统 - DEVELOPER开发版"));
+			}
+			if (oldHWnd)
+			{
+				::ShowWindow(oldHWnd, SW_SHOWNORMAL); //激活显示找到的已运行的程序
+				::SetForegroundWindow(oldHWnd);       //将已运行的程序设置为当前窗口
+			}
+			CloseHandle(m_hMutex);
+			m_hMutex = nullptr;
+
+			return FALSE;
+		}
+	}
+
+	//管理系统初始化
+	SIM = new student_information_management;
+	AIM = new administrator_information_management;
+	TIM = new teacher_information_management;
+
 
 	//登录窗口
 	CLoginDlg login_dlg;

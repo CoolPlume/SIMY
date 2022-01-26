@@ -36,6 +36,7 @@ void DISPLAY_RIGHT::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(DISPLAY_RIGHT, CFormView)
 	ON_BN_CLICKED(IDC_BUTTON1, &DISPLAY_RIGHT::OnBnClickedButton1)
 	ON_BN_CLICKED(IDC_BUTTON2, &DISPLAY_RIGHT::OnBnClickedButton2)
+	ON_BN_CLICKED(IDC_BUTTON3, &DISPLAY_RIGHT::OnBnClickedButton3)
 END_MESSAGE_MAP()
 
 
@@ -130,5 +131,15 @@ void DISPLAY_RIGHT::OnBnClickedButton2()
 	}
 	}
 	::MessageBox(nullptr, TEXT("密码修改成功！"), TEXT("提示"), MB_ICONINFORMATION | MB_OK);
+
+}
+
+
+void DISPLAY_RIGHT::OnBnClickedButton3()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	const auto app = dynamic_cast<CSIMYApp*>(AfxGetApp());
+	app->m_bRestart = true;
+	::PostMessage(AfxGetMainWnd()->GetSafeHwnd(), WM_CLOSE, 0, 0);
 
 }
