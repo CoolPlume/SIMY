@@ -196,19 +196,21 @@ LRESULT CSIMYDlg::OnMyMessage_INFORMATION(WPARAM wParam, LPARAM lParam)
 	//MessageBox(TEXT("123"));
 	const auto app = dynamic_cast<CSIMYApp*>(AfxGetApp());
 	const auto* pview_right = dynamic_cast<DISPLAY_RIGHT*>(app->child_window->GetPane(0, 1));
-	CString name, password;
+	CString name, password, nick_name;
 	switch (app->nCheckId)
 	{
 	case IDC_RADIO1:
 	{
 		name = app->AIM->return_currently_logged_in_administrator().return_username().c_str();
 		password = app->AIM->return_currently_logged_in_administrator().return_password().c_str();
+		nick_name = app->AIM->return_currently_logged_in_administrator().return_nick_name().c_str();
 		break;
 	}
 	case IDC_RADIO2:
 	{
 		name = app->TIM->return_currently_logged_in_teacher().return_username().c_str();
 		password = app->TIM->return_currently_logged_in_teacher().return_password().c_str();
+		nick_name = app->TIM->return_currently_logged_in_teacher().return_nick_name().c_str();
 
 		break;
 	}
@@ -216,6 +218,7 @@ LRESULT CSIMYDlg::OnMyMessage_INFORMATION(WPARAM wParam, LPARAM lParam)
 	{
 		name = app->SIM->return_currently_logged_in_student().return_username().c_str();
 		password = app->SIM->return_currently_logged_in_student().return_password().c_str();
+		nick_name = app->SIM->return_currently_logged_in_student().return_nick_name().c_str();
 
 		break;
 	}
@@ -226,6 +229,8 @@ LRESULT CSIMYDlg::OnMyMessage_INFORMATION(WPARAM wParam, LPARAM lParam)
 	}
 	::SetWindowTextW(pview_right->information_name, name);
 	::SetWindowTextW(pview_right->information_password, password);
+	::SetWindowTextW(pview_right->nick_name, nick_name);
+
 	return LRESULT();
 }
 

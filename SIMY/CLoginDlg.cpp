@@ -30,6 +30,7 @@ void CLoginDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_EDIT1, login_password);
 	DDX_Control(pDX, IDC_EDIT1, IDC_login_password);
 	DDX_Control(pDX, IDC_CHECK1, IDC_REMEMBER);
+	DDX_Control(pDX, IDC_CHECK2, auto_login);
 }
 
 
@@ -39,6 +40,9 @@ BEGIN_MESSAGE_MAP(CLoginDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON1, &CLoginDlg::OnBnClickedButton1)
 	ON_EN_SETFOCUS(IDC_EDIT2, &CLoginDlg::OnEnSetfocusEdit2)
 	ON_EN_SETFOCUS(IDC_EDIT1, &CLoginDlg::OnEnSetfocusEdit1)
+	ON_NOTIFY(BCN_HOTITEMCHANGE, IDC_CHECK2, &CLoginDlg::OnBnHotItemChangeCheck2)
+	ON_BN_CLICKED(IDC_CHECK2, &CLoginDlg::OnBnClickedCheck2)
+	ON_BN_CLICKED(IDC_CHECK1, &CLoginDlg::OnBnClickedCheck1)
 END_MESSAGE_MAP()
 
 
@@ -116,6 +120,24 @@ BOOL CLoginDlg::OnInitDialog()
 			IDC_REMEMBER.SetCheck(1);
 			UpdateData(false);
 		}
+
+
+		//判断是否自动登录
+			//得到config信息
+		TCHAR auto_login_flag[MAX_PATH] = { 0 };
+		::GetPrivateProfileStringW(TEXT("Login options"), TEXT("auto login"), nullptr, auto_login_flag, MAX_PATH, app->szIniPath);
+
+			//转换成string
+		const int iLen1 = WideCharToMultiByte(CP_ACP, 0, auto_login_flag, -1, nullptr, 0, nullptr, nullptr);
+		const auto chRtn1 = new char[iLen * sizeof(char)];
+		WideCharToMultiByte(CP_ACP, 0, auto_login_flag, -1, chRtn1, iLen1, nullptr, nullptr);
+		const std::string str1(chRtn1);
+		//判断
+		if (str1 == "true")
+		{
+			auto_login.SetCheck(true);
+			OnBnClickedButton1();
+		}
 	}
 
 	return TRUE;  // return TRUE unless you set the focus to a control
@@ -131,7 +153,7 @@ void CLoginDlg::OnBnClickedButton1()
 
 	if (login_username.IsEmpty() || login_password.IsEmpty() || login_username == TEXT("在此输入用户名") || login_password == TEXT("在此输入密码"))
 	{
-		::MessageBox(nullptr, TEXT("请输入用户名或密码"), TEXT("警告"), MB_ICONWARNING | MB_OK);
+		::MessageBox(nullptr, TEXT("请输入用户名或密码"), TEXT("警告"), MB_ICONWARNING | MB_OK | MB_TASKMODAL);
 		return;
 	}
 
@@ -143,7 +165,7 @@ void CLoginDlg::OnBnClickedButton1()
 	app->nCheckId = GetCheckedRadioButton(IDC_RADIO1, IDC_RADIO3);
 	if (app->nCheckId == 0)
 	{
-		::MessageBox(nullptr, TEXT("请选择身份"), TEXT("警告"), MB_ICONWARNING | MB_OK);
+		::MessageBox(nullptr, TEXT("请选择身份"), TEXT("警告"), MB_ICONWARNING | MB_OK | MB_TASKMODAL);
 		return;
 	}
 
@@ -169,17 +191,17 @@ void CLoginDlg::OnBnClickedButton1()
 
 	if (login_flag == false)
 	{
-		::MessageBox(nullptr, TEXT("用户名或密码错误！"), TEXT("警告"), MB_ICONWARNING | MB_OK);//|MB_SYSTEMMODAL);
+		::MessageBox(nullptr, TEXT("用户名或密码错误！"), TEXT("警告"), MB_ICONWARNING | MB_OK | MB_TASKMODAL);
 		return;
 	}
 	else
 	{
-		::MessageBox(nullptr, TEXT("登录成功！"), TEXT("提示"), MB_ICONINFORMATION | MB_OK);
+		::MessageBox(nullptr, TEXT("登录成功！"), TEXT("提示"), MB_ICONINFORMATION | MB_OK | MB_TASKMODAL);
 	}
 
 
 	//写入config
-	CString remember_flag_out, name_out, password_out, identity_out;
+	CString remember_flag_out, name_out, password_out, identity_out, auto_login_out;
 	switch (const UINT remember_flag = IDC_REMEMBER.GetCheck(); remember_flag)
 	{
 	case BST_CHECKED:
@@ -211,7 +233,7 @@ void CLoginDlg::OnBnClickedButton1()
 			break;
 		}
 		}
-		break;
+			break;
 	}
 	case BST_UNCHECKED:
 	{
@@ -224,7 +246,26 @@ void CLoginDlg::OnBnClickedButton1()
 	}
 	}
 
+	switch (const UINT auto_login_flag = auto_login.GetCheck(); auto_login_flag)
+	{
+	case BST_CHECKED:
+	{
+		auto_login_out = TEXT("true");
+		break;
+	}
+	case BST_UNCHECKED:
+	{
+		auto_login_out = TEXT("false");
+		break;
+	}
+	default:
+	{
+		break;
+	}
+	}
+
 	::WritePrivateProfileString(TEXT("Login options"), TEXT("remember password"), remember_flag_out,app->szIniPath);
+	::WritePrivateProfileString(TEXT("Login options"), TEXT("auto login"), auto_login_out, app->szIniPath);
 	if (!name_out.IsEmpty() && !password_out.IsEmpty() && !identity_out.IsEmpty())
 	{
 		::WritePrivateProfileString(TEXT("Login options"), TEXT("name"), name_out, app->szIniPath);
@@ -278,4 +319,43 @@ void CLoginDlg::OnCancel()
 
 	CDialogEx::OnCancel();
 	//exit(0);
+}
+
+
+void CLoginDlg::OnBnHotItemChangeCheck2(NMHDR* pNMHDR, LRESULT* pResult)
+{
+	// 此功能要求 Internet Explorer 6 或更高版本。
+	// 符号 _WIN32_IE 必须是 >= 0x0600。
+	LPNMBCHOTITEM pHotItem = reinterpret_cast<LPNMBCHOTITEM>(pNMHDR);
+	// TODO: 在此添加控件通知处理程序代码
+	*pResult = 0;
+}
+
+
+void CLoginDlg::OnBnClickedCheck2()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	//同步 记住密码 选项状态
+	if (const auto flag = auto_login.GetCheck(); flag == false)
+	{
+		
+	}
+	else
+	{
+		IDC_REMEMBER.SetCheck(true);
+	}
+
+}
+
+
+void CLoginDlg::OnBnClickedCheck1()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	if (const auto flag1 = IDC_REMEMBER.GetCheck(); static_cast<bool>(flag1) == false)
+	{
+		if (const auto flag2 = auto_login.GetCheck(); static_cast<bool>(flag2) == true)
+		{
+			auto_login.SetCheck(false);
+		}
+	}
 }

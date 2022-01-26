@@ -40,6 +40,10 @@ public:
 	afx_msg void OnBnClickedButton1();
 	afx_msg void OnBnClickedButton2();
 	afx_msg void OnBnClickedButton3();
+	CEdit nick_name;
+	CEdit nick_name_change_content;
+	CButton nick_name_change;
+	afx_msg void OnBnClickedButton4();
 };
 
 

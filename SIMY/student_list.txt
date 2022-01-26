@@ -1,1 +1,1 @@
-Username: 1 Password: 321 Gender: 0 Actual_name: zhang Nick_name: 1 END
+Username: 1 Password: 321 Gender: 0 Actual_name: zhang Nick_name: student END

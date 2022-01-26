@@ -38,4 +38,10 @@ private:
 	virtual void OnCancel();
 public:
 	CButton IDC_REMEMBER;
+private:
+	CButton auto_login;
+public:
+	afx_msg void OnBnHotItemChangeCheck2(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnBnClickedCheck2();
+	afx_msg void OnBnClickedCheck1();
 };
