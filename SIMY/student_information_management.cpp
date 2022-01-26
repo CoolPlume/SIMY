@@ -243,3 +243,8 @@ void student_information_management::add_student(const student& stu)
 	}
 	return stu;
 }
+
+std::list<student> student_information_management::return_student_list() const
+{
+	return student_list;
+}

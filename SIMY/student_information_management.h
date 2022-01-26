@@ -20,5 +20,6 @@ public:
 	[[nodiscard]] size_t return_student_list_size()const;
 	[[nodiscard]] student* revise_currently_logged_in_student()const;
 	[[nodiscard]] student* find_student(const std::string&)const;
+	[[nodiscard]] std::list<student> return_student_list()const;
 };
 
