@@ -69,6 +69,12 @@
     <ClInclude Include="DISPLAY_RIGHT.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="DISPLAY_WELCOME.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="DISPLAY_SCORE.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SIMY.cpp">
@@ -116,6 +122,12 @@
     <ClCompile Include="DISPLAY_RIGHT.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="DISPLAY_WELCOME.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="DISPLAY_SCORE.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="SIMY.rc">
@@ -139,6 +151,9 @@
       <Filter>资源文件</Filter>
     </Image>
     <Image Include="res\locate.ico">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\logo_bmp.bmp">
       <Filter>资源文件</Filter>
     </Image>
   </ItemGroup>

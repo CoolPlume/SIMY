@@ -273,7 +273,6 @@ void CLoginDlg::OnBnClickedButton1()
 		::WritePrivateProfileString(TEXT("Login options"), TEXT("identity"), identity_out, app->szIniPath);
 
 	}
-
 	EndDialog(0);
 }
 

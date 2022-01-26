@@ -11,7 +11,10 @@
 #define IDR_MAINFRAME                   130
 #define DIALOG_LOGIN                    131
 #define IDD_DISPLAY_RIGHT               135
+#define IDD_WELCOME                     136
+#define IDD_SCORE                       137
 #define IDI_LOCATE                      141
+#define IDB_logo                        149
 #define IDC_BUTTON1                     1000
 #define IDC_BUTTON2                     1001
 #define IDC_EDIT1                       1002
@@ -33,14 +36,16 @@
 #define IDC_TIME                        1014
 #define IDC_MFCEDITBROWSE1              1016
 #define IDC_BUTTON5                     1019
+#define IDC_LOGO_PICTURE                1020
+#define IDC_WEL_TEXT                    1021
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        145
+#define _APS_NEXT_RESOURCE_VALUE        150
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1020
+#define _APS_NEXT_CONTROL_VALUE         1022
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

@@ -37,6 +37,8 @@ protected:
 
 	afx_msg LRESULT OnMyMessage_A(WPARAM wParam, LPARAM lParam);
 	afx_msg LRESULT OnMyMessage_INFORMATION(WPARAM wParam, LPARAM lParam);
+	afx_msg LRESULT OnMyMessage_SCORE(WPARAM wParam, LPARAM lParam);
+	afx_msg LRESULT OnMyMessage_WELCOME(WPARAM wParam, LPARAM lParam);
 
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()

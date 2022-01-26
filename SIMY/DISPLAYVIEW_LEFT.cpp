@@ -114,10 +114,10 @@ void DISPLAYVIEW_LEFT::OnInitialUpdate()
 	m_imageList.Add(icon);
 	navigation.SetImageList(&m_imageList, TVSIL_NORMAL);
 
+	navigation.InsertItem(TEXT("首页"), 0, 0, nullptr);
 	navigation.InsertItem(TEXT("个人信息"), 0, 0, nullptr);
 	navigation.InsertItem(TEXT("成绩查询"), 0, 0, nullptr);
 	navigation.InsertItem(TEXT("关于"), 0, 0, nullptr);
-	navigation.InsertItem(TEXT("待定"), 0, 0, nullptr);
 	navigation.InsertItem(TEXT("待定"), 0, 0, nullptr);
 
 }
@@ -162,11 +162,16 @@ void DISPLAYVIEW_LEFT::OnTvnSelchangedTree1(NMHDR* pNMHDR, LRESULT* pResult)
 	}
 	else if (str == TEXT("成绩查询"))
 	{
-		
+		::PostMessage(AfxGetMainWnd()->GetSafeHwnd(), WM_MyMessage_SCORES, 0, 0);
+
 	}
 	else if (str == TEXT("关于"))
 	{
 		::PostMessage(AfxGetMainWnd()->GetSafeHwnd(), WM_MyMessage_A, 0, 0);
+	}
+	else if (str == TEXT("首页"))
+	{
+		::PostMessage(AfxGetMainWnd()->GetSafeHwnd(), WM_MyMessage_WELCOME, 0, 0);
 	}
 	else if (str == TEXT("待定"))
 	{

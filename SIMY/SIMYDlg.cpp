@@ -9,6 +9,8 @@
 #include "afxdialogex.h"
 #include "DISPLAYVIEW_LEFT.h"
 #include "DISPLAY_RIGHT.h"
+#include "DISPLAY_WELCOME.h"
+#include "DISPLAY_SCORE.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -74,6 +76,8 @@ BEGIN_MESSAGE_MAP(CSIMYDlg, CDialogEx)
 	//{{AFX_MSG_MAP(CChildView)
 	ON_MESSAGE(WM_MyMessage_A, &CSIMYDlg::OnMyMessage_A)
 	ON_MESSAGE(WM_MyMessage_INFORMATION, &CSIMYDlg::OnMyMessage_INFORMATION)
+	ON_MESSAGE(WM_MyMessage_WELCOME, &CSIMYDlg::OnMyMessage_WELCOME)
+	ON_MESSAGE(WM_MyMessage_SCORES, &CSIMYDlg::OnMyMessage_SCORE)
 
 	//}}AFX_MSG_MAP
 	ON_WM_CLOSE()
@@ -184,16 +188,31 @@ HCURSOR CSIMYDlg::OnQueryDragIcon()
 
 LRESULT CSIMYDlg::OnMyMessage_A(WPARAM wParam, LPARAM lParam)
 {
-	//MessageBox(TEXT("123"));
 	CAboutDlg dlg;
 	dlg.DoModal();
-	//return LRESULT();
+
 	return 0;
 }
 
 LRESULT CSIMYDlg::OnMyMessage_INFORMATION(WPARAM wParam, LPARAM lParam)
 {
 	//MessageBox(TEXT("123"));
+
+	CCreateContext ctx_information;
+	ctx_information.m_pNewViewClass = RUNTIME_CLASS(DISPLAY_RIGHT);
+	ctx_information.m_pCurrentDoc = nullptr;
+	ctx_information.m_pNewDocTemplate = nullptr;
+	ctx_information.m_pLastView = dynamic_cast<CFormView*>(m_cSplitter.GetPane(0, 1));
+	ctx_information.m_pCurrentFrame = reinterpret_cast<CFrameWnd*>(this);
+	m_cSplitter.DeleteView(0, 1);
+	m_cSplitter.CreateView(0, 1, RUNTIME_CLASS(DISPLAY_RIGHT), CSize(980, 640), &ctx_information);
+	const auto pNewView = dynamic_cast<DISPLAY_RIGHT*>(m_cSplitter.GetPane(0, 1));
+	m_cSplitter.RecalcLayout();
+	pNewView->OnInitialUpdate();
+	m_cSplitter.SetActivePane(0, 1);
+
+
+
 	const auto app = dynamic_cast<CSIMYApp*>(AfxGetApp());
 	const auto* pview_right = dynamic_cast<DISPLAY_RIGHT*>(app->child_window->GetPane(0, 1));
 	CString name, password, nick_name;
@@ -234,6 +253,43 @@ LRESULT CSIMYDlg::OnMyMessage_INFORMATION(WPARAM wParam, LPARAM lParam)
 	return LRESULT();
 }
 
+LRESULT CSIMYDlg::OnMyMessage_SCORE(WPARAM wParam, LPARAM lParam)
+{
+	CCreateContext ctx_score;
+	ctx_score.m_pNewViewClass = RUNTIME_CLASS(DISPLAY_SCORE);
+	ctx_score.m_pCurrentDoc = nullptr;
+	ctx_score.m_pNewDocTemplate = nullptr;
+	ctx_score.m_pLastView = dynamic_cast<CFormView*>(m_cSplitter.GetPane(0, 1));
+	ctx_score.m_pCurrentFrame = reinterpret_cast<CFrameWnd*>(this);
+	m_cSplitter.DeleteView(0, 1);
+	m_cSplitter.CreateView(0, 1, RUNTIME_CLASS(DISPLAY_SCORE), CSize(980, 640), &ctx_score);
+	const auto pNewView = dynamic_cast<DISPLAY_SCORE*>(m_cSplitter.GetPane(0, 1));
+	m_cSplitter.RecalcLayout();
+	pNewView->OnInitialUpdate();
+	m_cSplitter.SetActivePane(0, 1);
+
+
+	return LRESULT();
+}
+
+LRESULT CSIMYDlg::OnMyMessage_WELCOME(WPARAM wParam, LPARAM lParam)
+{
+	CCreateContext ctx_welcome;
+	ctx_welcome.m_pNewViewClass = RUNTIME_CLASS(DISPLAY_WELCOME);
+	ctx_welcome.m_pCurrentDoc = nullptr;
+	ctx_welcome.m_pNewDocTemplate = nullptr;
+	ctx_welcome.m_pLastView = dynamic_cast<CFormView*>(m_cSplitter.GetPane(0, 1));
+	ctx_welcome.m_pCurrentFrame = reinterpret_cast<CFrameWnd*>(this);
+	m_cSplitter.DeleteView(0, 1);
+	m_cSplitter.CreateView(0, 1, RUNTIME_CLASS(DISPLAY_WELCOME), CSize(980, 640), &ctx_welcome);
+	const auto pNewView = dynamic_cast<DISPLAY_WELCOME*>(m_cSplitter.GetPane(0, 1));
+	m_cSplitter.RecalcLayout();
+	pNewView->OnInitialUpdate();
+	m_cSplitter.SetActivePane(0, 1);
+
+	return LRESULT();
+}
+
 
 
 void CAboutDlg::OnOK()
@@ -261,7 +317,7 @@ int CSIMYDlg::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	ctx_left_view.m_pLastView = nullptr;
 	ctx_left_view.m_pCurrentFrame = nullptr;
 
-	ctx_right_view.m_pNewViewClass = RUNTIME_CLASS(DISPLAY_RIGHT);
+	ctx_right_view.m_pNewViewClass = RUNTIME_CLASS(DISPLAY_WELCOME);
 	ctx_right_view.m_pCurrentDoc = nullptr;
 	ctx_right_view.m_pNewDocTemplate = nullptr;
 	ctx_right_view.m_pLastView = nullptr;
@@ -285,15 +341,17 @@ int CSIMYDlg::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	// the parent
 	m_cSplitter.CreateStatic(m_pMyFrame, 1, 2);
 	m_cSplitter.CreateView(0, 0, RUNTIME_CLASS(DISPLAYVIEW_LEFT), CSize(300, 640), &ctx_left_view);
-	m_cSplitter.CreateView(0, 1, RUNTIME_CLASS(DISPLAY_RIGHT), CSize(980, 640), &ctx_right_view);
+	m_cSplitter.CreateView(0, 1, RUNTIME_CLASS(DISPLAY_WELCOME), CSize(980, 640), &ctx_right_view);
 
 	const auto app = dynamic_cast<CSIMYApp*>(AfxGetApp());
 	app->child_window = &m_cSplitter;
 
 	auto* pview1 = dynamic_cast<DISPLAYVIEW_LEFT*>(m_cSplitter.GetPane(0, 0));
 	pview1->OnInitialUpdate();
-	auto* pview2 = dynamic_cast<DISPLAY_RIGHT*>(m_cSplitter.GetPane(0, 1));
-	pview2->OnInitialUpdate();
+	//auto* pview2 = dynamic_cast<DISPLAY_WELCOME*>(m_cSplitter.GetPane(0, 1));
+	//pview2->OnInitialUpdate();
+
+	PostMessage(WM_MyMessage_WELCOME);
 
 	return 0;
 }
