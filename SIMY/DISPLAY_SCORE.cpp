@@ -57,10 +57,23 @@ void DISPLAY_SCORE::OnInitialUpdate()
 	// TODO: 在此添加专用代码和/或调用基类
 	score_list.SetExtendedStyle(LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES | LVS_EX_CHECKBOXES);
 
-	score_list.InsertColumn(0, _T("选择"), LVCFMT_CENTER, 45);
+	score_list.InsertColumn(0, _T(""), LVCFMT_CENTER, 23);
 	score_list.InsertColumn(1, _T("学号"), LVCFMT_CENTER, 150);
 	score_list.InsertColumn(2, _T("姓名"), LVCFMT_CENTER, 70);
 	score_list.InsertColumn(3, _T("性别"), LVCFMT_CENTER, 50);
+	score_list.InsertColumn(4, _T("语文"), LVCFMT_CENTER, 50);
+	score_list.InsertColumn(5, _T("数学"), LVCFMT_CENTER, 50);
+	score_list.InsertColumn(6, _T("外语"), LVCFMT_CENTER, 50);
+	score_list.InsertColumn(7, _T("政治"), LVCFMT_CENTER, 50);
+	score_list.InsertColumn(8, _T("历史"), LVCFMT_CENTER, 50);
+	score_list.InsertColumn(9, _T("地理"), LVCFMT_CENTER, 50);
+	score_list.InsertColumn(10, _T("物理"), LVCFMT_CENTER, 50);
+	score_list.InsertColumn(11, _T("化学"), LVCFMT_CENTER, 50);
+	score_list.InsertColumn(12, _T("生物"), LVCFMT_CENTER, 50);
+	score_list.InsertColumn(13, _T("信计"), LVCFMT_CENTER, 50);
+	score_list.InsertColumn(14, _T("通计"), LVCFMT_CENTER, 50);
+	score_list.InsertColumn(15, _T("总分"), LVCFMT_CENTER, 60);
+
 
 	const auto app = dynamic_cast<CSIMYApp*>(AfxGetApp());
 	const auto stu_list = app->SIM->return_student_list();

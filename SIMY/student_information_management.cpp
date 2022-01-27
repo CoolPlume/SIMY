@@ -1,5 +1,7 @@
 #include "pch.h"
 #include "student_information_management.h"
+#include <clocale>
+#include <locale>
 
 std::vector <std::string> student_storage_field_description =
 {
@@ -76,7 +78,11 @@ enum class login_decision_return_code_Type
 student_information_management::student_information_management()
 {
 	//创建学生列表本地文件
+	auto iii = setlocale(LC_ALL, "Chinese_China.936");
+	std::locale::global(std::locale("chs"));
+
 	std::ofstream create_local_file("student_list.txt", std::ios::app);
+
 	if (create_local_file.is_open())
 	{
 
@@ -159,6 +165,8 @@ student_information_management::student_information_management()
 student_information_management::~student_information_management()
 {
 	//将学生信息从内存写入本地文件
+	setlocale(LC_ALL, "Chinese_China.936");
+	std::locale::global(std::locale("chs"));
 	std::ofstream write_local_data("student_list.txt", std::ios::out | std::ios::trunc | std::ios::_Nocreate);
 	if (write_local_data.is_open())
 	{
