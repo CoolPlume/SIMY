@@ -5,6 +5,7 @@
 #include <map>
 #include <ios>
 #include <fstream>
+#include "person_remove_if.h"
 
 class user_information_management
 {

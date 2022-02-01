@@ -201,6 +201,7 @@
     <ClInclude Include="framework.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="person.h" />
+    <ClInclude Include="person_remove_if.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="SIMY.h" />
     <ClInclude Include="SIMYDlg.h" />
@@ -227,6 +228,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="person.cpp" />
+    <ClCompile Include="person_remove_if.cpp" />
     <ClCompile Include="SIMY.cpp" />
     <ClCompile Include="SIMYDlg.cpp" />
     <ClCompile Include="student.cpp" />

@@ -19,10 +19,13 @@
 #define IDC_BUTTON2                     1001
 #define IDC_EDIT1                       1002
 #define IDC_EDIT2                       1003
+#define IDC_BUTTON6                     1003
 #define IDC_RADIO1                      1004
 #define IDC_EDIT3                       1004
+#define IDC_BUTTON7                     1004
 #define IDC_RADIO2                      1005
 #define IDC_EDIT4                       1005
+#define IDC_BUTTON8                     1005
 #define IDC_RADIO3                      1006
 #define IDC_BUTTON3                     1006
 #define IDC_CHECK1                      1007

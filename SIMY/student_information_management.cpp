@@ -226,6 +226,13 @@ void student_information_management::add_student(const student& stu)
 	student_list.push_back(stu);
 }
 
+void student_information_management::delete_student(const std::string& username) const
+//删除学生
+{
+	student_list.remove_if(person_remove_if(username));
+
+}
+
 [[nodiscard]] size_t student_information_management::return_student_list_size() const
 	//返回学生总数
 {
@@ -256,3 +263,4 @@ std::list<student> student_information_management::return_student_list() const
 {
 	return student_list;
 }
+

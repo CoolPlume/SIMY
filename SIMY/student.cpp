@@ -15,3 +15,5 @@ student::student(const student& stu) :user(stu)
 {
 
 }
+
+

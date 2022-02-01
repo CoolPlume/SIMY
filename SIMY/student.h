@@ -11,6 +11,5 @@ public:
 	student();
 	virtual ~student();
 	student(const student&);
-
 };
 

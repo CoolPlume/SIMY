@@ -72,6 +72,7 @@ void DISPLAY_RIGHT::OnInitialUpdate()
 	auto* pWnd = dynamic_cast<CDialog*>(FromHandle(AfxGetMainWnd()->GetSafeHwnd()));
 	//MessageBox(TEXT("aaa"));
 	information_password.SetPasswordChar('*');
+	logout.SetFocus();
 }
 
 

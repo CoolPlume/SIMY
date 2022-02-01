@@ -30,6 +30,11 @@ protected:
 public:
 	virtual void OnInitialUpdate();
 	CListCtrl score_list;
+	CEdit find_content;
+	CButton btn_find;
+	afx_msg void OnEnSetfocusEdit1();
+	afx_msg void OnBnClickedButton1();
+	afx_msg void OnBnClickedButton6();
 };
 
 
