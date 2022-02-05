@@ -4,7 +4,8 @@
 #include "pch.h"
 #include "SIMY.h"
 #include "DISPLAY_SCORE.h"
-
+#include "DLG_ADD_STUDENT.h"
+#include "DLG_STUDENT_INFORMATION.h"
 
 // DISPLAY_SCORE
 
@@ -32,6 +33,8 @@ BEGIN_MESSAGE_MAP(DISPLAY_SCORE, CFormView)
 	ON_EN_SETFOCUS(IDC_EDIT1, &DISPLAY_SCORE::OnEnSetfocusEdit1)
 	ON_BN_CLICKED(IDC_BUTTON1, &DISPLAY_SCORE::OnBnClickedButton1)
 	ON_BN_CLICKED(IDC_BUTTON6, &DISPLAY_SCORE::OnBnClickedButton6)
+	ON_BN_CLICKED(IDC_BUTTON7, &DISPLAY_SCORE::OnBnClickedButton7)
+	ON_BN_CLICKED(IDC_BUTTON2, &DISPLAY_SCORE::OnBnClickedButton2)
 END_MESSAGE_MAP()
 
 
@@ -160,36 +163,79 @@ void DISPLAY_SCORE::OnBnClickedButton1()
 void DISPLAY_SCORE::OnBnClickedButton6()
 {
 	// TODO: 在此添加控件通知处理程序代码
-	switch (const auto select = ::MessageBox(nullptr, TEXT("删除后无法撤回，是否继续？"), TEXT("警告"), MB_ICONWARNING | MB_YESNOCANCEL | MB_TASKMODAL); select)
+	const auto app = dynamic_cast<CSIMYApp*>(AfxGetApp());
+	if (app->nCheckId == IDC_RADIO1)
 	{
-	case IDCANCEL:
-	{
-		__fallthrough;
-	}
-	case IDNO:
-	{
-		break;
-	}
-	case IDYES:
-	{
-		if (auto pos = score_list.GetFirstSelectedItemPosition(); pos == nullptr)
+		switch (const auto select = ::MessageBox(nullptr, TEXT("删除后无法撤回，是否继续？"), TEXT("警告"), MB_ICONWARNING | MB_YESNOCANCEL | MB_TASKMODAL); select)
 		{
-			::MessageBox(nullptr, TEXT("没有被选中的项！"), TEXT("警告"), MB_ICONWARNING | MB_OK | MB_TASKMODAL);
+		case IDCANCEL:
+		{
+			__fallthrough;
 		}
-		else
+		case IDNO:
 		{
-			while (pos)
+			return;
+		}
+		case IDYES:
+		{
+			if (auto pos = score_list.GetFirstSelectedItemPosition(); pos == nullptr)
 			{
-				const auto npos = score_list.GetNextSelectedItem(pos);
-				score_list.DeleteItem(npos);
-				pos = score_list.GetFirstSelectedItemPosition();
+				::MessageBox(nullptr, TEXT("没有被选中的项！"), TEXT("警告"), MB_ICONWARNING | MB_OK | MB_TASKMODAL);
 			}
+			else
+			{
+				while (pos)
+				{
+					const auto npos = score_list.GetNextSelectedItem(pos);
+					CString name = score_list.GetItemText(npos, 0);
+					app->SIM->delete_student(static_cast<std::string>(CW2A(name)));
+					score_list.DeleteItem(npos);
+					pos = score_list.GetFirstSelectedItemPosition();
+				}
+			}
+			break;
 		}
-		break;
+		default:
+		{
+			break;
+		}
+		}
 	}
-	default:
+	else
 	{
-		break;
+		::MessageBox(nullptr, TEXT("权限不足！"), TEXT("错误"), MB_ICONERROR | MB_OK | MB_TASKMODAL);
 	}
+}
+
+
+void DISPLAY_SCORE::OnBnClickedButton7()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	const auto app = dynamic_cast<CSIMYApp*>(AfxGetApp());
+	if (app->nCheckId == IDC_RADIO1)
+	{
+		DLG_ADD_STUDENT dlg;
+		dlg.DoModal();
 	}
+	else
+	{
+		::MessageBox(nullptr, TEXT("权限不足！"), TEXT("错误"), MB_ICONERROR | MB_OK | MB_TASKMODAL);
+	}
+}
+
+
+void DISPLAY_SCORE::OnBnClickedButton2()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	const auto app = dynamic_cast<CSIMYApp*>(AfxGetApp());
+	if (const auto pos = score_list.GetFirstSelectedItemPosition(); pos == nullptr)
+	{
+		::MessageBox(nullptr, TEXT("没有被选中的项！"), TEXT("警告"), MB_ICONWARNING | MB_OK | MB_TASKMODAL);
+	}
+	else
+	{
+		DLG_STUDENT_INFORMATION dlg;
+		dlg.DoModal();
+	}
+
 }

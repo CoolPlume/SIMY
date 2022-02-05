@@ -75,7 +75,10 @@
     <ClInclude Include="DISPLAY_SCORE.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="person_remove_if.h">
+    <ClInclude Include="DLG_ADD_STUDENT.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="DLG_STUDENT_INFORMATION.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
@@ -131,7 +134,10 @@
     <ClCompile Include="DISPLAY_SCORE.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="person_remove_if.cpp">
+    <ClCompile Include="DLG_ADD_STUDENT.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="DLG_STUDENT_INFORMATION.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

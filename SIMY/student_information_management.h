@@ -18,7 +18,7 @@ public:
 	bool login_decision(const std::string&, const std::string&);
 	[[nodiscard]] student return_currently_logged_in_student()const;
 	void add_student(const student&);
-	void delete_student(const std::string& username) const;
+	void delete_student(const std::string& username);
 	[[nodiscard]] size_t return_student_list_size()const;
 	[[nodiscard]] student* revise_currently_logged_in_student()const;
 	[[nodiscard]] student* find_student(const std::string&)const;

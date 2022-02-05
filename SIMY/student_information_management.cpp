@@ -226,11 +226,20 @@ void student_information_management::add_student(const student& stu)
 	student_list.push_back(stu);
 }
 
-void student_information_management::delete_student(const std::string& username) const
+void student_information_management::delete_student(const std::string& username) 
 //É¾³ıÑ§Éú
 {
-	student_list.remove_if(person_remove_if(username));
-
+	for (auto it = student_list.begin(); it != student_list.end();)
+	{
+		if (it->return_username() == username)
+		{
+			student_list.erase(it++);
+		}
+		else
+		{
+			++it;
+		}
+	}
 }
 
 [[nodiscard]] size_t student_information_management::return_student_list_size() const
