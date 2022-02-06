@@ -35,6 +35,9 @@ BEGIN_MESSAGE_MAP(DISPLAY_SCORE, CFormView)
 	ON_BN_CLICKED(IDC_BUTTON6, &DISPLAY_SCORE::OnBnClickedButton6)
 	ON_BN_CLICKED(IDC_BUTTON7, &DISPLAY_SCORE::OnBnClickedButton7)
 	ON_BN_CLICKED(IDC_BUTTON2, &DISPLAY_SCORE::OnBnClickedButton2)
+	ON_NOTIFY(NM_DBLCLK, IDC_LIST1, &DISPLAY_SCORE::OnNMDblclkList1)
+	ON_NOTIFY(HDN_ITEMCLICK, 0, &DISPLAY_SCORE::OnHdnItemclickList1)
+	ON_NOTIFY(LVN_COLUMNCLICK, IDC_LIST1, &DISPLAY_SCORE::OnLvnColumnclickList1)
 END_MESSAGE_MAP()
 
 
@@ -237,5 +240,99 @@ void DISPLAY_SCORE::OnBnClickedButton2()
 		DLG_STUDENT_INFORMATION dlg;
 		dlg.DoModal();
 	}
+
+}
+
+
+void DISPLAY_SCORE::OnNMDblclkList1(NMHDR* pNMHDR, LRESULT* pResult)
+{
+	auto pNMItemActivate = reinterpret_cast<LPNMITEMACTIVATE>(pNMHDR);
+	// TODO: 在此添加控件通知处理程序代码
+
+	OnBnClickedButton2();
+
+	*pResult = 0;
+}
+
+
+void DISPLAY_SCORE::OnHdnItemclickList1(NMHDR* pNMHDR, LRESULT* pResult)
+{
+	auto phdr = reinterpret_cast<LPNMHEADER>(pNMHDR);
+	// TODO: 在此添加控件通知处理程序代码
+	
+	*pResult = 0;
+}
+
+
+void DISPLAY_SCORE::OnLvnColumnclickList1(NMHDR* pNMHDR, LRESULT* pResult)
+{
+	const auto pNMLV = reinterpret_cast<LPNMLISTVIEW>(pNMHDR);
+	// TODO: 在此添加控件通知处理程序代码
+	sort_column = pNMLV->iSubItem;//点击的列
+
+	const int count = score_list.GetItemCount();
+	for (int i = 0; i < count; i++)
+		score_list.SetItemData(i, i);
+
+	DATA data{};
+	data.subitem = sort_column;
+	data.plist = &score_list;
+
+	sort_method = !sort_method;
+	score_list.SortItems(list_compere, reinterpret_cast<LPARAM>(&data));
+
+	*pResult = 0;
+}
+
+bool DISPLAY_SCORE::sort_method = true;
+int DISPLAY_SCORE::list_compere(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort)
+{
+	const DATA* pListCtrl = reinterpret_cast<DATA*>(lParamSort);
+	const int col = pListCtrl->subitem; //点击的列项传递给col，用来判断点击了第几列
+
+	//CString header[]={"姓名","年龄","编号"};  //假设现在的列头是这几项
+
+	//得到该列的前2项
+	const CString strItem1 = (pListCtrl->plist)->GetItemText(lParam1, col);
+	const CString strItem2 = (pListCtrl->plist)->GetItemText(lParam2, col);
+
+	if (col == 1 || col == 2)  // CString
+	{
+		const int tmp = strItem1.CompareNoCase(strItem2); //如果两个对象完全一致则返回0，如果小于lpsz，则返回-1。
+		if (sort_method) // true--升序
+		{
+			if (tmp <= 0)
+				return -1;
+			else
+				return 1;
+		}
+		else
+		{
+			if (tmp >= 0)
+				return -1;
+			else
+				return 1;
+		}
+	}
+	else if (col == 0)  // int 
+	{
+		const __int64 n1 = _atoi64(CW2A(strItem1));
+		const __int64 n2 = _atoi64(CW2A(strItem2));
+		if (sort_method)//
+		{
+			if (n1 <= n2)
+				return -1;
+			else
+				return 1;
+		}
+		else
+		{
+			if (n1 >= n2)
+				return -1;
+			else
+				return 1;
+		}
+	}
+	return -1;  // -1表示第一项在第二项前面，0表示两项相等
 
 }

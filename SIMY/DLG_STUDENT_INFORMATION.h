@@ -42,4 +42,11 @@ public:
 	CButton chemical;
 	CButton biology;
 	CButton technology;
+	afx_msg void OnBnClickedButton2();
+	afx_msg void OnBnClickedButton1();
+	student* now_stu;
+	afx_msg void OnBnClickedButton4();
+	afx_msg void OnBnClickedButton9();
+	afx_msg void OnBnClickedButton10();
+	afx_msg void OnBnClickedButton11();
 };

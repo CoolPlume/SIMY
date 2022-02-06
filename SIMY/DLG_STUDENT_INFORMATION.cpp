@@ -48,6 +48,12 @@ void DLG_STUDENT_INFORMATION::DoDataExchange(CDataExchange* pDX)
 
 
 BEGIN_MESSAGE_MAP(DLG_STUDENT_INFORMATION, CDialogEx)
+	ON_BN_CLICKED(IDC_BUTTON2, &DLG_STUDENT_INFORMATION::OnBnClickedButton2)
+	ON_BN_CLICKED(IDC_BUTTON1, &DLG_STUDENT_INFORMATION::OnBnClickedButton1)
+	ON_BN_CLICKED(IDC_BUTTON4, &DLG_STUDENT_INFORMATION::OnBnClickedButton4)
+	ON_BN_CLICKED(IDC_BUTTON9, &DLG_STUDENT_INFORMATION::OnBnClickedButton9)
+	ON_BN_CLICKED(IDC_BUTTON10, &DLG_STUDENT_INFORMATION::OnBnClickedButton10)
+	ON_BN_CLICKED(IDC_BUTTON11, &DLG_STUDENT_INFORMATION::OnBnClickedButton11)
 END_MESSAGE_MAP()
 
 
@@ -91,6 +97,7 @@ BOOL DLG_STUDENT_INFORMATION::OnInitDialog()
 	const auto npos = dlg->score_list.GetNextSelectedItem(pos);
 	const CString name = dlg->score_list.GetItemText(npos, 0);
 	const student stu = *(app->SIM->find_student(static_cast<std::string>(CW2A(name))));
+	now_stu = app->SIM->find_student(static_cast<std::string>(CW2A(name)));
 
 	//不能写在一起 会乱码
 	CString name_disp, password_disp, nick_name_disp, actual_name_disp;
@@ -108,4 +115,230 @@ BOOL DLG_STUDENT_INFORMATION::OnInitDialog()
 
 	return TRUE;  // return TRUE unless you set the focus to a control
 				  // 异常: OCX 属性页应返回 FALSE
+}
+
+
+void DLG_STUDENT_INFORMATION::OnBnClickedButton2()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	const auto app = dynamic_cast<CSIMYApp*>(AfxGetApp());
+
+	switch (const auto select = ::MessageBox(nullptr, TEXT("是否确定修改？"), TEXT("警告"), MB_ICONWARNING | MB_YESNOCANCEL | MB_TASKMODAL); select)
+	{
+	case IDCANCEL:
+	{
+		__fallthrough;
+	}
+	case IDNO:
+	{
+		return;
+	}
+	case IDYES:
+	{
+		CString name;
+		GetDlgItemTextW(IDC_EDIT1, name);
+		if (now_stu->return_username().c_str() == name)
+		{
+			::MessageBox(nullptr, TEXT("无效的修改！"), TEXT("警告"), MB_ICONWARNING | MB_OK | MB_TASKMODAL);
+			return;
+		}
+		now_stu->change_username(static_cast<std::string>(CW2A(name)));
+
+		const auto dlg = dynamic_cast<DISPLAY_SCORE*>(app->child_window->GetPane(0, 1));
+		auto pos = dlg->score_list.GetFirstSelectedItemPosition();
+		const auto npos = dlg->score_list.GetNextSelectedItem(pos);
+		dlg->score_list.SetItemText(npos, 0, name);
+
+		break;
+	}
+	default:
+	{
+		break;
+	}
+	}
+}
+
+
+void DLG_STUDENT_INFORMATION::OnBnClickedButton1()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	switch (const auto select = ::MessageBox(nullptr, TEXT("是否确定修改？"), TEXT("警告"), MB_ICONWARNING | MB_YESNOCANCEL | MB_TASKMODAL); select)
+	{
+	case IDCANCEL:
+	{
+		__fallthrough;
+	}
+	case IDNO:
+	{
+		return;
+	}
+	case IDYES:
+	{
+		CString password;
+		GetDlgItemTextW(IDC_EDIT2, password);
+		if (now_stu->return_password().c_str() == password)
+		{
+			::MessageBox(nullptr, TEXT("无效的修改！"), TEXT("警告"), MB_ICONWARNING | MB_OK | MB_TASKMODAL);
+			return;
+		}
+		now_stu->change_password(static_cast<std::string>(CW2A(password)));
+
+		break;
+	}
+	default:
+	{
+		break;
+	}
+	}
+}
+
+
+void DLG_STUDENT_INFORMATION::OnBnClickedButton4()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	switch (const auto select = ::MessageBox(nullptr, TEXT("是否确定修改？"), TEXT("警告"), MB_ICONWARNING | MB_YESNOCANCEL | MB_TASKMODAL); select)
+	{
+	case IDCANCEL:
+	{
+		__fallthrough;
+	}
+	case IDNO:
+	{
+		return;
+	}
+	case IDYES:
+	{
+		CString actual_name;
+		GetDlgItemTextW(IDC_EDIT3, actual_name);
+		if (now_stu->return_actual_name().c_str() == actual_name)
+		{
+			::MessageBox(nullptr, TEXT("无效的修改！"), TEXT("警告"), MB_ICONWARNING | MB_OK | MB_TASKMODAL);
+			return;
+		}
+		now_stu->change_actual_name(static_cast<std::string>(CW2A(actual_name)));
+
+		const auto app = dynamic_cast<CSIMYApp*>(AfxGetApp());
+		const auto dlg = dynamic_cast<DISPLAY_SCORE*>(app->child_window->GetPane(0, 1));
+		auto pos = dlg->score_list.GetFirstSelectedItemPosition();
+		const auto npos = dlg->score_list.GetNextSelectedItem(pos);
+		dlg->score_list.SetItemText(npos, 1, actual_name);
+
+		break;
+	}
+	default:
+	{
+		break;
+	}
+	}
+}
+
+
+void DLG_STUDENT_INFORMATION::OnBnClickedButton9()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	switch (const auto select = ::MessageBox(nullptr, TEXT("是否确定修改？"), TEXT("警告"), MB_ICONWARNING | MB_YESNOCANCEL | MB_TASKMODAL); select)
+	{
+	case IDCANCEL:
+	{
+		__fallthrough;
+	}
+	case IDNO:
+	{
+		return;
+	}
+	case IDYES:
+	{
+		CString nick_name;
+		GetDlgItemTextW(IDC_EDIT4, nick_name);
+		if (now_stu->return_nick_name().c_str() == nick_name)
+		{
+			::MessageBox(nullptr, TEXT("无效的修改！"), TEXT("警告"), MB_ICONWARNING | MB_OK | MB_TASKMODAL);
+			return;
+		}
+		now_stu->change_nick_name(static_cast<std::string>(CW2A(nick_name)));
+
+		break;
+	}
+	default:
+	{
+		break;
+	}
+	}
+}
+
+
+void DLG_STUDENT_INFORMATION::OnBnClickedButton10()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	switch (const auto select = ::MessageBox(nullptr, TEXT("是否确定修改？"), TEXT("警告"), MB_ICONWARNING | MB_YESNOCANCEL | MB_TASKMODAL); select)
+	{
+	case IDCANCEL:
+	{
+		__fallthrough;
+	}
+	case IDNO:
+	{
+		return;
+	}
+	case IDYES:
+	{
+		CString gender_string;
+		const auto combobox_index = gender.GetCurSel();
+		gender.GetLBText(combobox_index, gender_string);
+		int gender_number = 0;
+		if (gender_string == TEXT("男"))
+		{
+			gender_number = 1;
+		}
+		else if (gender_string == TEXT("女"))
+		{
+			gender_number = 0;
+		}
+
+		if (now_stu->return_gender() == gender_number)
+		{
+			::MessageBox(nullptr, TEXT("无效的修改！"), TEXT("警告"), MB_ICONWARNING | MB_OK | MB_TASKMODAL);
+			return;
+		}
+		now_stu->change_gender(gender_number);
+
+		const auto app = dynamic_cast<CSIMYApp*>(AfxGetApp());
+		const auto dlg = dynamic_cast<DISPLAY_SCORE*>(app->child_window->GetPane(0, 1));
+		auto pos = dlg->score_list.GetFirstSelectedItemPosition();
+		const auto npos = dlg->score_list.GetNextSelectedItem(pos);
+		dlg->score_list.SetItemText(npos, 2, gender_string);
+
+		break;
+	}
+	default:
+	{
+		break;
+	}
+	}
+}
+
+
+void DLG_STUDENT_INFORMATION::OnBnClickedButton11()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	switch (const auto select = ::MessageBox(nullptr, TEXT("是否确定修改？"), TEXT("警告"), MB_ICONWARNING | MB_YESNOCANCEL | MB_TASKMODAL); select)
+	{
+	case IDCANCEL:
+	{
+		__fallthrough;
+	}
+	case IDNO:
+	{
+		return;
+	}
+	case IDYES:
+	{
+		
+		break;
+	}
+	default:
+	{
+		break;
+	}
+	}
 }

@@ -8,11 +8,11 @@ Username: 7 Password: 123 Gender: 0 Actual_name: 吴九 Nick_name: student7 END
 Username: 8 Password: 123 Gender: 0 Actual_name: 郑十 Nick_name: student8 END
 Username: 9 Password: 123 Gender: 0 Actual_name: 张三 Nick_name: student9 END
 Username: 10 Password: 123 Gender: 1 Actual_name: 李四 Nick_name: student10 END
-Username: 11 Password: 123 Gender: 0 Actual_name: 王五 Nick_name: student11 END
+Username: 11 Password: 123 Gender: 1 Actual_name: 王五 Nick_name: student11 END
 Username: 12 Password: 123 Gender: 0 Actual_name: 赵六 Nick_name: student12 END
 Username: 13 Password: 123 Gender: 0 Actual_name: 孙七 Nick_name: student13 END
 Username: 14 Password: 123 Gender: 0 Actual_name: 周八 Nick_name: student14 END
-Username: 15 Password: 123 Gender: 0 Actual_name: 吴九 Nick_name: student15 END
+Username: 60 Password: 15 Gender: 0 Actual_name: 吴九 Nick_name: student15 END
 Username: 16 Password: 123 Gender: 0 Actual_name: 郑十 Nick_name: student16 END
 Username: 17 Password: 123 Gender: 0 Actual_name: 张三 Nick_name: student17 END
 Username: 18 Password: 123 Gender: 1 Actual_name: 李四 Nick_name: student18 END

@@ -37,6 +37,16 @@ public:
 	afx_msg void OnBnClickedButton6();
 	afx_msg void OnBnClickedButton7();
 	afx_msg void OnBnClickedButton2();
+	afx_msg void OnNMDblclkList1(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnHdnItemclickList1(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnLvnColumnclickList1(NMHDR* pNMHDR, LRESULT* pResult);
+	static bool sort_method;
+	static int CALLBACK list_compere(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort);
+	int sort_column{};
 };
 
-
+struct DATA
+{
+	int subitem;
+	CListCtrl* plist;
+};
