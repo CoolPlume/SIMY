@@ -138,6 +138,140 @@ student_information_management::student_information_management()
 					stu->change_nick_name(*judge);
 					break;
 				}
+				case static_cast<int>(student_storage_field_Type::Chinese):
+				{
+					read_local_date >> *judge;
+					const bool select_flag = std::stoi(*judge);
+					stu->CIM.change_the_selection_status(static_cast<int>(course_Type::chinese), select_flag);
+					read_local_date >> *judge;
+					const int course_score = std::stoi(*judge);
+					stu->CIM.change_course_results(static_cast<int>(course_Type::chinese), course_score);
+					break;
+				}
+				case static_cast<int>(student_storage_field_Type::Mathematics):
+				{
+					read_local_date >> *judge;
+					const bool select_flag = std::stoi(*judge);
+					stu->CIM.change_the_selection_status(static_cast<int>(course_Type::mathematics), select_flag);
+					read_local_date >> *judge;
+					const int course_score = std::stoi(*judge);
+					stu->CIM.change_course_results(static_cast<int>(course_Type::mathematics), course_score);
+					break;
+				}
+				case static_cast<int>(student_storage_field_Type::Foreign_language):
+				{
+					read_local_date >> *judge;
+					const bool select_flag = std::stoi(*judge);
+					stu->CIM.change_the_selection_status(static_cast<int>(course_Type::foreign_language), select_flag);
+					read_local_date >> *judge;
+					const int course_score = std::stoi(*judge);
+					stu->CIM.change_course_results(static_cast<int>(course_Type::foreign_language), course_score);
+					break;
+				}
+				case static_cast<int>(student_storage_field_Type::Politics):
+				{
+					read_local_date >> *judge;
+					const bool select_flag = std::stoi(*judge);
+					stu->CIM.change_the_selection_status(static_cast<int>(course_Type::politics), select_flag);
+					read_local_date >> *judge;
+					if (select_flag)
+					{
+						const int course_score = std::stoi(*judge);
+						stu->CIM.change_course_results(static_cast<int>(course_Type::politics), course_score);
+					}
+					break;
+				}
+				case static_cast<int>(student_storage_field_Type::History):
+				{
+					read_local_date >> *judge;
+					const bool select_flag = std::stoi(*judge);
+					stu->CIM.change_the_selection_status(static_cast<int>(course_Type::history), select_flag);
+					read_local_date >> *judge;
+					if (select_flag)
+					{
+						const int course_score = std::stoi(*judge);
+						stu->CIM.change_course_results(static_cast<int>(course_Type::history), course_score);
+					}
+					break;
+				}
+				case static_cast<int>(student_storage_field_Type::Geography):
+				{
+					read_local_date >> *judge;
+					const bool select_flag = std::stoi(*judge);
+					stu->CIM.change_the_selection_status(static_cast<int>(course_Type::geography), select_flag);
+					read_local_date >> *judge;
+					if (select_flag)
+					{
+						const int course_score = std::stoi(*judge);
+						stu->CIM.change_course_results(static_cast<int>(course_Type::geography), course_score);
+					}
+					break;
+				}
+				case static_cast<int>(student_storage_field_Type::Physics):
+				{
+					read_local_date >> *judge;
+					const bool select_flag = std::stoi(*judge);
+					stu->CIM.change_the_selection_status(static_cast<int>(course_Type::physics), select_flag);
+					read_local_date >> *judge;
+					if (select_flag)
+					{
+						const int course_score = std::stoi(*judge);
+						stu->CIM.change_course_results(static_cast<int>(course_Type::physics), course_score);
+					}
+					break;
+				}
+				case static_cast<int>(student_storage_field_Type::Chemical):
+				{
+					read_local_date >> *judge;
+					const bool select_flag = std::stoi(*judge);
+					stu->CIM.change_the_selection_status(static_cast<int>(course_Type::chemical), select_flag);
+					read_local_date >> *judge;
+					if (select_flag)
+					{
+						const int course_score = std::stoi(*judge);
+						stu->CIM.change_course_results(static_cast<int>(course_Type::chemical), course_score);
+					}
+					break;
+				}
+				case static_cast<int>(student_storage_field_Type::Biology):
+				{
+					read_local_date >> *judge;
+					const bool select_flag = std::stoi(*judge);
+					stu->CIM.change_the_selection_status(static_cast<int>(course_Type::biology), select_flag);
+					read_local_date >> *judge;
+					if (select_flag)
+					{
+						const int course_score = std::stoi(*judge);
+						stu->CIM.change_course_results(static_cast<int>(course_Type::biology), course_score);
+					}
+					break;
+				}
+				case static_cast<int>(student_storage_field_Type::Information_technology):
+				{
+					read_local_date >> *judge;
+					const bool select_flag = std::stoi(*judge);
+					stu->CIM.change_the_selection_status(static_cast<int>(course_Type::information_technology), select_flag);
+					read_local_date >> *judge;
+					if (select_flag)
+					{
+						const int course_score = std::stoi(*judge);
+						stu->CIM.change_course_results(static_cast<int>(course_Type::information_technology), course_score);
+					}
+					break;
+				}
+				case static_cast<int>(student_storage_field_Type::Common_technology):
+				{
+					read_local_date >> *judge;
+					const bool select_flag = std::stoi(*judge);
+					stu->CIM.change_the_selection_status(static_cast<int>(course_Type::common_technology), select_flag);
+					read_local_date >> *judge;
+					if (select_flag)
+					{
+						const int course_score = std::stoi(*judge);
+						stu->CIM.change_course_results(static_cast<int>(course_Type::common_technology), course_score);
+					}
+					break;
+				}
 				case static_cast<int>(student_storage_field_Type::END):
 				{
 					student_list.push_back(*stu);
@@ -159,7 +293,7 @@ student_information_management::student_information_management()
 	{
 		//initialization_failed(static_cast<int>(error_code_Type::Open_failed));
 	}
-	read_local_date.close();
+ 	read_local_date.close();
 }
 
 student_information_management::~student_information_management()
@@ -178,8 +312,20 @@ student_information_management::~student_information_management()
 				<< student_storage_field_description[static_cast<int>(student_storage_field_Type::Gender)] << student_storage_field_description[static_cast<int>(student_storage_field_Type::Space)] << stu->return_gender() << student_storage_field_description[static_cast<int>(student_storage_field_Type::Space)]
 				<< student_storage_field_description[static_cast<int>(student_storage_field_Type::Actual_name)] << student_storage_field_description[static_cast<int>(student_storage_field_Type::Space)] << stu->return_actual_name() << student_storage_field_description[static_cast<int>(student_storage_field_Type::Space)]
 				<< student_storage_field_description[static_cast<int>(student_storage_field_Type::Nick_name)] << student_storage_field_description[static_cast<int>(student_storage_field_Type::Space)] << stu->return_nick_name() << student_storage_field_description[static_cast<int>(student_storage_field_Type::Space)]
-			//	<< student_storage_field_description[static_cast<int>(student_storage_field_Type::Chinese)] << student_storage_field_description[static_cast<int>(student_storage_field_Type::Space)] << stu->return_course_information_management().return_the_selection_status(static_cast<int>(course_Type::chinese)) << student_storage_field_description[static_cast<int>(student_storage_field_Type::Space)] << stu->return_course_information_management().return_course_results(static_cast<int>(course_Type::chinese)) << student_storage_field_description[static_cast<int>(student_storage_field_Type::Space)]
-				<< student_storage_field_description[static_cast<int>(student_storage_field_Type::END)] << std::endl;
+				<< student_storage_field_description[static_cast<int>(student_storage_field_Type::Chinese)] << student_storage_field_description[static_cast<int>(student_storage_field_Type::Space)] << stu->CIM.return_the_selection_status(static_cast<int>(course_Type::chinese)) << student_storage_field_description[static_cast<int>(student_storage_field_Type::Space)] << stu->CIM.return_course_results(static_cast<int>(course_Type::chinese)) << student_storage_field_description[static_cast<int>(student_storage_field_Type::Space)]
+				<< student_storage_field_description[static_cast<int>(student_storage_field_Type::Mathematics)] << student_storage_field_description[static_cast<int>(student_storage_field_Type::Space)] << stu->CIM.return_the_selection_status(static_cast<int>(course_Type::mathematics)) << student_storage_field_description[static_cast<int>(student_storage_field_Type::Space)] << stu->CIM.return_course_results(static_cast<int>(course_Type::mathematics)) << student_storage_field_description[static_cast<int>(student_storage_field_Type::Space)]
+				<< student_storage_field_description[static_cast<int>(student_storage_field_Type::Foreign_language)] << student_storage_field_description[static_cast<int>(student_storage_field_Type::Space)] << stu->CIM.return_the_selection_status(static_cast<int>(course_Type::foreign_language)) << student_storage_field_description[static_cast<int>(student_storage_field_Type::Space)] << stu->CIM.return_course_results(static_cast<int>(course_Type::foreign_language)) << student_storage_field_description[static_cast<int>(student_storage_field_Type::Space)]
+				<< student_storage_field_description[static_cast<int>(student_storage_field_Type::Politics)] << student_storage_field_description[static_cast<int>(student_storage_field_Type::Space)] << stu->CIM.return_the_selection_status(static_cast<int>(course_Type::politics)) << student_storage_field_description[static_cast<int>(student_storage_field_Type::Space)] << stu->CIM.return_course_results(static_cast<int>(course_Type::politics)) << student_storage_field_description[static_cast<int>(student_storage_field_Type::Space)]
+				<< student_storage_field_description[static_cast<int>(student_storage_field_Type::History)] << student_storage_field_description[static_cast<int>(student_storage_field_Type::Space)] << stu->CIM.return_the_selection_status(static_cast<int>(course_Type::history)) << student_storage_field_description[static_cast<int>(student_storage_field_Type::Space)] << stu->CIM.return_course_results(static_cast<int>(course_Type::history)) << student_storage_field_description[static_cast<int>(student_storage_field_Type::Space)]
+				<< student_storage_field_description[static_cast<int>(student_storage_field_Type::Geography)] << student_storage_field_description[static_cast<int>(student_storage_field_Type::Space)] << stu->CIM.return_the_selection_status(static_cast<int>(course_Type::geography)) << student_storage_field_description[static_cast<int>(student_storage_field_Type::Space)] << stu->CIM.return_course_results(static_cast<int>(course_Type::geography)) << student_storage_field_description[static_cast<int>(student_storage_field_Type::Space)]
+				<< student_storage_field_description[static_cast<int>(student_storage_field_Type::Physics)] << student_storage_field_description[static_cast<int>(student_storage_field_Type::Space)] << stu->CIM.return_the_selection_status(static_cast<int>(course_Type::physics)) << student_storage_field_description[static_cast<int>(student_storage_field_Type::Space)] << stu->CIM.return_course_results(static_cast<int>(course_Type::physics)) << student_storage_field_description[static_cast<int>(student_storage_field_Type::Space)]
+				<< student_storage_field_description[static_cast<int>(student_storage_field_Type::Chemical)] << student_storage_field_description[static_cast<int>(student_storage_field_Type::Space)] << stu->CIM.return_the_selection_status(static_cast<int>(course_Type::chemical)) << student_storage_field_description[static_cast<int>(student_storage_field_Type::Space)] << stu->CIM.return_course_results(static_cast<int>(course_Type::chemical)) << student_storage_field_description[static_cast<int>(student_storage_field_Type::Space)]
+				<< student_storage_field_description[static_cast<int>(student_storage_field_Type::Biology)] << student_storage_field_description[static_cast<int>(student_storage_field_Type::Space)] << stu->CIM.return_the_selection_status(static_cast<int>(course_Type::biology)) << student_storage_field_description[static_cast<int>(student_storage_field_Type::Space)] << stu->CIM.return_course_results(static_cast<int>(course_Type::biology)) << student_storage_field_description[static_cast<int>(student_storage_field_Type::Space)]
+				<< student_storage_field_description[static_cast<int>(student_storage_field_Type::Information_technology)] << student_storage_field_description[static_cast<int>(student_storage_field_Type::Space)] << stu->CIM.return_the_selection_status(static_cast<int>(course_Type::information_technology)) << student_storage_field_description[static_cast<int>(student_storage_field_Type::Space)] << stu->CIM.return_course_results(static_cast<int>(course_Type::information_technology)) << student_storage_field_description[static_cast<int>(student_storage_field_Type::Space)]
+				<< student_storage_field_description[static_cast<int>(student_storage_field_Type::Common_technology)] << student_storage_field_description[static_cast<int>(student_storage_field_Type::Space)] << stu->CIM.return_the_selection_status(static_cast<int>(course_Type::common_technology)) << student_storage_field_description[static_cast<int>(student_storage_field_Type::Space)] << stu->CIM.return_course_results(static_cast<int>(course_Type::common_technology)) << student_storage_field_description[static_cast<int>(student_storage_field_Type::Space)]
+
+			<< student_storage_field_description[static_cast<int>(student_storage_field_Type::END)] << std::endl;
+
 			delete stu;
 		}
 	}

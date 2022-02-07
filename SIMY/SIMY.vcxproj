@@ -194,6 +194,8 @@
     <ClInclude Include="administrator.h" />
     <ClInclude Include="administrator_information_management.h" />
     <ClInclude Include="CLoginDlg.h" />
+    <ClInclude Include="course.h" />
+    <ClInclude Include="course_information_management.h" />
     <ClInclude Include="DISPLAYVIEW_LEFT.h" />
     <ClInclude Include="DISPLAY_RIGHT.h" />
     <ClInclude Include="DISPLAY_SCORE.h" />
@@ -218,6 +220,8 @@
     <ClCompile Include="administrator.cpp" />
     <ClCompile Include="administrator_information_management.cpp" />
     <ClCompile Include="CLoginDlg.cpp" />
+    <ClCompile Include="course.cpp" />
+    <ClCompile Include="course_information_management.cpp" />
     <ClCompile Include="DISPLAYVIEW_LEFT.cpp" />
     <ClCompile Include="DISPLAY_RIGHT.cpp" />
     <ClCompile Include="DISPLAY_SCORE.cpp" />

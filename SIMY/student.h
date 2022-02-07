@@ -11,5 +11,6 @@ public:
 	student();
 	virtual ~student();
 	student(const student&);
+	course_information_management CIM;
 };
 

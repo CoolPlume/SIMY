@@ -1,5 +1,7 @@
 #pragma once
 #include "person.h"
+#include "course_information_management.h"
+
 class user :
     public person
 {
@@ -8,7 +10,6 @@ private:
 	//timer date_of_birth;
 	std::string actual_name;
 	int gender;
-	//course_information_management* CIM;
 protected:
 
 public:

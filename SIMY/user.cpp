@@ -18,6 +18,7 @@ user::user(const user& user) :person(user)
 	//this->date_of_birth = user.date_of_birth;
 	this->gender = user.gender;
 	this->actual_name = user.actual_name;
+	//this->CIM = user.CIM;
 }
 
 void user::change_gender(int gender)

@@ -66,9 +66,8 @@ void DISPLAY_SCORE::OnInitialUpdate()
 	CFormView::OnInitialUpdate();
 
 	// TODO: 在此添加专用代码和/或调用基类
-	score_list.SetExtendedStyle(LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES); //| LVS_EX_CHECKBOXES);
+	score_list.SetExtendedStyle(LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES);
 
-	//score_list.InsertColumn(0, TEXT(""), LVCFMT_CENTER, 23);
 	score_list.InsertColumn(0, TEXT("学号"), LVCFMT_CENTER, 150);
 	score_list.InsertColumn(1, TEXT("姓名"), LVCFMT_CENTER, 70);
 	score_list.InsertColumn(2, TEXT("性别"), LVCFMT_CENTER, 50);
@@ -87,9 +86,9 @@ void DISPLAY_SCORE::OnInitialUpdate()
 
 
 	const auto app = dynamic_cast<CSIMYApp*>(AfxGetApp());
-	const auto stu_list = app->SIM->return_student_list();
+	auto stu_list = app->SIM->return_student_list();
 	int cnt = 0;
-	for (const auto& i : stu_list)
+	for (auto& i : stu_list)
 	{
 		score_list.InsertItem(cnt, TEXT("student"));
 		const auto member = static_cast<CString>(i.return_username().c_str());
@@ -107,6 +106,55 @@ void DISPLAY_SCORE::OnInitialUpdate()
 			gender = TEXT("女");
 		}
 		score_list.SetItemText(cnt, 2, gender);
+
+		const auto chinese_score= static_cast<CString>(std::to_string(i.CIM.return_course_results(static_cast<int>(course_Type::chinese))).c_str());
+		score_list.SetItemText(cnt, 3, chinese_score);
+		const auto mathematics_score = static_cast<CString>(std::to_string(i.CIM.return_course_results(static_cast<int>(course_Type::mathematics))).c_str());
+		score_list.SetItemText(cnt, 4, mathematics_score);
+		const auto foreign_language_score = static_cast<CString>(std::to_string(i.CIM.return_course_results(static_cast<int>(course_Type::foreign_language))).c_str());
+		score_list.SetItemText(cnt, 5, foreign_language_score);
+		if (i.CIM.return_the_selection_status(static_cast<int>(course_Type::politics)) == true)
+		{
+			const auto politics_score = static_cast<CString>(std::to_string(i.CIM.return_course_results(static_cast<int>(course_Type::politics))).c_str());
+			score_list.SetItemText(cnt, 6, politics_score);
+		}
+		if (i.CIM.return_the_selection_status(static_cast<int>(course_Type::history)) == true)
+		{
+			const auto history_score = static_cast<CString>(std::to_string(i.CIM.return_course_results(static_cast<int>(course_Type::history))).c_str());
+			score_list.SetItemText(cnt, 7, history_score);
+		}
+		if (i.CIM.return_the_selection_status(static_cast<int>(course_Type::geography)) == true)
+		{
+			const auto geography_score = static_cast<CString>(std::to_string(i.CIM.return_course_results(static_cast<int>(course_Type::geography))).c_str());
+			score_list.SetItemText(cnt, 8, geography_score);
+		}
+		if (i.CIM.return_the_selection_status(static_cast<int>(course_Type::physics)) == true)
+		{
+			const auto physics_score = static_cast<CString>(std::to_string(i.CIM.return_course_results(static_cast<int>(course_Type::physics))).c_str());
+			score_list.SetItemText(cnt, 9, physics_score);
+		}
+		if (i.CIM.return_the_selection_status(static_cast<int>(course_Type::chemical)) == true)
+		{
+			const auto chemical_score = static_cast<CString>(std::to_string(i.CIM.return_course_results(static_cast<int>(course_Type::chemical))).c_str());
+			score_list.SetItemText(cnt, 10, chemical_score);
+		}
+		if (i.CIM.return_the_selection_status(static_cast<int>(course_Type::biology)) == true)
+		{
+			const auto biology_score = static_cast<CString>(std::to_string(i.CIM.return_course_results(static_cast<int>(course_Type::biology))).c_str());
+			score_list.SetItemText(cnt, 11, biology_score);
+		}
+		if (i.CIM.return_the_selection_status(static_cast<int>(course_Type::information_technology)) == true)
+		{
+			const auto information_technology_score = static_cast<CString>(std::to_string(i.CIM.return_course_results(static_cast<int>(course_Type::information_technology))).c_str());
+			score_list.SetItemText(cnt, 12, information_technology_score);
+		}
+		if (i.CIM.return_the_selection_status(static_cast<int>(course_Type::common_technology)) == true)
+		{
+			const auto common_technology_score = static_cast<CString>(std::to_string(i.CIM.return_course_results(static_cast<int>(course_Type::common_technology))).c_str());
+			score_list.SetItemText(cnt, 13, common_technology_score);
+		}
+		auto total_score = static_cast<CString>(std::to_string(i.CIM.return_total_score()).c_str());
+		score_list.SetItemText(cnt, 14, total_score);
 
 		cnt++;
 	}
@@ -284,55 +332,71 @@ void DISPLAY_SCORE::OnLvnColumnclickList1(NMHDR* pNMHDR, LRESULT* pResult)
 	*pResult = 0;
 }
 
-bool DISPLAY_SCORE::sort_method = true;
+bool DISPLAY_SCORE::sort_method = false;
+
 int DISPLAY_SCORE::list_compere(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort)
 {
 	const DATA* pListCtrl = reinterpret_cast<DATA*>(lParamSort);
-	const int col = pListCtrl->subitem; //点击的列项传递给col，用来判断点击了第几列
+	const auto col = pListCtrl->subitem; //点击的列项传递给col，用来判断点击了第几列
 
 	//CString header[]={"姓名","年龄","编号"};  //假设现在的列头是这几项
 
 	//得到该列的前2项
-	const CString strItem1 = (pListCtrl->plist)->GetItemText(lParam1, col);
-	const CString strItem2 = (pListCtrl->plist)->GetItemText(lParam2, col);
+	const auto strItem1 = (pListCtrl->plist)->GetItemText(static_cast<int>(lParam1), col);
+	const auto strItem2 = (pListCtrl->plist)->GetItemText(static_cast<int>(lParam2), col);
 
 	if (col == 1 || col == 2)  // CString
 	{
-		const int tmp = strItem1.CompareNoCase(strItem2); //如果两个对象完全一致则返回0，如果小于lpsz，则返回-1。
+		const auto tmp = strItem1.CompareNoCase(strItem2); //如果两个对象完全一致则返回0，如果小于lpsz，则返回-1。
 		if (sort_method) // true--升序
 		{
 			if (tmp <= 0)
+			{
 				return -1;
+			}
 			else
+			{
 				return 1;
+			}
 		}
 		else
 		{
 			if (tmp >= 0)
+			{
 				return -1;
+			}
 			else
+			{
 				return 1;
+			}
 		}
 	}
-	else if (col == 0)  // int 
+	else if (col == 0 || (col >= 3 && col <= 14))  // int 
 	{
-		const __int64 n1 = _atoi64(CW2A(strItem1));
-		const __int64 n2 = _atoi64(CW2A(strItem2));
+		const auto n1 = _atoi64(CW2A(strItem1));
+		const auto n2 = _atoi64(CW2A(strItem2));
 		if (sort_method)//
 		{
 			if (n1 <= n2)
+			{
 				return -1;
+			}
 			else
+			{
 				return 1;
+			}
 		}
 		else
 		{
 			if (n1 >= n2)
+			{
 				return -1;
+			}
 			else
+			{
 				return 1;
+			}
 		}
 	}
 	return -1;  // -1表示第一项在第二项前面，0表示两项相等
-
 }
