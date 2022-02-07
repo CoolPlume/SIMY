@@ -317,7 +317,7 @@ void CLoginDlg::OnCancel()
 	//测试用后门 勿忘！！！！！！！！！！！
 
 	CDialogEx::OnCancel();
-	//exit(0);
+	exit(0);
 }
 
 

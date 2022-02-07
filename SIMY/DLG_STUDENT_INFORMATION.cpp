@@ -113,6 +113,35 @@ BOOL DLG_STUDENT_INFORMATION::OnInitDialog()
 	actual_name.SetWindowTextW(actual_name_disp);
 	gender.SetCurSel(gender_num);
 
+	if (now_stu->CIM.return_the_selection_status(static_cast<int>(course_Type::politics)) == true)
+	{
+		politics.SetCheck(true);
+	}
+	if (now_stu->CIM.return_the_selection_status(static_cast<int>(course_Type::history)) == true)
+	{
+		history.SetCheck(true);
+	}
+	if (now_stu->CIM.return_the_selection_status(static_cast<int>(course_Type::geography)) == true)
+	{
+		geography.SetCheck(true);
+	}
+	if (now_stu->CIM.return_the_selection_status(static_cast<int>(course_Type::physics)) == true)
+	{
+		physics.SetCheck(true);
+	}
+	if (now_stu->CIM.return_the_selection_status(static_cast<int>(course_Type::chemical)) == true)
+	{
+		chemical.SetCheck(true);
+	}
+	if (now_stu->CIM.return_the_selection_status(static_cast<int>(course_Type::biology)) == true)
+	{
+		biology.SetCheck(true);
+	}
+	if (now_stu->CIM.return_the_selection_status(static_cast<int>(course_Type::information_technology)) == true)
+	{
+		technology.SetCheck(true);
+	}
+
 	return TRUE;  // return TRUE unless you set the focus to a control
 				  // 异常: OCX 属性页应返回 FALSE
 }
@@ -333,7 +362,46 @@ void DLG_STUDENT_INFORMATION::OnBnClickedButton11()
 	}
 	case IDYES:
 	{
-		
+		const bool politics_flag = politics.GetCheck();
+		const bool history_flag = history.GetCheck();
+		const bool geography_flag = geography.GetCheck();
+		const bool physics_flag = physics.GetCheck();
+		const bool chemical_flag = chemical.GetCheck();
+		const bool biology_flag = biology.GetCheck();
+		const bool technology_flag = technology.GetCheck();
+
+		//统计科目数
+		int cnt = 0;
+		if (politics_flag)
+			cnt++;
+		if (history_flag)
+			cnt++;
+		if (geography_flag)
+			cnt++;
+		if (physics_flag)
+			cnt++;
+		if (chemical_flag)
+			cnt++;
+		if (biology_flag)
+			cnt++;
+		if (technology_flag)
+			cnt++;
+		if (cnt != 3)
+		{
+			::MessageBox(nullptr, TEXT("应当只选择三门课！"), TEXT("警告"), MB_ICONWARNING | MB_OK | MB_TASKMODAL);
+			return;
+		}
+
+		const auto app = dynamic_cast<CSIMYApp*>(AfxGetApp());
+		app->SIM->revise_currently_logged_in_student()->CIM.change_the_selection_status(static_cast<int>(course_Type::politics), politics_flag);
+		app->SIM->revise_currently_logged_in_student()->CIM.change_the_selection_status(static_cast<int>(course_Type::history), history_flag);
+		app->SIM->revise_currently_logged_in_student()->CIM.change_the_selection_status(static_cast<int>(course_Type::geography),geography_flag);
+		app->SIM->revise_currently_logged_in_student()->CIM.change_the_selection_status(static_cast<int>(course_Type::physics), physics_flag);
+		app->SIM->revise_currently_logged_in_student()->CIM.change_the_selection_status(static_cast<int>(course_Type::chemical), chemical_flag);
+		app->SIM->revise_currently_logged_in_student()->CIM.change_the_selection_status(static_cast<int>(course_Type::biology), biology_flag);
+		app->SIM->revise_currently_logged_in_student()->CIM.change_the_selection_status(static_cast<int>(course_Type::technology), technology_flag);
+
+
 		break;
 	}
 	default:

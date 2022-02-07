@@ -87,6 +87,9 @@
     <ClInclude Include="course_information_management.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="DLG_CHANGE_SCORE.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SIMY.cpp">
@@ -150,6 +153,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="course_information_management.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="DLG_CHANGE_SCORE.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

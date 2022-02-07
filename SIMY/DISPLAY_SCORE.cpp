@@ -6,6 +6,7 @@
 #include "DISPLAY_SCORE.h"
 #include "DLG_ADD_STUDENT.h"
 #include "DLG_STUDENT_INFORMATION.h"
+#include "DLG_CHANGE_SCORE.h"
 
 // DISPLAY_SCORE
 
@@ -38,6 +39,7 @@ BEGIN_MESSAGE_MAP(DISPLAY_SCORE, CFormView)
 	ON_NOTIFY(NM_DBLCLK, IDC_LIST1, &DISPLAY_SCORE::OnNMDblclkList1)
 	ON_NOTIFY(HDN_ITEMCLICK, 0, &DISPLAY_SCORE::OnHdnItemclickList1)
 	ON_NOTIFY(LVN_COLUMNCLICK, IDC_LIST1, &DISPLAY_SCORE::OnLvnColumnclickList1)
+	ON_BN_CLICKED(IDC_BUTTON8, &DISPLAY_SCORE::OnBnClickedButton8)
 END_MESSAGE_MAP()
 
 
@@ -399,4 +401,20 @@ int DISPLAY_SCORE::list_compere(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSor
 		}
 	}
 	return -1;  // -1表示第一项在第二项前面，0表示两项相等
+}
+
+
+void DISPLAY_SCORE::OnBnClickedButton8()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	const auto app = dynamic_cast<CSIMYApp*>(AfxGetApp());
+	if (const auto pos = score_list.GetFirstSelectedItemPosition(); pos == nullptr)
+	{
+		::MessageBox(nullptr, TEXT("没有被选中的项！"), TEXT("警告"), MB_ICONWARNING | MB_OK | MB_TASKMODAL);
+	}
+	else
+	{
+		DLG_CHANGE_SCORE dlg;
+		dlg.DoModal();
+	}
 }
