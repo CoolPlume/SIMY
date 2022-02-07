@@ -100,6 +100,13 @@ BOOL DLG_CHANGE_SCORE::OnInitDialog()
 	SetDlgItemText(IDC_CHOISE2, choise[1]);
 	SetDlgItemText(IDC_CHOISE3, choise[2]);
 
+	if (cnt != 3)
+	{
+		::MessageBox(nullptr, TEXT("非法选科"), TEXT("错误"), MB_ICONERROR | MB_OK | MB_TASKMODAL);
+		EndDialog(0);
+		return true;
+	}
+
 	chinese = now_stu->CIM.return_course_results(static_cast<int>(course_Type::chinese));
 	mathematics = now_stu->CIM.return_course_results(static_cast<int>(course_Type::mathematics));
 	foreign_language = now_stu->CIM.return_course_results(static_cast<int>(course_Type::foreign_language));
@@ -238,4 +245,151 @@ void DLG_CHANGE_SCORE::OnOK()
 void DLG_CHANGE_SCORE::OnBnClickedButton1()
 {
 	// TODO: 在此添加控件通知处理程序代码
+	UpdateData(true);
+
+	now_stu->CIM.change_course_results(static_cast<int>(course_Type::chinese), chinese);
+	const auto app = dynamic_cast<CSIMYApp*>(AfxGetApp());
+	const auto dlg = dynamic_cast<DISPLAY_SCORE*>(app->child_window->GetPane(0, 1));
+	auto pos = dlg->score_list.GetFirstSelectedItemPosition();
+	const auto npos = dlg->score_list.GetNextSelectedItem(pos);
+	dlg->score_list.SetItemText(npos, 3, static_cast<CString>(std::to_string(chinese).c_str()));
+	now_stu->CIM.change_course_results(static_cast<int>(course_Type::mathematics), mathematics);
+	dlg->score_list.SetItemText(npos, 4, static_cast<CString>(std::to_string(mathematics).c_str()));
+	now_stu->CIM.change_course_results(static_cast<int>(course_Type::mathematics), foreign_language);
+	dlg->score_list.SetItemText(npos, 5, static_cast<CString>(std::to_string(foreign_language).c_str()));
+	CString cho1, cho2, cho3, cho4;
+	GetDlgItemText(IDC_CHOISE1, cho1);
+	GetDlgItemText(IDC_CHOISE2, cho2);
+	GetDlgItemText(IDC_CHOISE3, cho3);
+	GetDlgItemText(IDC_CHOISE4, cho4);
+	if (cho1 == TEXT("政治："))
+	{
+		now_stu->CIM.change_course_results(static_cast<int>(course_Type::politics), choise1);
+		dlg->score_list.SetItemText(npos, 6, static_cast<CString>(std::to_string(choise1).c_str()));
+	}
+	else if (cho1 == TEXT("历史："))
+	{
+		now_stu->CIM.change_course_results(static_cast<int>(course_Type::history), choise1);
+		dlg->score_list.SetItemText(npos, 7, static_cast<CString>(std::to_string(choise1).c_str()));
+	}
+	else if (cho1 == TEXT("地理："))
+	{
+		now_stu->CIM.change_course_results(static_cast<int>(course_Type::geography), choise1);
+		dlg->score_list.SetItemText(npos, 8, static_cast<CString>(std::to_string(choise1).c_str()));
+	}
+	else if (cho1 == TEXT("物理："))
+	{
+		now_stu->CIM.change_course_results(static_cast<int>(course_Type::physics), choise1);
+		dlg->score_list.SetItemText(npos, 9, static_cast<CString>(std::to_string(choise1).c_str()));
+	}
+	else if (cho1 == TEXT("化学："))
+	{
+		now_stu->CIM.change_course_results(static_cast<int>(course_Type::chemical), choise1);
+		dlg->score_list.SetItemText(npos, 10, static_cast<CString>(std::to_string(choise1).c_str()));
+	}
+	else if (cho1 == TEXT("生物："))
+	{
+		now_stu->CIM.change_course_results(static_cast<int>(course_Type::biology), choise1);
+		dlg->score_list.SetItemText(npos, 11, static_cast<CString>(std::to_string(choise1).c_str()));
+	}
+	else if (cho1 == TEXT("信计："))
+	{
+		now_stu->CIM.change_course_results(static_cast<int>(course_Type::information_technology), choise1);
+		dlg->score_list.SetItemText(npos, 12, static_cast<CString>(std::to_string(choise1).c_str()));
+	}
+	else if (cho1 == TEXT("通计："))
+	{
+		now_stu->CIM.change_course_results(static_cast<int>(course_Type::common_technology), choise1);
+		dlg->score_list.SetItemText(npos, 13, static_cast<CString>(std::to_string(choise1).c_str()));
+	}
+
+	if (cho2 == TEXT("政治："))
+	{
+		now_stu->CIM.change_course_results(static_cast<int>(course_Type::politics), choise2);
+		dlg->score_list.SetItemText(npos, 6, static_cast<CString>(std::to_string(choise2).c_str()));
+	}
+	else if (cho2 == TEXT("历史："))
+	{
+		now_stu->CIM.change_course_results(static_cast<int>(course_Type::history), choise2);
+		dlg->score_list.SetItemText(npos, 7, static_cast<CString>(std::to_string(choise2).c_str()));
+	}
+	else if (cho2 == TEXT("地理："))
+	{
+		now_stu->CIM.change_course_results(static_cast<int>(course_Type::geography), choise2);
+		dlg->score_list.SetItemText(npos, 8, static_cast<CString>(std::to_string(choise2).c_str()));
+	}
+	else if (cho2 == TEXT("物理："))
+	{
+		now_stu->CIM.change_course_results(static_cast<int>(course_Type::physics), choise2);
+		dlg->score_list.SetItemText(npos, 9, static_cast<CString>(std::to_string(choise2).c_str()));
+	}
+	else if (cho2 == TEXT("化学："))
+	{
+		now_stu->CIM.change_course_results(static_cast<int>(course_Type::chemical), choise2);
+		dlg->score_list.SetItemText(npos, 10, static_cast<CString>(std::to_string(choise2).c_str()));
+	}
+	else if (cho2 == TEXT("生物："))
+	{
+		now_stu->CIM.change_course_results(static_cast<int>(course_Type::biology), choise2);
+		dlg->score_list.SetItemText(npos, 11, static_cast<CString>(std::to_string(choise2).c_str()));
+	}
+	else if (cho2 == TEXT("信计："))
+	{
+		now_stu->CIM.change_course_results(static_cast<int>(course_Type::information_technology), choise2);
+		dlg->score_list.SetItemText(npos, 12, static_cast<CString>(std::to_string(choise2).c_str()));
+	}
+	else if (cho2 == TEXT("通计："))
+	{
+		now_stu->CIM.change_course_results(static_cast<int>(course_Type::common_technology), choise2);
+		dlg->score_list.SetItemText(npos, 13, static_cast<CString>(std::to_string(choise2).c_str()));
+	}
+
+	if (cho3 == TEXT("政治："))
+	{
+		now_stu->CIM.change_course_results(static_cast<int>(course_Type::politics), choise3);
+		dlg->score_list.SetItemText(npos, 6, static_cast<CString>(std::to_string(choise3).c_str()));
+	}
+	else if (cho3 == TEXT("历史："))
+	{
+		now_stu->CIM.change_course_results(static_cast<int>(course_Type::history), choise3);
+		dlg->score_list.SetItemText(npos, 7, static_cast<CString>(std::to_string(choise3).c_str()));
+	}
+	else if (cho3 == TEXT("地理："))
+	{
+		now_stu->CIM.change_course_results(static_cast<int>(course_Type::geography), choise3);
+		dlg->score_list.SetItemText(npos, 8, static_cast<CString>(std::to_string(choise3).c_str()));
+	}
+	else if (cho3 == TEXT("物理："))
+	{
+		now_stu->CIM.change_course_results(static_cast<int>(course_Type::physics), choise3);
+		dlg->score_list.SetItemText(npos, 9, static_cast<CString>(std::to_string(choise3).c_str()));
+	}
+	else if (cho3 == TEXT("化学："))
+	{
+		now_stu->CIM.change_course_results(static_cast<int>(course_Type::chemical), choise3);
+		dlg->score_list.SetItemText(npos, 10, static_cast<CString>(std::to_string(choise3).c_str()));
+	}
+	else if (cho3 == TEXT("生物："))
+	{
+		now_stu->CIM.change_course_results(static_cast<int>(course_Type::biology), choise3);
+		dlg->score_list.SetItemText(npos, 11, static_cast<CString>(std::to_string(choise3).c_str()));
+	}
+	else if (cho3 == TEXT("信计："))
+	{
+		now_stu->CIM.change_course_results(static_cast<int>(course_Type::information_technology), choise3);
+		dlg->score_list.SetItemText(npos, 12, static_cast<CString>(std::to_string(choise3).c_str()));
+	}
+	else if (cho3 == TEXT("通计："))
+	{
+		now_stu->CIM.change_course_results(static_cast<int>(course_Type::common_technology), choise3);
+		dlg->score_list.SetItemText(npos, 13, static_cast<CString>(std::to_string(choise3).c_str()));
+	}
+
+	if (cho4 == TEXT("通计："))
+	{
+		now_stu->CIM.change_course_results(static_cast<int>(course_Type::common_technology), choise4);
+		dlg->score_list.SetItemText(npos, 13, static_cast<CString>(std::to_string(choise4).c_str()));
+	}
+
+	EndDialog(0);
 }

@@ -393,13 +393,13 @@ void DLG_STUDENT_INFORMATION::OnBnClickedButton11()
 		}
 
 		const auto app = dynamic_cast<CSIMYApp*>(AfxGetApp());
-		app->SIM->revise_currently_logged_in_student()->CIM.change_the_selection_status(static_cast<int>(course_Type::politics), politics_flag);
-		app->SIM->revise_currently_logged_in_student()->CIM.change_the_selection_status(static_cast<int>(course_Type::history), history_flag);
-		app->SIM->revise_currently_logged_in_student()->CIM.change_the_selection_status(static_cast<int>(course_Type::geography),geography_flag);
-		app->SIM->revise_currently_logged_in_student()->CIM.change_the_selection_status(static_cast<int>(course_Type::physics), physics_flag);
-		app->SIM->revise_currently_logged_in_student()->CIM.change_the_selection_status(static_cast<int>(course_Type::chemical), chemical_flag);
-		app->SIM->revise_currently_logged_in_student()->CIM.change_the_selection_status(static_cast<int>(course_Type::biology), biology_flag);
-		app->SIM->revise_currently_logged_in_student()->CIM.change_the_selection_status(static_cast<int>(course_Type::technology), technology_flag);
+		now_stu->CIM.change_the_selection_status(static_cast<int>(course_Type::politics), politics_flag);
+		now_stu->CIM.change_the_selection_status(static_cast<int>(course_Type::history), history_flag);
+		now_stu->CIM.change_the_selection_status(static_cast<int>(course_Type::geography),geography_flag);
+		now_stu->CIM.change_the_selection_status(static_cast<int>(course_Type::physics), physics_flag);
+		now_stu->CIM.change_the_selection_status(static_cast<int>(course_Type::chemical), chemical_flag);
+		now_stu->CIM.change_the_selection_status(static_cast<int>(course_Type::biology), biology_flag);
+		now_stu->CIM.change_the_selection_status(static_cast<int>(course_Type::technology), technology_flag);
 
 
 		break;
