@@ -40,6 +40,7 @@ BEGIN_MESSAGE_MAP(DISPLAY_SCORE, CFormView)
 	ON_NOTIFY(HDN_ITEMCLICK, 0, &DISPLAY_SCORE::OnHdnItemclickList1)
 	ON_NOTIFY(LVN_COLUMNCLICK, IDC_LIST1, &DISPLAY_SCORE::OnLvnColumnclickList1)
 	ON_BN_CLICKED(IDC_BUTTON8, &DISPLAY_SCORE::OnBnClickedButton8)
+	ON_BN_CLICKED(IDC_BUTTON12, &DISPLAY_SCORE::OnBnClickedButton12)
 END_MESSAGE_MAP()
 
 
@@ -417,4 +418,11 @@ void DISPLAY_SCORE::OnBnClickedButton8()
 		DLG_CHANGE_SCORE dlg;
 		dlg.DoModal();
 	}
+}
+
+
+void DISPLAY_SCORE::OnBnClickedButton12()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	::PostMessage(AfxGetMainWnd()->GetSafeHwnd(), WM_MyMessage_SCORES, 0, 0);
 }

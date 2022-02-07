@@ -44,6 +44,7 @@ public:
 	static int CALLBACK list_compere(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort);
 	int sort_column{};
 	afx_msg void OnBnClickedButton8();
+	afx_msg void OnBnClickedButton12();
 };
 
 struct DATA
