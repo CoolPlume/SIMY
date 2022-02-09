@@ -164,6 +164,7 @@ void DISPLAY_SCORE::OnInitialUpdate()
 
 	
 	find_content.SetWindowTextW(TEXT("在此输入学号"));
+
 }
 
 

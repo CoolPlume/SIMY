@@ -70,7 +70,6 @@ void DISPLAY_RIGHT::OnInitialUpdate()
 
 	// TODO: 在此添加专用代码和/或调用基类
 	auto* pWnd = dynamic_cast<CDialog*>(FromHandle(AfxGetMainWnd()->GetSafeHwnd()));
-	//MessageBox(TEXT("aaa"));
 	information_password.SetPasswordChar('*');
 	logout.SetFocus();
 }
@@ -108,6 +107,7 @@ void DISPLAY_RIGHT::OnBnClickedButton2()
 		return;
 	}
 	const auto app = dynamic_cast<CSIMYApp*>(AfxGetApp());
+	CString password_disp;
 	switch (app->nCheckId)
 	{
 	case IDC_RADIO1:
@@ -118,16 +118,19 @@ void DISPLAY_RIGHT::OnBnClickedButton2()
 			return;
 		}
 		app->AIM->revise_currently_logged_in_administrator()->change_password(static_cast<std::string>(CW2A(pwd)));
+		password_disp = app->AIM->return_currently_logged_in_administrator().return_password().c_str();
 		break;
 	}
 	case IDC_RADIO2:
 	{
 		app->TIM->revise_currently_logged_in_teacher()->change_password(static_cast<std::string>(CW2A(pwd)));
+		password_disp = app->TIM->return_currently_logged_in_teacher().return_password().c_str();
 		break;
 	}
 	case IDC_RADIO3:
 	{
 		app->SIM->revise_currently_logged_in_student()->change_password(static_cast<std::string>(CW2A(pwd)));
+		password_disp = app->SIM->return_currently_logged_in_student().return_password().c_str();
 		break;
 	}
 	default:
@@ -137,6 +140,8 @@ void DISPLAY_RIGHT::OnBnClickedButton2()
 	}
 	::MessageBox(nullptr, TEXT("密码修改成功！"), TEXT("提示"), MB_ICONINFORMATION | MB_OK | MB_TASKMODAL);
 
+
+	information_password.SetWindowTextW(password_disp);
 }
 
 

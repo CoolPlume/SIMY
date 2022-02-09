@@ -246,6 +246,30 @@ void DLG_CHANGE_SCORE::OnBnClickedButton1()
 {
 	// TODO: 在此添加控件通知处理程序代码
 	UpdateData(true);
+	if (chinese > main_subject_full_score ||
+		mathematics > main_subject_full_score ||
+		foreign_language > main_subject_full_score ||
+		choise1 > associate_subjects_full_score ||
+		choise2 > associate_subjects_full_score)
+	{
+		::MessageBox(nullptr, TEXT("非法成绩！"), TEXT("错误"), MB_ICONERROR | MB_OK | MB_TASKMODAL);
+		return;
+	}
+
+	CString cho1, cho2, cho3, cho4;
+	GetDlgItemText(IDC_CHOISE1, cho1);
+	GetDlgItemText(IDC_CHOISE2, cho2);
+	GetDlgItemText(IDC_CHOISE3, cho3);
+	GetDlgItemText(IDC_CHOISE4, cho4);
+
+	if (cho3 == TEXT("信计："))
+	{
+		if (choise3 > technical_subjects_full_score || choise4 > technical_subjects_full_score)
+		{
+			::MessageBox(nullptr, TEXT("非法成绩！"), TEXT("错误"), MB_ICONERROR | MB_OK | MB_TASKMODAL);
+			return;
+		}
+	}
 
 	now_stu->CIM.change_course_results(static_cast<int>(course_Type::chinese), chinese);
 	const auto app = dynamic_cast<CSIMYApp*>(AfxGetApp());
@@ -255,13 +279,9 @@ void DLG_CHANGE_SCORE::OnBnClickedButton1()
 	dlg->score_list.SetItemText(npos, 3, static_cast<CString>(std::to_string(chinese).c_str()));
 	now_stu->CIM.change_course_results(static_cast<int>(course_Type::mathematics), mathematics);
 	dlg->score_list.SetItemText(npos, 4, static_cast<CString>(std::to_string(mathematics).c_str()));
-	now_stu->CIM.change_course_results(static_cast<int>(course_Type::mathematics), foreign_language);
+	now_stu->CIM.change_course_results(static_cast<int>(course_Type::foreign_language), foreign_language);
 	dlg->score_list.SetItemText(npos, 5, static_cast<CString>(std::to_string(foreign_language).c_str()));
-	CString cho1, cho2, cho3, cho4;
-	GetDlgItemText(IDC_CHOISE1, cho1);
-	GetDlgItemText(IDC_CHOISE2, cho2);
-	GetDlgItemText(IDC_CHOISE3, cho3);
-	GetDlgItemText(IDC_CHOISE4, cho4);
+
 	if (cho1 == TEXT("政治："))
 	{
 		now_stu->CIM.change_course_results(static_cast<int>(course_Type::politics), choise1);
