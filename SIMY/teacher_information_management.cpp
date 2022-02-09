@@ -183,6 +183,22 @@ void teacher_information_management::add_teacher(const teacher& tea)
 	teacher_list.push_back(tea);
 }
 
+void teacher_information_management::delete_teacher(const std::string& username)
+	//删除教师
+{
+	for (auto it = teacher_list.begin(); it != teacher_list.end();)
+	{
+		if (it->return_username() == username)
+		{
+			teacher_list.erase(it++);
+		}
+		else
+		{
+			++it;
+		}
+	}
+}
+
 [[nodiscard]] size_t teacher_information_management::return_teacher_list_size() const
 	//返回教师总数
 {

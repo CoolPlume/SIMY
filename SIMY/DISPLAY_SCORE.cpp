@@ -335,7 +335,7 @@ void DISPLAY_SCORE::OnLvnColumnclickList1(NMHDR* pNMHDR, LRESULT* pResult)
 	*pResult = 0;
 }
 
-bool DISPLAY_SCORE::sort_method = false;
+bool DISPLAY_SCORE::sort_method = true;
 
 int DISPLAY_SCORE::list_compere(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort)
 {
