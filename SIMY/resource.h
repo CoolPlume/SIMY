@@ -21,6 +21,8 @@
 #define IDD_SCORE_STUDENT               156
 #define IDD_SELECTIVE_SUBJECTS          158
 #define IDD_STAFF                       159
+#define IDD_STAFF_INFORMATION           161
+#define IDD_ADD_STAFF                   163
 #define IDC_BUTTON1                     1000
 #define IDC_BUTTON2                     1001
 #define IDC_EDIT1                       1002
@@ -81,7 +83,7 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        161
+#define _APS_NEXT_RESOURCE_VALUE        165
 #define _APS_NEXT_COMMAND_VALUE         32771
 #define _APS_NEXT_CONTROL_VALUE         1029
 #define _APS_NEXT_SYMED_VALUE           101

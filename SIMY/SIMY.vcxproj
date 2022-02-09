@@ -202,9 +202,11 @@
     <ClInclude Include="DISPLAY_SCORE_STUDENT.h" />
     <ClInclude Include="DISPLAY_STAFF.h" />
     <ClInclude Include="DISPLAY_WELCOME.h" />
+    <ClInclude Include="DLG_ADD_STAFF.h" />
     <ClInclude Include="DLG_ADD_STUDENT.h" />
     <ClInclude Include="DLG_CHANGE_SCORE.h" />
     <ClInclude Include="DLG_SELECT_SUBJECT.h" />
+    <ClInclude Include="DLG_STAFF_INFORMATION.h" />
     <ClInclude Include="DLG_STUDENT_INFORMATION.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="pch.h" />
@@ -232,9 +234,11 @@
     <ClCompile Include="DISPLAY_SCORE_STUDENT.cpp" />
     <ClCompile Include="DISPLAY_STAFF.cpp" />
     <ClCompile Include="DISPLAY_WELCOME.cpp" />
+    <ClCompile Include="DLG_ADD_STAFF.cpp" />
     <ClCompile Include="DLG_ADD_STUDENT.cpp" />
     <ClCompile Include="DLG_CHANGE_SCORE.cpp" />
     <ClCompile Include="DLG_SELECT_SUBJECT.cpp" />
+    <ClCompile Include="DLG_STAFF_INFORMATION.cpp" />
     <ClCompile Include="DLG_STUDENT_INFORMATION.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

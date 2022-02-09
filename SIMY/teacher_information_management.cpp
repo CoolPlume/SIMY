@@ -215,3 +215,17 @@ std::list<teacher> teacher_information_management::return_teacher_list() const
 {
 	return teacher_list;
 }
+
+teacher* teacher_information_management::find_teacher(const std::string& username) const
+//根据用户名寻找教师，返回教师指针
+{
+	teacher* tea = nullptr;
+	for (const auto& i : teacher_list)
+	{
+		if (i.return_username() == username)
+		{
+			tea = const_cast<teacher*>(&i);
+		}
+	}
+	return tea;
+}

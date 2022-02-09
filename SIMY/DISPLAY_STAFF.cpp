@@ -4,6 +4,8 @@
 #include "pch.h"
 #include "SIMY.h"
 #include "DISPLAY_STAFF.h"
+#include "DLG_STAFF_INFORMATION.h"
+#include "DLG_ADD_STAFF.h"
 
 struct DATA
 {
@@ -38,6 +40,9 @@ BEGIN_MESSAGE_MAP(DISPLAY_STAFF, CFormView)
 	ON_NOTIFY(LVN_COLUMNCLICK, IDC_LIST2, &DISPLAY_STAFF::OnLvnColumnclickList2)
 	ON_BN_CLICKED(IDC_BUTTON12, &DISPLAY_STAFF::OnBnClickedButton12)
 	ON_BN_CLICKED(IDC_BUTTON6, &DISPLAY_STAFF::OnBnClickedButton6)
+	ON_BN_CLICKED(IDC_BUTTON2, &DISPLAY_STAFF::OnBnClickedButton2)
+	ON_NOTIFY(NM_DBLCLK, IDC_LIST2, &DISPLAY_STAFF::OnNMDblclkList2)
+	ON_BN_CLICKED(IDC_BUTTON7, &DISPLAY_STAFF::OnBnClickedButton7)
 END_MESSAGE_MAP()
 
 
@@ -289,4 +294,40 @@ void DISPLAY_STAFF::OnBnClickedButton6()
 	{
 		::MessageBox(nullptr, TEXT("权限不足！"), TEXT("错误"), MB_ICONERROR | MB_OK | MB_TASKMODAL);
 	}
+}
+
+
+void DISPLAY_STAFF::OnBnClickedButton2()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	const auto app = dynamic_cast<CSIMYApp*>(AfxGetApp());
+	if (const auto pos = staff_list.GetFirstSelectedItemPosition(); pos == nullptr)
+	{
+		::MessageBox(nullptr, TEXT("没有被选中的项！"), TEXT("警告"), MB_ICONWARNING | MB_OK | MB_TASKMODAL);
+	}
+	else
+	{
+		DLG_STAFF_INFORMATION dlg;
+		dlg.DoModal();
+	}
+
+}
+
+
+void DISPLAY_STAFF::OnNMDblclkList2(NMHDR* pNMHDR, LRESULT* pResult)
+{
+	LPNMITEMACTIVATE pNMItemActivate = reinterpret_cast<LPNMITEMACTIVATE>(pNMHDR);
+	// TODO: 在此添加控件通知处理程序代码
+
+	OnBnClickedButton2();
+
+	*pResult = 0;
+}
+
+
+void DISPLAY_STAFF::OnBnClickedButton7()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	DLG_ADD_STAFF dlg;
+	dlg.DoModal();
 }

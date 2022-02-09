@@ -99,6 +99,12 @@
     <ClInclude Include="DISPLAY_STAFF.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="DLG_STAFF_INFORMATION.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="DLG_ADD_STAFF.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SIMY.cpp">
@@ -174,6 +180,12 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="DISPLAY_STAFF.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="DLG_STAFF_INFORMATION.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="DLG_ADD_STAFF.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

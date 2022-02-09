@@ -9,7 +9,7 @@ Username: 8 Password: 123 Gender: 0 Actual_name: 范长江 Nick_name: teacher8 END
 Username: 9 Password: 123 Gender: 0 Actual_name: 林君雄 Nick_name: teacher9 END
 Username: 10 Password: 123 Gender: 1 Actual_name: 谭平山 Nick_name: teacher10 END
 Username: 11 Password: 123 Gender: 0 Actual_name: 朱希亮 Nick_name: teacher11 END
-Username: 12 Password: 123 Gender: 0 Actual_name: 李四光 Nick_name: teacher12 END
+Username: 12 Password: 123 Gender: 1 Actual_name: 李四光 Nick_name: teacher12 END
 Username: 13 Password: 123 Gender: 0 Actual_name: 甘铁生 Nick_name: teacher13 END
 Username: 14 Password: 123 Gender: 0 Actual_name: 张伍绍祖 Nick_name: teacher14 END
 Username: 15 Password: 123 Gender: 0 Actual_name: 马继祖 Nick_name: teacher15 END
