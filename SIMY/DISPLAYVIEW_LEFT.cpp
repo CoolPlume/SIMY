@@ -117,6 +117,10 @@ void DISPLAYVIEW_LEFT::OnInitialUpdate()
 	navigation.InsertItem(TEXT("首页"), 0, 0, nullptr);
 	navigation.InsertItem(TEXT("个人信息"), 0, 0, nullptr);
 	navigation.InsertItem(TEXT("成绩查询"), 0, 0, nullptr);
+	if (app->nCheckId == IDC_RADIO1)
+	{
+		navigation.InsertItem(TEXT("职工列表"), 0, 0, nullptr);
+	}
 	navigation.InsertItem(TEXT("关于"), 0, 0, nullptr);
 	navigation.InsertItem(TEXT("待定"), 0, 0, nullptr);
 
@@ -158,12 +162,18 @@ void DISPLAYVIEW_LEFT::OnTvnSelchangedTree1(NMHDR* pNMHDR, LRESULT* pResult)
 	if (str == TEXT("个人信息"))
 	{
 		::PostMessage(AfxGetMainWnd()->GetSafeHwnd(), WM_MyMessage_INFORMATION, 0, 0);
-		
+
 	}
 	else if (str == TEXT("成绩查询"))
 	{
-		::PostMessage(AfxGetMainWnd()->GetSafeHwnd(), WM_MyMessage_SCORES, 0, 0);
-
+		if (const auto app = dynamic_cast<CSIMYApp*>(AfxGetApp()); app->nCheckId == IDC_RADIO3)
+		{
+			::PostMessage(AfxGetMainWnd()->GetSafeHwnd(), WM_MyMessage_SCORE_STUDENT, 0, 0);
+		}
+		else
+		{
+			::PostMessage(AfxGetMainWnd()->GetSafeHwnd(), WM_MyMessage_SCORES, 0, 0);
+		}
 	}
 	else if (str == TEXT("关于"))
 	{
@@ -172,6 +182,10 @@ void DISPLAYVIEW_LEFT::OnTvnSelchangedTree1(NMHDR* pNMHDR, LRESULT* pResult)
 	else if (str == TEXT("首页"))
 	{
 		::PostMessage(AfxGetMainWnd()->GetSafeHwnd(), WM_MyMessage_WELCOME, 0, 0);
+	}
+	else if (str == TEXT("职工列表"))
+	{
+		::PostMessage(AfxGetMainWnd()->GetSafeHwnd(), WM_MyMessage_STAFF, 0, 0);
 	}
 	else if (str == TEXT("待定"))
 	{

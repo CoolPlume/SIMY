@@ -18,6 +18,9 @@
 #define IDD_ADD_STUDENT                 151
 #define IDD_STUDENT_INFORMATION         153
 #define IDD_CHANGE_SCORE                155
+#define IDD_SCORE_STUDENT               156
+#define IDD_SELECTIVE_SUBJECTS          158
+#define IDD_STAFF                       159
 #define IDC_BUTTON1                     1000
 #define IDC_BUTTON2                     1001
 #define IDC_EDIT1                       1002
@@ -41,11 +44,19 @@
 #define IDC_EDIT8                       1008
 #define IDC_CUTSOM_WINDOW               1009
 #define IDC_BUTTON10                    1009
+#define IDC_EDIT9                       1009
+#define IDC_CHECK10                     1009
 #define IDC_EDIT5                       1010
 #define IDC_BUTTON11                    1010
+#define IDC_CHECK11                     1010
 #define IDC_show_identity               1011
+#define IDC_EDIT10                      1011
+#define IDC_CHECK12                     1011
 #define IDC_show_name                   1012
+#define IDC_EDIT11                      1012
+#define IDC_CHECK13                     1012
 #define IDC_TREE1                       1013
+#define IDC_CHECK14                     1013
 #define IDC_TIME                        1014
 #define IDC_MFCEDITBROWSE1              1016
 #define IDC_BUTTON5                     1019
@@ -62,6 +73,7 @@
 #define IDC_CHOISE3                     1027
 #define IDC_CHECK7                      1028
 #define IDC_CHOISE4                     1028
+#define IDC_LIST2                       1028
 #define IDC_CHECK8                      1029
 #define IDC_CHECK9                      1030
 
@@ -69,9 +81,9 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        157
+#define _APS_NEXT_RESOURCE_VALUE        161
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1028
+#define _APS_NEXT_CONTROL_VALUE         1029
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

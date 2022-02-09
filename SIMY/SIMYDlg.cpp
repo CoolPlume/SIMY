@@ -11,6 +11,8 @@
 #include "DISPLAY_RIGHT.h"
 #include "DISPLAY_WELCOME.h"
 #include "DISPLAY_SCORE.h"
+#include "DISPLAY_SCORE_STUDENT.h"
+#include "DISPLAY_STAFF.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -78,6 +80,8 @@ BEGIN_MESSAGE_MAP(CSIMYDlg, CDialogEx)
 	ON_MESSAGE(WM_MyMessage_INFORMATION, &CSIMYDlg::OnMyMessage_INFORMATION)
 	ON_MESSAGE(WM_MyMessage_WELCOME, &CSIMYDlg::OnMyMessage_WELCOME)
 	ON_MESSAGE(WM_MyMessage_SCORES, &CSIMYDlg::OnMyMessage_SCORE)
+	ON_MESSAGE(WM_MyMessage_SCORE_STUDENT, &CSIMYDlg::OnMyMessage_SCORE_STUDENT)
+	ON_MESSAGE(WM_MyMessage_STAFF, &CSIMYDlg::OnMyMessage_STAFF)
 
 	//}}AFX_MSG_MAP
 	ON_WM_CLOSE()
@@ -283,6 +287,43 @@ LRESULT CSIMYDlg::OnMyMessage_WELCOME(WPARAM wParam, LPARAM lParam)
 	m_cSplitter.DeleteView(0, 1);
 	m_cSplitter.CreateView(0, 1, RUNTIME_CLASS(DISPLAY_WELCOME), CSize(980, 640), &ctx_welcome);
 	const auto pNewView = dynamic_cast<DISPLAY_WELCOME*>(m_cSplitter.GetPane(0, 1));
+	m_cSplitter.RecalcLayout();
+	pNewView->OnInitialUpdate();
+	m_cSplitter.SetActivePane(0, 1);
+
+	return LRESULT();
+}
+
+LRESULT CSIMYDlg::OnMyMessage_SCORE_STUDENT(WPARAM wParam, LPARAM lParam)
+{
+	CCreateContext ctx_score;
+	ctx_score.m_pNewViewClass = RUNTIME_CLASS(DISPLAY_SCORE_STUDENT);
+	ctx_score.m_pCurrentDoc = nullptr;
+	ctx_score.m_pNewDocTemplate = nullptr;
+	ctx_score.m_pLastView = dynamic_cast<CFormView*>(m_cSplitter.GetPane(0, 1));
+	ctx_score.m_pCurrentFrame = reinterpret_cast<CFrameWnd*>(this);
+	m_cSplitter.DeleteView(0, 1);
+	m_cSplitter.CreateView(0, 1, RUNTIME_CLASS(DISPLAY_SCORE_STUDENT), CSize(980, 640), &ctx_score);
+	const auto pNewView = dynamic_cast<DISPLAY_SCORE_STUDENT*>(m_cSplitter.GetPane(0, 1));
+	m_cSplitter.RecalcLayout();
+	pNewView->OnInitialUpdate();
+	m_cSplitter.SetActivePane(0, 1);
+
+
+	return LRESULT();
+}
+
+LRESULT CSIMYDlg::OnMyMessage_STAFF(WPARAM wParam, LPARAM lParam)
+{
+	CCreateContext ctx_welcome;
+	ctx_welcome.m_pNewViewClass = RUNTIME_CLASS(DISPLAY_STAFF);
+	ctx_welcome.m_pCurrentDoc = nullptr;
+	ctx_welcome.m_pNewDocTemplate = nullptr;
+	ctx_welcome.m_pLastView = dynamic_cast<CFormView*>(m_cSplitter.GetPane(0, 1));
+	ctx_welcome.m_pCurrentFrame = reinterpret_cast<CFrameWnd*>(this);
+	m_cSplitter.DeleteView(0, 1);
+	m_cSplitter.CreateView(0, 1, RUNTIME_CLASS(DISPLAY_STAFF), CSize(980, 640), &ctx_welcome);
+	const auto pNewView = dynamic_cast<DISPLAY_STAFF*>(m_cSplitter.GetPane(0, 1));
 	m_cSplitter.RecalcLayout();
 	pNewView->OnInitialUpdate();
 	m_cSplitter.SetActivePane(0, 1);

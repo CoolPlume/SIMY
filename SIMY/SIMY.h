@@ -47,3 +47,5 @@ constexpr UINT WM_MyMessage_A = WM_USER + 1001;
 constexpr UINT WM_MyMessage_INFORMATION = WM_USER + 1002;
 constexpr UINT WM_MyMessage_SCORES = WM_USER + 1003;
 constexpr UINT WM_MyMessage_WELCOME = WM_USER + 1004;
+constexpr UINT WM_MyMessage_SCORE_STUDENT = WM_USER + 1005;
+constexpr UINT WM_MyMessage_STAFF = WM_USER + 1006;

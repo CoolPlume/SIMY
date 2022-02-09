@@ -194,3 +194,8 @@ void teacher_information_management::add_teacher(const teacher& tea)
 {
 	return currently_logged_in_teacher;
 }
+
+std::list<teacher> teacher_information_management::return_teacher_list() const
+{
+	return teacher_list;
+}

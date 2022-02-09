@@ -18,5 +18,6 @@ public:
 	void add_teacher(const teacher&);
 	[[nodiscard]] size_t return_teacher_list_size()const;
 	[[nodiscard]] teacher* revise_currently_logged_in_teacher()const;
+	[[nodiscard]] std::list<teacher> return_teacher_list()const;
 };
 

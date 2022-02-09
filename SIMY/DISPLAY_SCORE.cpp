@@ -72,7 +72,7 @@ void DISPLAY_SCORE::OnInitialUpdate()
 	score_list.SetExtendedStyle(LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES);
 
 	score_list.InsertColumn(0, TEXT("学号"), LVCFMT_CENTER, 150);
-	score_list.InsertColumn(1, TEXT("姓名"), LVCFMT_CENTER, 70);
+	score_list.InsertColumn(1, TEXT("姓名"), LVCFMT_CENTER, 75);
 	score_list.InsertColumn(2, TEXT("性别"), LVCFMT_CENTER, 50);
 	score_list.InsertColumn(3, TEXT("语文"), LVCFMT_CENTER, 50);
 	score_list.InsertColumn(4, TEXT("数学"), LVCFMT_CENTER, 50);

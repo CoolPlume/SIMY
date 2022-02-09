@@ -90,6 +90,15 @@
     <ClInclude Include="DLG_CHANGE_SCORE.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="DISPLAY_SCORE_STUDENT.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="DLG_SELECT_SUBJECT.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="DISPLAY_STAFF.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SIMY.cpp">
@@ -156,6 +165,15 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="DLG_CHANGE_SCORE.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="DISPLAY_SCORE_STUDENT.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="DLG_SELECT_SUBJECT.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="DISPLAY_STAFF.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
