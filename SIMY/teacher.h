@@ -10,6 +10,6 @@ protected:
 public:
 	teacher();
 	virtual ~teacher();
-	teacher(const teacher&);
+	int teaching_subject;
 };
 

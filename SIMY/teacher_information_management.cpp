@@ -10,6 +10,7 @@ std::vector <std::string> teacher_storage_field_description =
 	"END",
 	"Actual_name:",
 	"Nick_name:",
+	"Teaching_subject",
 };
 
 enum class teacher_storage_field_Type
@@ -21,6 +22,7 @@ enum class teacher_storage_field_Type
 	END = 4,
 	Actual_name = 5,
 	Nick_name = 6,
+	Teaching_subject = 7,
 };
 
 std::map <std::string, int> teacher_storage_field_Map
@@ -32,6 +34,7 @@ std::map <std::string, int> teacher_storage_field_Map
 	{"END",4},
 	{"Actual_name:",5},
 	{"Nick_name:",6},
+	{"Teaching_subject",7},
 };
 
 enum class login_decision_return_code_Type
@@ -55,7 +58,7 @@ teacher_information_management::teacher_information_management()
 	create_local_file.flush();
 	create_local_file.close();
 
-	//从本地文件中读取学生信息至内存
+	//从本地文件中读取教师信息至内存
 	std::ifstream read_local_date("teacher_list.txt", std::ios::in | std::ios::_Nocreate);
 	if (read_local_date.is_open())
 	{
@@ -99,6 +102,12 @@ teacher_information_management::teacher_information_management()
 					tea->change_nick_name(*judge);
 					break;
 				}
+				case static_cast<int>(teacher_storage_field_Type::Teaching_subject):
+				{
+					read_local_date >> *judge;
+					tea->teaching_subject = std::stoi(*judge);
+					break;
+				}
 				case static_cast<int>(teacher_storage_field_Type::END):
 				{
 					teacher_list.push_back(*tea);
@@ -137,7 +146,8 @@ teacher_information_management::~teacher_information_management()
 				<< teacher_storage_field_description[static_cast<int>(teacher_storage_field_Type::Gender)] << teacher_storage_field_description[static_cast<int>(teacher_storage_field_Type::Space)] << tea->return_gender() << teacher_storage_field_description[static_cast<int>(teacher_storage_field_Type::Space)]
 				<< teacher_storage_field_description[static_cast<int>(teacher_storage_field_Type::Actual_name)] << teacher_storage_field_description[static_cast<int>(teacher_storage_field_Type::Space)] << tea->return_actual_name() << teacher_storage_field_description[static_cast<int>(teacher_storage_field_Type::Space)]
 				<< teacher_storage_field_description[static_cast<int>(teacher_storage_field_Type::Nick_name)] << teacher_storage_field_description[static_cast<int>(teacher_storage_field_Type::Space)] << tea->return_nick_name() << teacher_storage_field_description[static_cast<int>(teacher_storage_field_Type::Space)]
-				<< teacher_storage_field_description[static_cast<int>(teacher_storage_field_Type::END)] << std::endl;
+				<< teacher_storage_field_description[static_cast<int>(teacher_storage_field_Type::Teaching_subject)] << teacher_storage_field_description[static_cast<int>(teacher_storage_field_Type::Space)] << tea->teaching_subject << teacher_storage_field_description[static_cast<int>(teacher_storage_field_Type::Space)]
+			<< teacher_storage_field_description[static_cast<int>(teacher_storage_field_Type::END)] << std::endl;
 			delete tea;
 		}
 	}

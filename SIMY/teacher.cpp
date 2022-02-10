@@ -7,6 +7,4 @@ teacher::teacher()
 teacher::~teacher()
 = default;
 
-teacher::teacher(const teacher& tea) 
-=
-default;
+

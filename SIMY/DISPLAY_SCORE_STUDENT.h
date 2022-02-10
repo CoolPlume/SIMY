@@ -41,6 +41,20 @@ public:
 	int information_technology;
 	int common_technology;
 	afx_msg void OnBnClickedButton1();
+	CStatic row_text1;
+	CStatic row_text_2;
+	CFont row_font;
+	afx_msg void OnTimer(UINT_PTR nIDEvent);
+	std::array<std::string,12> row_text=
+	{
+		"书山有路勤为径","学海无涯苦作舟",
+		"路漫漫其修远兮","吾将上下而求索",
+		"让舞弊远离校园","让诚信常驻心中",
+		"以实力争取优异成绩","以诚信展现良好学风",
+		"黑发不知勤学早","白首方悔读书迟",
+		"纸上得来终觉浅","绝知此事要躬行",
+	};
+	int row_index = 0;
 };
 
 

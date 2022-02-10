@@ -31,6 +31,7 @@ void DLG_STAFF_INFORMATION::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_EDIT4, nick_name);
 	DDX_Control(pDX, IDC_EDIT3, actual_name);
 	DDX_Control(pDX, IDC_EDIT2, password);
+	DDX_Control(pDX, IDC_COMBO2, subject);
 }
 
 
@@ -40,6 +41,7 @@ BEGIN_MESSAGE_MAP(DLG_STAFF_INFORMATION, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON4, &DLG_STAFF_INFORMATION::OnBnClickedButton4)
 	ON_BN_CLICKED(IDC_BUTTON9, &DLG_STAFF_INFORMATION::OnBnClickedButton9)
 	ON_BN_CLICKED(IDC_BUTTON10, &DLG_STAFF_INFORMATION::OnBnClickedButton10)
+	ON_BN_CLICKED(IDC_BUTTON11, &DLG_STAFF_INFORMATION::OnBnClickedButton11)
 END_MESSAGE_MAP()
 
 
@@ -54,6 +56,20 @@ BOOL DLG_STAFF_INFORMATION::OnInitDialog()
 
 	gender.AddString(TEXT("女"));
 	gender.AddString(TEXT("男"));
+
+	subject.AddString(TEXT("语文"));
+	subject.AddString(TEXT("数学"));
+	subject.AddString(TEXT("外语"));
+	subject.AddString(TEXT("政治"));
+	subject.AddString(TEXT("历史"));
+	subject.AddString(TEXT("地理"));
+	subject.AddString(TEXT("物理"));
+	subject.AddString(TEXT("化学"));
+	subject.AddString(TEXT("生物"));
+	subject.AddString(TEXT("信息技术"));
+	subject.AddString(TEXT("通用技术"));
+
+
 	const auto app = dynamic_cast<CSIMYApp*>(AfxGetApp());
 	const auto dlg = dynamic_cast<DISPLAY_STAFF*>(app->child_window->GetPane(0, 1));
 	auto pos = dlg->staff_list.GetFirstSelectedItemPosition();
@@ -73,6 +89,9 @@ BOOL DLG_STAFF_INFORMATION::OnInitDialog()
 	nick_name.SetWindowTextW(nick_name_disp);
 	actual_name.SetWindowTextW(actual_name_disp);
 	gender.SetCurSel(gender_num);
+	subject.SetCurSel(tea->teaching_subject);
+
+
 
 	return TRUE;  // return TRUE unless you set the focus to a control
 				  // 异常: OCX 属性页应返回 FALSE
@@ -268,6 +287,93 @@ void DLG_STAFF_INFORMATION::OnBnClickedButton10()
 		auto pos = dlg->staff_list.GetFirstSelectedItemPosition();
 		const auto npos = dlg->staff_list.GetNextSelectedItem(pos);
 		dlg->staff_list.SetItemText(npos, 2, gender_string);
+
+		break;
+	}
+	default:
+	{
+		break;
+	}
+	}
+}
+
+
+void DLG_STAFF_INFORMATION::OnBnClickedButton11()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	switch (const auto select = ::MessageBox(nullptr, TEXT("是否确定修改？"), TEXT("警告"), MB_ICONWARNING | MB_YESNOCANCEL | MB_TASKMODAL); select)
+	{
+	case IDCANCEL:
+	{
+		__fallthrough;
+	}
+	case IDNO:
+	{
+		return;
+	}
+	case IDYES:
+	{
+		CString subject_string;
+		const auto combobox_index = subject.GetCurSel();
+		subject.GetLBText(combobox_index, subject_string);
+		int subject_number = 0;
+		if (subject_string == TEXT("语文"))
+		{
+			subject_number = 0;
+		}
+		else if (subject_string == TEXT("数学"))
+		{
+			subject_number = 1;
+		}
+		else if (subject_string == TEXT("外语"))
+		{
+			subject_number = 2;
+		}
+		else if (subject_string == TEXT("政治"))
+		{
+			subject_number = 3;
+		}
+		else if (subject_string == TEXT("历史"))
+		{
+			subject_number = 4;
+		}
+		else if (subject_string == TEXT("地理"))
+		{
+			subject_number = 5;
+		}
+		else if (subject_string == TEXT("物理"))
+		{
+			subject_number = 6;
+		}
+		else if (subject_string == TEXT("化学"))
+		{
+			subject_number = 7;
+		}
+		else if (subject_string == TEXT("生物"))
+		{
+			subject_number = 8;
+		}
+		else if (subject_string == TEXT("信息技术"))
+		{
+			subject_number = 9;
+		}
+		else if (subject_string == TEXT("通用技术"))
+		{
+			subject_number = 10;
+		}
+
+		if (tea->teaching_subject == subject_number)
+		{
+			::MessageBox(nullptr, TEXT("无效的修改！"), TEXT("警告"), MB_ICONWARNING | MB_OK | MB_TASKMODAL);
+			return;
+		}
+		tea->teaching_subject = subject_number;
+
+		const auto app = dynamic_cast<CSIMYApp*>(AfxGetApp());
+		const auto dlg = dynamic_cast<DISPLAY_STAFF*>(app->child_window->GetPane(0, 1));
+		auto pos = dlg->staff_list.GetFirstSelectedItemPosition();
+		const auto npos = dlg->staff_list.GetNextSelectedItem(pos);
+		dlg->staff_list.SetItemText(npos, 3, subject_string);
 
 		break;
 	}

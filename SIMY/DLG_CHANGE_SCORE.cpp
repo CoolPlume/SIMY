@@ -411,5 +411,7 @@ void DLG_CHANGE_SCORE::OnBnClickedButton1()
 		dlg->score_list.SetItemText(npos, 13, static_cast<CString>(std::to_string(choise4).c_str()));
 	}
 
+	dlg->score_list.SetItemText(npos, 14, static_cast<CString>(std::to_string(now_stu->CIM.return_total_score()).c_str()));
+
 	EndDialog(0);
 }

@@ -46,10 +46,13 @@ void DISPLAY_SCORE_STUDENT::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_EDIT9, biology);
 	DDX_Text(pDX, IDC_EDIT11, information_technology);
 	DDX_Text(pDX, IDC_EDIT10, common_technology);
+	DDX_Control(pDX, IDC_ROW_TEXT1, row_text1);
+	DDX_Control(pDX, IDC_ROW_TEXT2, row_text_2);
 }
 
 BEGIN_MESSAGE_MAP(DISPLAY_SCORE_STUDENT, CFormView)
 	ON_BN_CLICKED(IDC_BUTTON1, &DISPLAY_SCORE_STUDENT::OnBnClickedButton1)
+	ON_WM_TIMER()
 END_MESSAGE_MAP()
 
 
@@ -93,6 +96,11 @@ void DISPLAY_SCORE_STUDENT::OnInitialUpdate()
 	common_technology = now_stu.CIM.return_course_results(static_cast<int>(course_Type::common_technology));
 
 	UpdateData(false);
+
+	row_font.CreatePointFont(200, L"宋体", nullptr);
+	row_text1.SetFont(&row_font);
+	row_text_2.SetFont(&row_font);
+	SetTimer(1, 3000, nullptr);
 }
 
 
@@ -101,4 +109,19 @@ void DISPLAY_SCORE_STUDENT::OnBnClickedButton1()
 	// TODO: 在此添加控件通知处理程序代码
 	DLG_SELECT_SUBJECT dlg;
 	dlg.DoModal();
+}
+
+
+void DISPLAY_SCORE_STUDENT::OnTimer(UINT_PTR nIDEvent)
+{
+	// TODO: 在此添加消息处理程序代码和/或调用默认值
+
+	CFormView::OnTimer(nIDEvent);
+	if (row_index >= row_text.size())
+	{
+		row_index = 0;
+	}
+	SetDlgItemText(IDC_ROW_TEXT1, static_cast<CString>(row_text[row_index++].c_str()));
+	SetDlgItemText(IDC_ROW_TEXT2, static_cast<CString>(row_text[row_index++].c_str()));
+
 }

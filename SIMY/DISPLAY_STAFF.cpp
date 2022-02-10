@@ -76,6 +76,7 @@ void DISPLAY_STAFF::OnInitialUpdate()
 	staff_list.InsertColumn(0, TEXT("职工号"), LVCFMT_CENTER, 150);
 	staff_list.InsertColumn(1, TEXT("姓名"), LVCFMT_CENTER, 75);
 	staff_list.InsertColumn(2, TEXT("性别"), LVCFMT_CENTER, 50);
+	staff_list.InsertColumn(3, TEXT("任教科目"), LVCFMT_CENTER, 75);
 
 	const auto app = dynamic_cast<CSIMYApp*>(AfxGetApp());
 	auto tea_list = app->TIM->return_teacher_list();
@@ -98,6 +99,72 @@ void DISPLAY_STAFF::OnInitialUpdate()
 			gender = TEXT("女");
 		}
 		staff_list.SetItemText(cnt, 2, gender);
+
+		CString subject;
+		switch (i.teaching_subject)
+		{
+		case static_cast<int>(course_Type::chinese):
+		{
+			subject = TEXT("语文");
+			break;
+		}
+		case static_cast<int>(course_Type::mathematics):
+		{
+			subject = TEXT("数学");
+			break;
+		}
+		case static_cast<int>(course_Type::foreign_language):
+		{
+			subject = TEXT("外语");
+			break;
+		}
+		case static_cast<int>(course_Type::politics):
+		{
+			subject = TEXT("政治");
+			break;
+		}
+		case static_cast<int>(course_Type::history):
+		{
+			subject = TEXT("历史");
+			break;
+		}
+		case static_cast<int>(course_Type::geography):
+		{
+			subject = TEXT("地理");
+			break;
+		}
+		case static_cast<int>(course_Type::physics):
+		{
+			subject = TEXT("物理");
+			break;
+		}
+		case static_cast<int>(course_Type::chemical):
+		{
+			subject = TEXT("化学");
+			break;
+		}
+		case static_cast<int>(course_Type::biology):
+		{
+			subject = TEXT("生物");
+			break;
+		}
+		case static_cast<int>(course_Type::information_technology):
+		{
+			subject = TEXT("信息技术");
+			break;
+		}
+		case static_cast<int>(course_Type::common_technology):
+		{
+			subject = TEXT("通用技术");
+			break;
+		}
+		default:
+		{
+			subject = TEXT("illegal");
+			break;
+		}
+		}
+		staff_list.SetItemText(cnt, 3, subject);
 
 		cnt++;
 	}

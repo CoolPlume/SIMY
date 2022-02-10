@@ -34,4 +34,6 @@ public:
 	afx_msg void OnBnClickedButton4();
 	afx_msg void OnBnClickedButton9();
 	afx_msg void OnBnClickedButton10();
+	CComboBox subject;
+	afx_msg void OnBnClickedButton11();
 };
