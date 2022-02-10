@@ -78,6 +78,7 @@ void DISPLAY_RIGHT::OnInitialUpdate()
 void DISPLAY_RIGHT::OnBnClickedButton1()
 {
 	// TODO: 在此添加控件通知处理程序代码
+	//按钮：控制密码显隐性
 	CString caption;
 	information_password_hidden.GetWindowTextW(caption);
 	if (caption == TEXT("显示密码"))
@@ -99,19 +100,21 @@ void DISPLAY_RIGHT::OnBnClickedButton1()
 void DISPLAY_RIGHT::OnBnClickedButton2()
 {
 	// TODO: 在此添加控件通知处理程序代码
+	//按钮：修改密码
 	CString pwd;
 	GetDlgItemText(IDC_EDIT5, pwd);
-	if (pwd == CString(""))
+	if (pwd == CString(""))	//如果输入框为空
 	{
 		::MessageBox(nullptr, TEXT("请在上方的方框中输入修改后的密码"), TEXT("警告"), MB_ICONWARNING | MB_OK | MB_TASKMODAL);
 		return;
 	}
 	const auto app = dynamic_cast<CSIMYApp*>(AfxGetApp());
-	CString password_disp;
-	switch (app->nCheckId)
+	CString password_disp;	//用来显示的密码
+	switch (app->nCheckId)	//判断登录身份
 	{
 	case IDC_RADIO1:
 	{
+		//超级管理员不能修改自身密码
 		if (const std::string name = app->AIM->return_currently_logged_in_administrator().return_username(); name == "admin")
 		{
 			::MessageBox(nullptr, TEXT("超级管理员禁止修改自身密码！"), TEXT("错误"), MB_ICONERROR | MB_OK | MB_TASKMODAL);
@@ -141,13 +144,14 @@ void DISPLAY_RIGHT::OnBnClickedButton2()
 	::MessageBox(nullptr, TEXT("密码修改成功！"), TEXT("提示"), MB_ICONINFORMATION | MB_OK | MB_TASKMODAL);
 
 
-	information_password.SetWindowTextW(password_disp);
+	information_password.SetWindowTextW(password_disp);	//修改ui上显示的密码
 }
 
 
 void DISPLAY_RIGHT::OnBnClickedButton3()
 {
 	// TODO: 在此添加控件通知处理程序代码
+	//按钮：注销登录
 	const auto app = dynamic_cast<CSIMYApp*>(AfxGetApp());
 	app->m_bRestart = true;
 	::WritePrivateProfileString(TEXT("Login options"), TEXT("auto login"), TEXT("false"), app->szIniPath);
@@ -159,18 +163,20 @@ void DISPLAY_RIGHT::OnBnClickedButton3()
 void DISPLAY_RIGHT::OnBnClickedButton4()//UNDONE: 不接受空格
 {
 	// TODO: 在此添加控件通知处理程序代码
+	//按钮：修改昵称
 	CString nick_name;
 	GetDlgItemText(IDC_EDIT4, nick_name);
-	if (nick_name == CString(""))
+	if (nick_name == CString(""))	//如果文本框为空
 	{
 		::MessageBox(nullptr, TEXT("请在上方的方框中输入修改后的昵称"), TEXT("警告"), MB_ICONWARNING | MB_OK | MB_TASKMODAL);
 		return;
 	}
 	const auto app = dynamic_cast<CSIMYApp*>(AfxGetApp());
-	switch (app->nCheckId)
+	switch (app->nCheckId)	//根据登录身份选择修改函数
 	{
 	case IDC_RADIO1:
 	{
+		//超级管理员不允许修改自身昵称
 		if (const std::string name = app->AIM->return_currently_logged_in_administrator().return_username(); name == "admin")
 		{
 			::MessageBox(nullptr, TEXT("超级管理员禁止修改自身昵称！"), TEXT("错误"), MB_ICONERROR | MB_OK | MB_TASKMODAL);

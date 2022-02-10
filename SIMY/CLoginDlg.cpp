@@ -60,7 +60,7 @@ void CLoginDlg::OnClose()
 void CLoginDlg::OnBnClickedButton2()
 {
 	// TODO: 在此添加控件通知处理程序代码
-
+	//退出键关闭程序
 	exit(0);
 }
 
@@ -85,17 +85,17 @@ BOOL CLoginDlg::OnInitDialog()
 	else
 	{
 		//判断是否记住密码
-			//得到config信息
+		//得到config信息
 		TCHAR remember_password_flag[MAX_PATH] = { 0 };
 		::GetPrivateProfileStringW(TEXT("Login options"), TEXT("remember password"), nullptr, remember_password_flag, MAX_PATH, app->szIniPath);
 		//nValue = ::GetPrivateProfileInt(TEXT("Service"), TEXT("Description"), 0, szIniPath);
 
-			//转换成string
+		//转换成string
 		const int iLen = WideCharToMultiByte(CP_ACP, 0, remember_password_flag, -1, nullptr, 0, nullptr, nullptr);
 		const auto chRtn = new char[iLen * sizeof(char)];
 		WideCharToMultiByte(CP_ACP, 0, remember_password_flag, -1, chRtn, iLen, nullptr, nullptr);
 		const std::string str(chRtn);
-			//判断
+		//判断
 		if (str == "true")
 		{
 			//设置用户名
@@ -123,11 +123,11 @@ BOOL CLoginDlg::OnInitDialog()
 
 
 		//判断是否自动登录
-			//得到config信息
+		//得到config信息
 		TCHAR auto_login_flag[MAX_PATH] = { 0 };
 		::GetPrivateProfileStringW(TEXT("Login options"), TEXT("auto login"), nullptr, auto_login_flag, MAX_PATH, app->szIniPath);
 
-			//转换成string
+		//转换成string
 		const int iLen1 = WideCharToMultiByte(CP_ACP, 0, auto_login_flag, -1, nullptr, 0, nullptr, nullptr);
 		const auto chRtn1 = new char[iLen * sizeof(char)];
 		WideCharToMultiByte(CP_ACP, 0, auto_login_flag, -1, chRtn1, iLen1, nullptr, nullptr);
@@ -145,12 +145,13 @@ BOOL CLoginDlg::OnInitDialog()
 }
 
 
-void CLoginDlg::OnBnClickedButton1()
+void CLoginDlg::OnBnClickedButton1()	//登录按钮
 {
 	// TODO: 在此添加控件通知处理程序代码
 
 	UpdateData(true);
 
+	//判定输入框是否非空
 	if (login_username.IsEmpty() || login_password.IsEmpty() || login_username == TEXT("在此输入用户名") || login_password == TEXT("在此输入密码"))
 	{
 		::MessageBox(nullptr, TEXT("请输入用户名或密码"), TEXT("警告"), MB_ICONWARNING | MB_OK | MB_TASKMODAL);
@@ -159,9 +160,11 @@ void CLoginDlg::OnBnClickedButton1()
 
 	const auto app = dynamic_cast<CSIMYApp*>(AfxGetApp());
 
+	//将用户名密码由CString转为std::string
 	const auto username = static_cast<std::string>(ATL::CW2AEX(login_username.GetString()));
 	const auto password = static_cast<std::string>(ATL::CW2AEX(login_password.GetString()));
 
+	//判断勾选的身份是否非空
 	app->nCheckId = GetCheckedRadioButton(IDC_RADIO1, IDC_RADIO3);
 	if (app->nCheckId == 0)
 	{
@@ -170,6 +173,7 @@ void CLoginDlg::OnBnClickedButton1()
 	}
 
 	bool login_flag = false;
+	//根据勾选的身份调用对应登录函数，将结果存入login_flag
 	switch (app->nCheckId)
 	{
 	case IDC_RADIO1:
@@ -189,6 +193,7 @@ void CLoginDlg::OnBnClickedButton1()
 	}
 	}
 
+	//登录结果反馈
 	if (login_flag == false)
 	{
 		::MessageBox(nullptr, TEXT("用户名或密码错误！"), TEXT("警告"), MB_ICONWARNING | MB_OK | MB_TASKMODAL);
@@ -201,14 +206,14 @@ void CLoginDlg::OnBnClickedButton1()
 
 
 	//写入config
-	CString remember_flag_out, name_out, password_out, identity_out, auto_login_out;
+	CString remember_flag_out, name_out, password_out, identity_out, auto_login_out;	//存储用于输出的字符
 	switch (const UINT remember_flag = IDC_REMEMBER.GetCheck(); remember_flag)
 	{
-	case BST_CHECKED:
+	case BST_CHECKED:	//如果勾选了记住密码
 	{
 		remember_flag_out = TEXT("true");
 		identity_out = std::to_string(app->nCheckId).c_str();
-		switch (app->nCheckId)
+		switch (app->nCheckId)	//调用对应函数取得用户名及密码
 		{
 		case IDC_RADIO1:
 		{
@@ -235,7 +240,7 @@ void CLoginDlg::OnBnClickedButton1()
 		}
 			break;
 	}
-	case BST_UNCHECKED:
+	case BST_UNCHECKED:	//未勾选记住密码
 	{
 		remember_flag_out = TEXT("false");
 		break;
@@ -248,12 +253,12 @@ void CLoginDlg::OnBnClickedButton1()
 
 	switch (const UINT auto_login_flag = auto_login.GetCheck(); auto_login_flag)
 	{
-	case BST_CHECKED:
+	case BST_CHECKED:	//勾选自动登录
 	{
 		auto_login_out = TEXT("true");
 		break;
 	}
-	case BST_UNCHECKED:
+	case BST_UNCHECKED:	//未勾选自动登录
 	{
 		auto_login_out = TEXT("false");
 		break;
@@ -264,6 +269,7 @@ void CLoginDlg::OnBnClickedButton1()
 	}
 	}
 
+	//数据写入
 	::WritePrivateProfileString(TEXT("Login options"), TEXT("remember password"), remember_flag_out,app->szIniPath);
 	::WritePrivateProfileString(TEXT("Login options"), TEXT("auto login"), auto_login_out, app->szIniPath);
 	if (!name_out.IsEmpty() && !password_out.IsEmpty() && !identity_out.IsEmpty())
@@ -280,6 +286,7 @@ void CLoginDlg::OnBnClickedButton1()
 void CLoginDlg::OnEnSetfocusEdit2()
 {
 	// TODO: 在此添加控件通知处理程序代码
+	//用于在编辑框获得焦点时清空原有提示
 	UpdateData(true);
 	if (login_username == TEXT("在此输入用户名"))
 	{
@@ -292,6 +299,7 @@ void CLoginDlg::OnEnSetfocusEdit2()
 void CLoginDlg::OnEnSetfocusEdit1()
 {
 	// TODO: 在此添加控件通知处理程序代码
+	//用于在编辑框获得焦点时清空原有提示，并将编辑框设为密码模式
 	IDC_login_password.SetPasswordChar('*');
 	UpdateData(true);
 	if (login_password == TEXT("在此输入密码"))
@@ -334,7 +342,7 @@ void CLoginDlg::OnBnHotItemChangeCheck2(NMHDR* pNMHDR, LRESULT* pResult)
 void CLoginDlg::OnBnClickedCheck2()
 {
 	// TODO: 在此添加控件通知处理程序代码
-	//同步 记住密码 选项状态
+	//勾选自动登录 将自动勾选记住密码
 	if (const auto flag = auto_login.GetCheck(); flag == false)
 	{
 		
@@ -350,6 +358,7 @@ void CLoginDlg::OnBnClickedCheck2()
 void CLoginDlg::OnBnClickedCheck1()
 {
 	// TODO: 在此添加控件通知处理程序代码
+	//取消勾选记住密码 将自动取消勾选自动登录
 	if (const auto flag1 = IDC_REMEMBER.GetCheck(); static_cast<bool>(flag1) == false)
 	{
 		if (const auto flag2 = auto_login.GetCheck(); static_cast<bool>(flag2) == true)

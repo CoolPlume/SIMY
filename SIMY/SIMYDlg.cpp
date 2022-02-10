@@ -431,7 +431,7 @@ void CSIMYDlg::OnClose()
 	memset(&startupInfo, 0x00, sizeof(STARTUPINFO));
 	startupInfo.cb = sizeof(STARTUPINFO);
 
-	delete app->AIM;
+	delete app->AIM;	//保存
 	delete app->SIM;
 	delete app->TIM;
 

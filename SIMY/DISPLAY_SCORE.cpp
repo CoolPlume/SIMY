@@ -69,8 +69,9 @@ void DISPLAY_SCORE::OnInitialUpdate()
 	CFormView::OnInitialUpdate();
 
 	// TODO: 在此添加专用代码和/或调用基类
-	score_list.SetExtendedStyle(LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES);
+	score_list.SetExtendedStyle(LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES);	//设置list样式：整行选中、显示网格线
 
+	//插入标题
 	score_list.InsertColumn(0, TEXT("学号"), LVCFMT_CENTER, 150);
 	score_list.InsertColumn(1, TEXT("姓名"), LVCFMT_CENTER, 75);
 	score_list.InsertColumn(2, TEXT("性别"), LVCFMT_CENTER, 50);
@@ -87,18 +88,18 @@ void DISPLAY_SCORE::OnInitialUpdate()
 	score_list.InsertColumn(13, TEXT("通计"), LVCFMT_CENTER, 50);
 	score_list.InsertColumn(14, TEXT("总分"), LVCFMT_CENTER, 60);
 
-
+	//遍历学生列表
 	const auto app = dynamic_cast<CSIMYApp*>(AfxGetApp());
 	auto stu_list = app->SIM->return_student_list();
-	int cnt = 0;
+	int cnt = 0;	//用于记录当前学生数 以此和list行数对应
 	for (auto& i : stu_list)
 	{
 		score_list.InsertItem(cnt, TEXT("student"));
-		const auto member = static_cast<CString>(i.return_username().c_str());
+		const auto member = static_cast<CString>(i.return_username().c_str());	//学号
 		score_list.SetItemText(cnt, 0, member);
-		const auto name = static_cast<CString>(i.return_actual_name().c_str());
+		const auto name = static_cast<CString>(i.return_actual_name().c_str());	//姓名
 		score_list.SetItemText(cnt, 1, name);
-		const auto gender_flag = i.return_gender();
+		const auto gender_flag = i.return_gender();	//性别
 		CString gender;
 		if(gender_flag==1)
 		{
@@ -110,12 +111,14 @@ void DISPLAY_SCORE::OnInitialUpdate()
 		}
 		score_list.SetItemText(cnt, 2, gender);
 
+		//成绩
 		const auto chinese_score= static_cast<CString>(std::to_string(i.CIM.return_course_results(static_cast<int>(course_Type::chinese))).c_str());
 		score_list.SetItemText(cnt, 3, chinese_score);
 		const auto mathematics_score = static_cast<CString>(std::to_string(i.CIM.return_course_results(static_cast<int>(course_Type::mathematics))).c_str());
 		score_list.SetItemText(cnt, 4, mathematics_score);
 		const auto foreign_language_score = static_cast<CString>(std::to_string(i.CIM.return_course_results(static_cast<int>(course_Type::foreign_language))).c_str());
 		score_list.SetItemText(cnt, 5, foreign_language_score);
+		//对于小三门 选过的课才显示成绩
 		if (i.CIM.return_the_selection_status(static_cast<int>(course_Type::politics)) == true)
 		{
 			const auto politics_score = static_cast<CString>(std::to_string(i.CIM.return_course_results(static_cast<int>(course_Type::politics))).c_str());
@@ -163,7 +166,7 @@ void DISPLAY_SCORE::OnInitialUpdate()
 	}
 
 	
-	find_content.SetWindowTextW(TEXT("在此输入学号"));
+	find_content.SetWindowTextW(TEXT("在此输入学号"));	//设置编辑框提示
 
 }
 
@@ -171,43 +174,45 @@ void DISPLAY_SCORE::OnInitialUpdate()
 void DISPLAY_SCORE::OnEnSetfocusEdit1()
 {
 	// TODO: 在此添加控件通知处理程序代码
+	//当查找输入框获得焦点时，清空原有内容
 	find_content.SetWindowTextW(nullptr);
 }
 
 
-void DISPLAY_SCORE::OnBnClickedButton1()
+void DISPLAY_SCORE::OnBnClickedButton1()	//按钮：查找
 {
 	// TODO: 在此添加控件通知处理程序代码
-	CString target_num;
+	CString target_num;	//目标学号
 	GetDlgItemText(IDC_EDIT1, target_num);
-	if (target_num.IsEmpty() || target_num == TEXT("在此输入学号"))
+	if (target_num.IsEmpty() || target_num == TEXT("在此输入学号"))	//若查找输入框为空
 	{
 		::MessageBox(nullptr, TEXT("请在左侧文本框中输入要查找的学号！"), TEXT("警告"), MB_ICONWARNING | MB_OK | MB_TASKMODAL);
 		return;
 	}
 
 	//遍历
-	int i = 0;
+	int i = 0;	
 	const int line_count = score_list.GetItemCount();
-	bool find_flag = false;
+	bool find_flag = false;	//查找结果
 	for (; i < line_count; i++)
 	{
 		const CString num = score_list.GetItemText(i, 0);
 		if (num == target_num)
 		{
-			//清空选择
+			//清空原有选择
 			for (int j = 0; j < line_count; j++)
 			{
 				score_list.SetItemState(j, 0, -1);
 			}
-			//选择
+			//选择目标
 			score_list.SetItemState(i, LVIS_SELECTED | LVIS_FOCUSED, LVIS_SELECTED | LVIS_FOCUSED);
 			score_list.SetFocus();
 			score_list.EnsureVisible(i, true);
 			find_flag = true;
 		}
 	}
-	if (i == line_count && find_flag == false)
+
+	if (i == line_count && find_flag == false)	
 	{
 		::MessageBox(nullptr, TEXT("查无此人！"), TEXT("警告"), MB_ICONWARNING | MB_OK | MB_TASKMODAL);
 	}
@@ -215,7 +220,7 @@ void DISPLAY_SCORE::OnBnClickedButton1()
 }
 
 
-void DISPLAY_SCORE::OnBnClickedButton6()
+void DISPLAY_SCORE::OnBnClickedButton6()	//按钮：删除
 {
 	// TODO: 在此添加控件通知处理程序代码
 	const auto app = dynamic_cast<CSIMYApp*>(AfxGetApp());
@@ -227,11 +232,11 @@ void DISPLAY_SCORE::OnBnClickedButton6()
 		{
 			__fallthrough;
 		}
-		case IDNO:
+		case IDNO:	//取消
 		{
 			return;
 		}
-		case IDYES:
+		case IDYES:	//继续
 		{
 			if (auto pos = score_list.GetFirstSelectedItemPosition(); pos == nullptr)
 			{
@@ -241,6 +246,7 @@ void DISPLAY_SCORE::OnBnClickedButton6()
 			{
 				while (pos)
 				{
+					//删除所有被选中的项
 					const auto npos = score_list.GetNextSelectedItem(pos);
 					CString name = score_list.GetItemText(npos, 0);
 					app->SIM->delete_student(static_cast<std::string>(CW2A(name)));
@@ -256,38 +262,38 @@ void DISPLAY_SCORE::OnBnClickedButton6()
 		}
 		}
 	}
-	else
+	else  //非管理员没有权限删除人员
 	{
 		::MessageBox(nullptr, TEXT("权限不足！"), TEXT("错误"), MB_ICONERROR | MB_OK | MB_TASKMODAL);
 	}
 }
 
 
-void DISPLAY_SCORE::OnBnClickedButton7()
+void DISPLAY_SCORE::OnBnClickedButton7()	//按钮：添加
 {
 	// TODO: 在此添加控件通知处理程序代码
 	const auto app = dynamic_cast<CSIMYApp*>(AfxGetApp());
-	if (app->nCheckId == IDC_RADIO1)
+	if (app->nCheckId == IDC_RADIO1)	//若是管理员 弹出添加对话框
 	{
 		DLG_ADD_STUDENT dlg;
 		dlg.DoModal();
 	}
-	else
+	else  //其他人员没有权限
 	{
 		::MessageBox(nullptr, TEXT("权限不足！"), TEXT("错误"), MB_ICONERROR | MB_OK | MB_TASKMODAL);
 	}
 }
 
 
-void DISPLAY_SCORE::OnBnClickedButton2()
+void DISPLAY_SCORE::OnBnClickedButton2()	//按钮：详细信息\修改
 {
 	// TODO: 在此添加控件通知处理程序代码
 	const auto app = dynamic_cast<CSIMYApp*>(AfxGetApp());
-	if (const auto pos = score_list.GetFirstSelectedItemPosition(); pos == nullptr)
+	if (const auto pos = score_list.GetFirstSelectedItemPosition(); pos == nullptr)	//未选中项时
 	{
 		::MessageBox(nullptr, TEXT("没有被选中的项！"), TEXT("警告"), MB_ICONWARNING | MB_OK | MB_TASKMODAL);
 	}
-	else
+	else  //弹出信息对话框
 	{
 		DLG_STUDENT_INFORMATION dlg;
 		dlg.DoModal();
@@ -296,7 +302,7 @@ void DISPLAY_SCORE::OnBnClickedButton2()
 }
 
 
-void DISPLAY_SCORE::OnNMDblclkList1(NMHDR* pNMHDR, LRESULT* pResult)
+void DISPLAY_SCORE::OnNMDblclkList1(NMHDR* pNMHDR, LRESULT* pResult)	//如果在列表上双击，则触发详细信息按钮
 {
 	auto pNMItemActivate = reinterpret_cast<LPNMITEMACTIVATE>(pNMHDR);
 	// TODO: 在此添加控件通知处理程序代码
@@ -316,7 +322,7 @@ void DISPLAY_SCORE::OnHdnItemclickList1(NMHDR* pNMHDR, LRESULT* pResult)
 }
 
 
-void DISPLAY_SCORE::OnLvnColumnclickList1(NMHDR* pNMHDR, LRESULT* pResult)
+void DISPLAY_SCORE::OnLvnColumnclickList1(NMHDR* pNMHDR, LRESULT* pResult)	//点击表头 排序
 {
 	const auto pNMLV = reinterpret_cast<LPNMLISTVIEW>(pNMHDR);
 	// TODO: 在此添加控件通知处理程序代码
@@ -330,7 +336,7 @@ void DISPLAY_SCORE::OnLvnColumnclickList1(NMHDR* pNMHDR, LRESULT* pResult)
 	data.subitem = sort_column;
 	data.plist = &score_list;
 
-	sort_method = !sort_method;
+	sort_method = !sort_method;	//正序<-->倒序
 	score_list.SortItems(list_compere, reinterpret_cast<LPARAM>(&data));
 
 	*pResult = 0;
@@ -338,12 +344,10 @@ void DISPLAY_SCORE::OnLvnColumnclickList1(NMHDR* pNMHDR, LRESULT* pResult)
 
 bool DISPLAY_SCORE::sort_method = true;
 
-int DISPLAY_SCORE::list_compere(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort)
+int DISPLAY_SCORE::list_compere(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort)	//自定义排序方法
 {
 	const DATA* pListCtrl = reinterpret_cast<DATA*>(lParamSort);
 	const auto col = pListCtrl->subitem; //点击的列项传递给col，用来判断点击了第几列
-
-	//CString header[]={"姓名","年龄","编号"};  //假设现在的列头是这几项
 
 	//得到该列的前2项
 	const auto strItem1 = (pListCtrl->plist)->GetItemText(static_cast<int>(lParam1), col);
@@ -406,11 +410,11 @@ int DISPLAY_SCORE::list_compere(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSor
 }
 
 
-void DISPLAY_SCORE::OnBnClickedButton8()
+void DISPLAY_SCORE::OnBnClickedButton8()	//按钮：等级分数
 {
 	// TODO: 在此添加控件通知处理程序代码
 	const auto app = dynamic_cast<CSIMYApp*>(AfxGetApp());
-	if (const auto pos = score_list.GetFirstSelectedItemPosition(); pos == nullptr)
+	if (const auto pos = score_list.GetFirstSelectedItemPosition(); pos == nullptr)	//若未选中项
 	{
 		::MessageBox(nullptr, TEXT("没有被选中的项！"), TEXT("警告"), MB_ICONWARNING | MB_OK | MB_TASKMODAL);
 	}
@@ -422,7 +426,7 @@ void DISPLAY_SCORE::OnBnClickedButton8()
 }
 
 
-void DISPLAY_SCORE::OnBnClickedButton12()
+void DISPLAY_SCORE::OnBnClickedButton12()	//按钮：刷新
 {
 	// TODO: 在此添加控件通知处理程序代码
 	::PostMessage(AfxGetMainWnd()->GetSafeHwnd(), WM_MyMessage_SCORES, 0, 0);
