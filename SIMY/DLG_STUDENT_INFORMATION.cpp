@@ -69,9 +69,9 @@ BOOL DLG_STUDENT_INFORMATION::OnInitDialog()
 	gender.AddString(TEXT("男"));
 	const auto app = dynamic_cast<CSIMYApp*>(AfxGetApp());
 
-	if (app->nCheckId == IDC_RADIO2)
+	if (app->nCheckId == IDC_RADIO2)	//如果是教师 则只能查看无法修改
 	{
-		password.SetPasswordChar('*');
+		password.SetPasswordChar('*');	//教师无法查看密码
 		username.SetReadOnly(true);
 		username_change.EnableWindow(false);
 		password.SetReadOnly(true);
@@ -92,6 +92,7 @@ BOOL DLG_STUDENT_INFORMATION::OnInitDialog()
 		technology.EnableWindow(false);
 	}
 
+	//获取选定的学生
 	const auto dlg = dynamic_cast<DISPLAY_SCORE*>(app->child_window->GetPane(0, 1));
 	auto pos = dlg->score_list.GetFirstSelectedItemPosition();
 	const auto npos = dlg->score_list.GetNextSelectedItem(pos);
@@ -99,6 +100,7 @@ BOOL DLG_STUDENT_INFORMATION::OnInitDialog()
 	const student stu = *(app->SIM->find_student(static_cast<std::string>(CW2A(name))));
 	now_stu = app->SIM->find_student(static_cast<std::string>(CW2A(name)));
 
+	//要展示的内容
 	//不能写在一起 会乱码
 	CString name_disp, password_disp, nick_name_disp, actual_name_disp;
 	name_disp = stu.return_username().c_str();
@@ -147,7 +149,7 @@ BOOL DLG_STUDENT_INFORMATION::OnInitDialog()
 }
 
 
-void DLG_STUDENT_INFORMATION::OnBnClickedButton2()
+void DLG_STUDENT_INFORMATION::OnBnClickedButton2()	//按钮：修改用户名
 {
 	// TODO: 在此添加控件通知处理程序代码
 	const auto app = dynamic_cast<CSIMYApp*>(AfxGetApp());
@@ -188,7 +190,7 @@ void DLG_STUDENT_INFORMATION::OnBnClickedButton2()
 }
 
 
-void DLG_STUDENT_INFORMATION::OnBnClickedButton1()
+void DLG_STUDENT_INFORMATION::OnBnClickedButton1()	//按钮：修改密码
 {
 	// TODO: 在此添加控件通知处理程序代码
 	switch (const auto select = ::MessageBox(nullptr, TEXT("是否确定修改？"), TEXT("警告"), MB_ICONWARNING | MB_YESNOCANCEL | MB_TASKMODAL); select)
@@ -222,7 +224,7 @@ void DLG_STUDENT_INFORMATION::OnBnClickedButton1()
 }
 
 
-void DLG_STUDENT_INFORMATION::OnBnClickedButton4()
+void DLG_STUDENT_INFORMATION::OnBnClickedButton4()	//按钮：修改姓名
 {
 	// TODO: 在此添加控件通知处理程序代码
 	switch (const auto select = ::MessageBox(nullptr, TEXT("是否确定修改？"), TEXT("警告"), MB_ICONWARNING | MB_YESNOCANCEL | MB_TASKMODAL); select)
@@ -262,7 +264,7 @@ void DLG_STUDENT_INFORMATION::OnBnClickedButton4()
 }
 
 
-void DLG_STUDENT_INFORMATION::OnBnClickedButton9()
+void DLG_STUDENT_INFORMATION::OnBnClickedButton9()	//按钮：修改昵称
 {
 	// TODO: 在此添加控件通知处理程序代码
 	switch (const auto select = ::MessageBox(nullptr, TEXT("是否确定修改？"), TEXT("警告"), MB_ICONWARNING | MB_YESNOCANCEL | MB_TASKMODAL); select)
@@ -296,7 +298,7 @@ void DLG_STUDENT_INFORMATION::OnBnClickedButton9()
 }
 
 
-void DLG_STUDENT_INFORMATION::OnBnClickedButton10()
+void DLG_STUDENT_INFORMATION::OnBnClickedButton10()	//按钮：修改性别
 {
 	// TODO: 在此添加控件通知处理程序代码
 	switch (const auto select = ::MessageBox(nullptr, TEXT("是否确定修改？"), TEXT("警告"), MB_ICONWARNING | MB_YESNOCANCEL | MB_TASKMODAL); select)
@@ -347,7 +349,7 @@ void DLG_STUDENT_INFORMATION::OnBnClickedButton10()
 }
 
 
-void DLG_STUDENT_INFORMATION::OnBnClickedButton11()
+void DLG_STUDENT_INFORMATION::OnBnClickedButton11()	//按钮：修改选课
 {
 	// TODO: 在此添加控件通知处理程序代码
 	switch (const auto select = ::MessageBox(nullptr, TEXT("是否确定修改？"), TEXT("警告"), MB_ICONWARNING | MB_YESNOCANCEL | MB_TASKMODAL); select)

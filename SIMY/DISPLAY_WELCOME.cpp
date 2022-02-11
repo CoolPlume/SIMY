@@ -69,6 +69,7 @@ void DISPLAY_WELCOME::OnInitialUpdate()
 	//将图片设置到Picture控件上  
 	p->SetBitmap(bitmap);
 
+	//设置字体
 	wel_font.CreatePointFont(250, L"黑体", nullptr);
 	GetDlgItem(IDC_WEL_TEXT)->SetFont(&wel_font);
 

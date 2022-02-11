@@ -51,6 +51,7 @@ BOOL DLG_SELECT_SUBJECT::OnInitDialog()
 	const auto app = dynamic_cast<CSIMYApp*>(AfxGetApp());
 	const student now_stu = app->SIM->return_currently_logged_in_student();
 
+	//获得选课状态
 	const bool politics_flag = now_stu.CIM.return_the_selection_status(static_cast<int>(course_Type::politics));
 	const bool history_flag = now_stu.CIM.return_the_selection_status(static_cast<int>(course_Type::history));
 	const bool geography_flag = now_stu.CIM.return_the_selection_status(static_cast<int>(course_Type::geography));
@@ -64,7 +65,7 @@ BOOL DLG_SELECT_SUBJECT::OnInitDialog()
 	{
 		cnt++;
 		politics.SetCheck(true);
-		politics.EnableWindow(false);
+		politics.EnableWindow(false);	//已勾选的不能取消
 	}
 	if (history_flag == true)
 	{
@@ -103,7 +104,7 @@ BOOL DLG_SELECT_SUBJECT::OnInitDialog()
 		technology.EnableWindow(false);
 	}
 
-	if (cnt >= 3)
+	if (cnt >= 3)	//若已完成选科
 	{
 		::MessageBox(nullptr, TEXT("您已完成了选科"), TEXT("提示"), MB_ICONINFORMATION | MB_OK | MB_TASKMODAL);
 		EndDialog(0);
@@ -115,7 +116,7 @@ BOOL DLG_SELECT_SUBJECT::OnInitDialog()
 }
 
 
-void DLG_SELECT_SUBJECT::OnBnClickedButton1()
+void DLG_SELECT_SUBJECT::OnBnClickedButton1()	//按钮：提交
 {
 	// TODO: 在此添加控件通知处理程序代码
 	const auto flag = ::MessageBox(nullptr, TEXT("确认提交？"), TEXT("警告"), MB_ICONWARNING | MB_YESNO | MB_TASKMODAL);
@@ -127,6 +128,7 @@ void DLG_SELECT_SUBJECT::OnBnClickedButton1()
 	{
 		const auto app = dynamic_cast<CSIMYApp*>(AfxGetApp());
 		auto* now_stu = app->SIM->revise_currently_logged_in_student();
+		//获得勾选状况
 		const bool politics_flag = politics.GetCheck();
 		const bool history_flag = history.GetCheck();
 		const bool geography_flag = geography.GetCheck();
@@ -135,7 +137,7 @@ void DLG_SELECT_SUBJECT::OnBnClickedButton1()
 		const bool biology_flag = biology.GetCheck();
 		const bool technology_flag = technology.GetCheck();
 
-		int cnt = 0;
+		int cnt = 0;	//统计个数
 		if (politics_flag == true)
 		{
 			cnt++;
@@ -165,12 +167,13 @@ void DLG_SELECT_SUBJECT::OnBnClickedButton1()
 			cnt++;
 		}
 
-		if (cnt > 3)
+		if (cnt > 3)	//若选科过多
 		{
 			::MessageBox(nullptr, TEXT("选择的数量过多！"), TEXT("警告"), MB_ICONWARNING | MB_OK | MB_TASKMODAL);
 			return;
 		}
 
+		//更改
 		now_stu->CIM.change_the_selection_status(static_cast<int>(course_Type::politics), politics_flag);
 		now_stu->CIM.change_the_selection_status(static_cast<int>(course_Type::history), history_flag);
 		now_stu->CIM.change_the_selection_status(static_cast<int>(course_Type::geography), geography_flag);

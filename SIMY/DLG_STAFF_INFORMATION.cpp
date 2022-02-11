@@ -70,6 +70,7 @@ BOOL DLG_STAFF_INFORMATION::OnInitDialog()
 	subject.AddString(TEXT("通用技术"));
 
 
+	//获得选定的教师
 	const auto app = dynamic_cast<CSIMYApp*>(AfxGetApp());
 	const auto dlg = dynamic_cast<DISPLAY_STAFF*>(app->child_window->GetPane(0, 1));
 	auto pos = dlg->staff_list.GetFirstSelectedItemPosition();
@@ -77,6 +78,7 @@ BOOL DLG_STAFF_INFORMATION::OnInitDialog()
 	const CString name = dlg->staff_list.GetItemText(npos, 0);
 	tea = app->TIM->find_teacher(static_cast<std::string>(CW2A(name)));
 
+	//要展示的信息
 	CString name_disp, password_disp, nick_name_disp, actual_name_disp;
 	name_disp = tea->return_username().c_str();
 	password_disp = tea->return_password().c_str();
@@ -98,7 +100,7 @@ BOOL DLG_STAFF_INFORMATION::OnInitDialog()
 }
 
 
-void DLG_STAFF_INFORMATION::OnBnClickedButton2()
+void DLG_STAFF_INFORMATION::OnBnClickedButton2()	//按钮：用户名修改
 {
 	// TODO: 在此添加控件通知处理程序代码
 	const auto app = dynamic_cast<CSIMYApp*>(AfxGetApp());
@@ -124,6 +126,7 @@ void DLG_STAFF_INFORMATION::OnBnClickedButton2()
 		}
 		tea->change_username(static_cast<std::string>(CW2A(name)));
 
+		//同步列表中的信息
 		const auto dlg = dynamic_cast<DISPLAY_STAFF*>(app->child_window->GetPane(0, 1));
 		auto pos = dlg->staff_list.GetFirstSelectedItemPosition();
 		const auto npos = dlg->staff_list.GetNextSelectedItem(pos);
@@ -139,7 +142,7 @@ void DLG_STAFF_INFORMATION::OnBnClickedButton2()
 }
 
 
-void DLG_STAFF_INFORMATION::OnBnClickedButton1()
+void DLG_STAFF_INFORMATION::OnBnClickedButton1()	//按钮：密码修改
 {
 	// TODO: 在此添加控件通知处理程序代码
 	switch (const auto select = ::MessageBox(nullptr, TEXT("是否确定修改？"), TEXT("警告"), MB_ICONWARNING | MB_YESNOCANCEL | MB_TASKMODAL); select)
@@ -173,7 +176,7 @@ void DLG_STAFF_INFORMATION::OnBnClickedButton1()
 }
 
 
-void DLG_STAFF_INFORMATION::OnBnClickedButton4()
+void DLG_STAFF_INFORMATION::OnBnClickedButton4()	//按钮：姓名修改
 {
 	// TODO: 在此添加控件通知处理程序代码
 	switch (const auto select = ::MessageBox(nullptr, TEXT("是否确定修改？"), TEXT("警告"), MB_ICONWARNING | MB_YESNOCANCEL | MB_TASKMODAL); select)
@@ -213,7 +216,7 @@ void DLG_STAFF_INFORMATION::OnBnClickedButton4()
 }
 
 
-void DLG_STAFF_INFORMATION::OnBnClickedButton9()
+void DLG_STAFF_INFORMATION::OnBnClickedButton9()	//按钮：昵称修改
 {
 	// TODO: 在此添加控件通知处理程序代码
 	switch (const auto select = ::MessageBox(nullptr, TEXT("是否确定修改？"), TEXT("警告"), MB_ICONWARNING | MB_YESNOCANCEL | MB_TASKMODAL); select)
@@ -247,7 +250,7 @@ void DLG_STAFF_INFORMATION::OnBnClickedButton9()
 }
 
 
-void DLG_STAFF_INFORMATION::OnBnClickedButton10()
+void DLG_STAFF_INFORMATION::OnBnClickedButton10()	//按钮：性别修改
 {
 	// TODO: 在此添加控件通知处理程序代码
 	switch (const auto select = ::MessageBox(nullptr, TEXT("是否确定修改？"), TEXT("警告"), MB_ICONWARNING | MB_YESNOCANCEL | MB_TASKMODAL); select)
@@ -298,7 +301,7 @@ void DLG_STAFF_INFORMATION::OnBnClickedButton10()
 }
 
 
-void DLG_STAFF_INFORMATION::OnBnClickedButton11()
+void DLG_STAFF_INFORMATION::OnBnClickedButton11()	//按钮：任教科目修改
 {
 	// TODO: 在此添加控件通知处理程序代码
 	switch (const auto select = ::MessageBox(nullptr, TEXT("是否确定修改？"), TEXT("警告"), MB_ICONWARNING | MB_YESNOCANCEL | MB_TASKMODAL); select)

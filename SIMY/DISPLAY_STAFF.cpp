@@ -71,24 +71,26 @@ void DISPLAY_STAFF::OnInitialUpdate()
 	CFormView::OnInitialUpdate();
 
 	// TODO: 在此添加专用代码和/或调用基类
-	staff_list.SetExtendedStyle(LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES);
+	staff_list.SetExtendedStyle(LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES);	//设置list样式：整行选中、显示网格线
 
+	//插入标题
 	staff_list.InsertColumn(0, TEXT("职工号"), LVCFMT_CENTER, 150);
 	staff_list.InsertColumn(1, TEXT("姓名"), LVCFMT_CENTER, 75);
 	staff_list.InsertColumn(2, TEXT("性别"), LVCFMT_CENTER, 50);
 	staff_list.InsertColumn(3, TEXT("任教科目"), LVCFMT_CENTER, 75);
 
+	//遍历教师列表
 	const auto app = dynamic_cast<CSIMYApp*>(AfxGetApp());
 	auto tea_list = app->TIM->return_teacher_list();
-	int cnt = 0;
+	int cnt = 0;	//用于记录当前教师数 以此和list行数对应
 	for (auto& i : tea_list)
 	{
 		staff_list.InsertItem(cnt, TEXT("teacher"));
-		const auto member = static_cast<CString>(i.return_username().c_str());
+		const auto member = static_cast<CString>(i.return_username().c_str());	//职工号
 		staff_list.SetItemText(cnt, 0, member);
-		const auto name = static_cast<CString>(i.return_actual_name().c_str());
+		const auto name = static_cast<CString>(i.return_actual_name().c_str());	//姓名
 		staff_list.SetItemText(cnt, 1, name);
-		const auto gender_flag = i.return_gender();
+		const auto gender_flag = i.return_gender();	//性别
 		CString gender;
 		if (gender_flag == 1)
 		{
@@ -100,7 +102,7 @@ void DISPLAY_STAFF::OnInitialUpdate()
 		}
 		staff_list.SetItemText(cnt, 2, gender);
 
-		CString subject;
+		CString subject;	//任教科目
 		switch (i.teaching_subject)
 		{
 		case static_cast<int>(course_Type::chinese):
@@ -169,16 +171,16 @@ void DISPLAY_STAFF::OnInitialUpdate()
 		cnt++;
 	}
 
-	find_content.SetWindowTextW(TEXT("在此输入职工号"));
+	find_content.SetWindowTextW(TEXT("在此输入职工号"));	//设置编辑框提示
 }
 
 
-void DISPLAY_STAFF::OnBnClickedButton1()
+void DISPLAY_STAFF::OnBnClickedButton1()	//按钮：查找
 {
 	// TODO: 在此添加控件通知处理程序代码
-	CString target_num;
+	CString target_num;	//目标职工号
 	GetDlgItemText(IDC_EDIT1, target_num);
-	if (target_num.IsEmpty() || target_num == TEXT("在此输入职工号"))
+	if (target_num.IsEmpty() || target_num == TEXT("在此输入职工号"))	//若查找输入框为空
 	{
 		::MessageBox(nullptr, TEXT("请在左侧文本框中输入要查找的职工号！"), TEXT("警告"), MB_ICONWARNING | MB_OK | MB_TASKMODAL);
 		return;
@@ -187,18 +189,18 @@ void DISPLAY_STAFF::OnBnClickedButton1()
 	//遍历
 	int i = 0;
 	const int line_count = staff_list.GetItemCount();
-	bool find_flag = false;
+	bool find_flag = false;	//查找结果
 	for (; i < line_count; i++)
 	{
 		const CString num = staff_list.GetItemText(i, 0);
 		if (num == target_num)
 		{
-			//清空选择
+			//清空原有选择
 			for (int j = 0; j < line_count; j++)
 			{
 				staff_list.SetItemState(j, 0, -1);
 			}
-			//选择
+			//选择目标
 			staff_list.SetItemState(i, LVIS_SELECTED | LVIS_FOCUSED, LVIS_SELECTED | LVIS_FOCUSED);
 			staff_list.SetFocus();
 			staff_list.EnsureVisible(i, true);
@@ -213,14 +215,14 @@ void DISPLAY_STAFF::OnBnClickedButton1()
 }
 
 
-void DISPLAY_STAFF::OnEnSetfocusEdit1()
+void DISPLAY_STAFF::OnEnSetfocusEdit1()	//当查找输入框获得焦点时，清空原有内容
 {
 	// TODO: 在此添加控件通知处理程序代码
 	find_content.SetWindowTextW(nullptr);
 }
 
 
-void DISPLAY_STAFF::OnLvnColumnclickList2(NMHDR* pNMHDR, LRESULT* pResult)
+void DISPLAY_STAFF::OnLvnColumnclickList2(NMHDR* pNMHDR, LRESULT* pResult)	//点击表头 排序
 {
 	LPNMLISTVIEW pNMLV = reinterpret_cast<LPNMLISTVIEW>(pNMHDR);
 	// TODO: 在此添加控件通知处理程序代码
@@ -234,7 +236,7 @@ void DISPLAY_STAFF::OnLvnColumnclickList2(NMHDR* pNMHDR, LRESULT* pResult)
 	data.subitem = sort_column;
 	data.plist = &staff_list;
 
-	sort_method2 = !sort_method2;
+	sort_method2 = !sort_method2;	//正序<-->倒序
 	staff_list.SortItems(list_compere, reinterpret_cast<LPARAM>(&data));
 
 	*pResult = 0;
@@ -242,12 +244,10 @@ void DISPLAY_STAFF::OnLvnColumnclickList2(NMHDR* pNMHDR, LRESULT* pResult)
 
 bool DISPLAY_STAFF::sort_method2 = true;
 
-int DISPLAY_STAFF::list_compere(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort)
+int DISPLAY_STAFF::list_compere(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort)	//自定义排序方法
 {
 	const DATA* pListCtrl = reinterpret_cast<DATA*>(lParamSort);
 	const auto col = pListCtrl->subitem; //点击的列项传递给col，用来判断点击了第几列
-
-	//CString header[]={"姓名","年龄","编号"};  //假设现在的列头是这几项
 
 	//得到该列的前2项
 	const auto strItem1 = (pListCtrl->plist)->GetItemText(static_cast<int>(lParam1), col);
@@ -309,14 +309,14 @@ int DISPLAY_STAFF::list_compere(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSor
 	return -1;  // -1表示第一项在第二项前面，0表示两项相等
 }
 
-void DISPLAY_STAFF::OnBnClickedButton12()
+void DISPLAY_STAFF::OnBnClickedButton12()	//按钮：刷新
 {
 	// TODO: 在此添加控件通知处理程序代码
 	::PostMessage(AfxGetMainWnd()->GetSafeHwnd(), WM_MyMessage_STAFF, 0, 0);
 }
 
 
-void DISPLAY_STAFF::OnBnClickedButton6()
+void DISPLAY_STAFF::OnBnClickedButton6()	//按钮：删除
 {
 	// TODO: 在此添加控件通知处理程序代码
 	const auto app = dynamic_cast<CSIMYApp*>(AfxGetApp());
@@ -328,11 +328,11 @@ void DISPLAY_STAFF::OnBnClickedButton6()
 		{
 			__fallthrough;
 		}
-		case IDNO:
+		case IDNO:	//取消
 		{
 			return;
 		}
-		case IDYES:
+		case IDYES:	//继续
 		{
 			if (auto pos = staff_list.GetFirstSelectedItemPosition(); pos == nullptr)
 			{
@@ -342,6 +342,7 @@ void DISPLAY_STAFF::OnBnClickedButton6()
 			{
 				while (pos)
 				{
+					//删除所有被选中的项
 					const auto npos = staff_list.GetNextSelectedItem(pos);
 					CString name = staff_list.GetItemText(npos, 0);
 					app->TIM->delete_teacher(static_cast<std::string>(CW2A(name)));
@@ -357,22 +358,22 @@ void DISPLAY_STAFF::OnBnClickedButton6()
 		}
 		}
 	}
-	else
+	else  //非管理员没有权限删除人员
 	{
 		::MessageBox(nullptr, TEXT("权限不足！"), TEXT("错误"), MB_ICONERROR | MB_OK | MB_TASKMODAL);
 	}
 }
 
 
-void DISPLAY_STAFF::OnBnClickedButton2()
+void DISPLAY_STAFF::OnBnClickedButton2()	//按钮：详细信息\修改
 {
 	// TODO: 在此添加控件通知处理程序代码
 	const auto app = dynamic_cast<CSIMYApp*>(AfxGetApp());
-	if (const auto pos = staff_list.GetFirstSelectedItemPosition(); pos == nullptr)
+	if (const auto pos = staff_list.GetFirstSelectedItemPosition(); pos == nullptr)	//未选中项时
 	{
 		::MessageBox(nullptr, TEXT("没有被选中的项！"), TEXT("警告"), MB_ICONWARNING | MB_OK | MB_TASKMODAL);
 	}
-	else
+	else  //弹出信息对话框
 	{
 		DLG_STAFF_INFORMATION dlg;
 		dlg.DoModal();
@@ -381,7 +382,7 @@ void DISPLAY_STAFF::OnBnClickedButton2()
 }
 
 
-void DISPLAY_STAFF::OnNMDblclkList2(NMHDR* pNMHDR, LRESULT* pResult)
+void DISPLAY_STAFF::OnNMDblclkList2(NMHDR* pNMHDR, LRESULT* pResult)	//如果在列表上双击，则触发详细信息按钮
 {
 	LPNMITEMACTIVATE pNMItemActivate = reinterpret_cast<LPNMITEMACTIVATE>(pNMHDR);
 	// TODO: 在此添加控件通知处理程序代码
@@ -392,9 +393,10 @@ void DISPLAY_STAFF::OnNMDblclkList2(NMHDR* pNMHDR, LRESULT* pResult)
 }
 
 
-void DISPLAY_STAFF::OnBnClickedButton7()
+void DISPLAY_STAFF::OnBnClickedButton7()	//按钮：添加
 {
 	// TODO: 在此添加控件通知处理程序代码
+	//弹出添加对话框
 	DLG_ADD_STAFF dlg;
 	dlg.DoModal();
 }

@@ -56,6 +56,7 @@ BOOL DLG_CHANGE_SCORE::OnInitDialog()
 	CDialogEx::OnInitDialog();
 
 	// TODO:  在此添加额外的初始化
+	//取得所选择的学生
 	const auto app = dynamic_cast<CSIMYApp*>(AfxGetApp());
 	const auto dlg = dynamic_cast<DISPLAY_SCORE*>(app->child_window->GetPane(0, 1));
 	auto pos = dlg->score_list.GetFirstSelectedItemPosition();
@@ -63,6 +64,8 @@ BOOL DLG_CHANGE_SCORE::OnInitDialog()
 	const CString name = dlg->score_list.GetItemText(npos, 0);
 	const student stu = *(app->SIM->find_student(static_cast<std::string>(CW2A(name))));
 	now_stu = app->SIM->find_student(static_cast<std::string>(CW2A(name)));
+
+	//得到选科情况
 	CString choise[3];
 	int cnt = 0;
 	const bool politics_flag = now_stu->CIM.return_the_selection_status(static_cast<int>(course_Type::politics));
@@ -73,6 +76,7 @@ BOOL DLG_CHANGE_SCORE::OnInitDialog()
 	const bool biology_flag = now_stu->CIM.return_the_selection_status(static_cast<int>(course_Type::biology));
 	const bool technology_flag = now_stu->CIM.return_the_selection_status(static_cast<int>(course_Type::information_technology));
 
+	//替换ui文字
 	if (politics_flag)
 		choise[cnt++] = TEXT("政治：");
 	if (history_flag)
@@ -85,7 +89,7 @@ BOOL DLG_CHANGE_SCORE::OnInitDialog()
 		choise[cnt++] = TEXT("化学：");
 	if (biology_flag)
 		choise[cnt++] = TEXT("生物：");
-	if (!technology_flag)
+	if (!technology_flag)	//如果选的不是技术，那么第四个编辑框就可以隐藏
 	{
 		reinterpret_cast<CEdit*>(GetDlgItem(IDC_CHOISE4)->ShowWindow(false));
 		reinterpret_cast<CEdit*>(GetDlgItem(IDC_EDIT8)->ShowWindow(false));
@@ -100,13 +104,14 @@ BOOL DLG_CHANGE_SCORE::OnInitDialog()
 	SetDlgItemText(IDC_CHOISE2, choise[1]);
 	SetDlgItemText(IDC_CHOISE3, choise[2]);
 
-	if (cnt != 3)
+	if (cnt != 3)	//若选科数量不等于3
 	{
 		::MessageBox(nullptr, TEXT("非法选科"), TEXT("错误"), MB_ICONERROR | MB_OK | MB_TASKMODAL);
 		EndDialog(0);
 		return true;
 	}
 
+	//显示现有成绩
 	chinese = now_stu->CIM.return_course_results(static_cast<int>(course_Type::chinese));
 	mathematics = now_stu->CIM.return_course_results(static_cast<int>(course_Type::mathematics));
 	foreign_language = now_stu->CIM.return_course_results(static_cast<int>(course_Type::foreign_language));
@@ -237,6 +242,7 @@ BOOL DLG_CHANGE_SCORE::OnInitDialog()
 void DLG_CHANGE_SCORE::OnOK()
 {
 	// TODO: 在此添加专用代码和/或调用基类
+	//如果按下回车，则按下提交按钮
 	OnBnClickedButton1();
 	//CDialogEx::OnOK();
 }
@@ -246,6 +252,7 @@ void DLG_CHANGE_SCORE::OnBnClickedButton1()
 {
 	// TODO: 在此添加控件通知处理程序代码
 	UpdateData(true);
+	//检查单科分数上限
 	if (chinese > main_subject_full_score ||
 		mathematics > main_subject_full_score ||
 		foreign_language > main_subject_full_score ||
@@ -271,6 +278,7 @@ void DLG_CHANGE_SCORE::OnBnClickedButton1()
 		}
 	}
 
+	//写入成绩
 	now_stu->CIM.change_course_results(static_cast<int>(course_Type::chinese), chinese);
 	const auto app = dynamic_cast<CSIMYApp*>(AfxGetApp());
 	const auto dlg = dynamic_cast<DISPLAY_SCORE*>(app->child_window->GetPane(0, 1));

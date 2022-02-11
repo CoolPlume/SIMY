@@ -48,6 +48,7 @@ BOOL DLG_ADD_STUDENT::OnInitDialog()
 	gender.AddString(TEXT("男"));
 	gender.AddString(TEXT("女"));
 
+	//自动分配用户名
 	CString name;
 	name = std::to_string((app->SIM->return_student_list_size() + 1)).c_str();
 	username.SetWindowTextW(name);
@@ -67,18 +68,19 @@ void DLG_ADD_STUDENT::OnBnClickedButton1()
 	GetDlgItemText(IDC_EDIT1, username_string);
 	GetDlgItemText(IDC_EDIT2, actual_name_string);
 	const auto combobox_index = gender.GetCurSel();
-	if (combobox_index == -1)
+	if (combobox_index == -1)	//若未选择性别
 	{
 		::MessageBox(nullptr, TEXT("请选择性别"), TEXT("警告"), MB_ICONWARNING | MB_OK | MB_TASKMODAL);
 		return;
 	}
-	if (actual_name_string.IsEmpty())
+	if (actual_name_string.IsEmpty())	//若未输入姓名
 	{
 		::MessageBox(nullptr, TEXT("请输入姓名"), TEXT("警告"), MB_ICONWARNING | MB_OK | MB_TASKMODAL);
 		return;
 	}
 	gender.GetLBText(combobox_index, gender_string);
 
+	//构建对象stu 将目标属性赋给stu 最后push_back stu
 	student stu;
 	stu.change_actual_name(static_cast<std::string>(CW2A(actual_name_string)));
 	stu.change_username(static_cast<std::string>(CW2A(username_string)));

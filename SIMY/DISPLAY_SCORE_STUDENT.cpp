@@ -83,6 +83,7 @@ void DISPLAY_SCORE_STUDENT::OnInitialUpdate()
 	// TODO: 在此添加专用代码和/或调用基类
 	const auto app = dynamic_cast<CSIMYApp*>(AfxGetApp());
 	const student now_stu = app->SIM->return_currently_logged_in_student();
+	//读取成绩
 	chinese = now_stu.CIM.return_course_results(static_cast<int>(course_Type::chinese));
 	mathematics= now_stu.CIM.return_course_results(static_cast<int>(course_Type::mathematics));
 	foreign_language = now_stu.CIM.return_course_results(static_cast<int>(course_Type::foreign_language));
@@ -97,6 +98,7 @@ void DISPLAY_SCORE_STUDENT::OnInitialUpdate()
 
 	UpdateData(false);
 
+	//设置字幕滚动
 	row_font.CreatePointFont(200, L"宋体", nullptr);
 	row_text1.SetFont(&row_font);
 	row_text_2.SetFont(&row_font);
@@ -104,7 +106,7 @@ void DISPLAY_SCORE_STUDENT::OnInitialUpdate()
 }
 
 
-void DISPLAY_SCORE_STUDENT::OnBnClickedButton1()
+void DISPLAY_SCORE_STUDENT::OnBnClickedButton1()	//按钮：选考科目选择
 {
 	// TODO: 在此添加控件通知处理程序代码
 	DLG_SELECT_SUBJECT dlg;
@@ -112,7 +114,7 @@ void DISPLAY_SCORE_STUDENT::OnBnClickedButton1()
 }
 
 
-void DISPLAY_SCORE_STUDENT::OnTimer(UINT_PTR nIDEvent)
+void DISPLAY_SCORE_STUDENT::OnTimer(UINT_PTR nIDEvent)	//计时器 完成字幕内容变换
 {
 	// TODO: 在此添加消息处理程序代码和/或调用默认值
 

@@ -410,7 +410,7 @@ int DISPLAY_SCORE::list_compere(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSor
 }
 
 
-void DISPLAY_SCORE::OnBnClickedButton8()	//按钮：等级分数
+void DISPLAY_SCORE::OnBnClickedButton8()	//按钮：登记分数
 {
 	// TODO: 在此添加控件通知处理程序代码
 	const auto app = dynamic_cast<CSIMYApp*>(AfxGetApp());
